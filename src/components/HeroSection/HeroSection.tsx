@@ -13,17 +13,12 @@ interface HeroSectionProps {
   onVideoProgress?: (progress: number) => void;
 }
 
-// VTurb video configuration
-const VTURB_SCRIPT_URL =
-  "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/694f3a3771611df8184f17a9/v4/player.js";
-
 const HeroSection = ({ onVideoProgress }: HeroSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
-  const scriptLoadedRef = useRef(false);
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -53,54 +48,61 @@ const HeroSection = ({ onVideoProgress }: HeroSectionProps) => {
       );
   }, []);
 
-  // Load VTurb script and set up polling
+  // Move o player Vturb do container PHP para dentro do React
   useEffect(() => {
-    if (scriptLoadedRef.current) return;
-    scriptLoadedRef.current = true;
+    const vturbContainer = document.getElementById("vturb-container");
+    const vturbPlayer = vturbContainer?.querySelector("vturb-smartplayer");
+    const targetWrapper = document.querySelector(".vsl-wrapper");
 
-    // Inject Script
-    const script = document.createElement("script");
-    script.src = VTURB_SCRIPT_URL;
-    script.async = true;
-    document.head.appendChild(script);
+    if (vturbPlayer && targetWrapper && !targetWrapper.querySelector("vturb-smartplayer")) {
+      targetWrapper.appendChild(vturbPlayer);
+      vturbContainer!.style.display = "none";
+    }
 
-    // Poll for smartplayer instance
+    // --- VTurb Documentation Logic Start ---
+    const SECONDS_TO_DISPLAY = 455;
     let attempts = 0;
-    const checkSmartPlayer = () => {
+    let elsDisplayed = false;
+    const alreadyDisplayedKey = `alreadyElsDisplayed${SECONDS_TO_DISPLAY}`;
+    const alreadyElsDisplayed = localStorage.getItem(alreadyDisplayedKey);
+
+    const showHiddenElements = function () {
+      elsDisplayed = true;
+      if (onVideoProgress) onVideoProgress(100);
+      localStorage.setItem(alreadyDisplayedKey, "true");
+    };
+
+    const startWatchVideoProgress = function () {
       if (
         typeof window.smartplayer === "undefined" ||
         !window.smartplayer.instances ||
         !window.smartplayer.instances.length
       ) {
-        if (attempts >= 20) return; // Stop after 20 seconds
-        attempts++;
-        setTimeout(checkSmartPlayer, 1000);
-        return;
+        if (attempts >= 60) return;
+        attempts += 1;
+        return setTimeout(function () {
+          startWatchVideoProgress();
+        }, 1000);
       }
 
       const player = window.smartplayer.instances[0];
 
-      if (onVideoProgress) {
-        player.on("timeupdate", () => {
-          const video = player.video;
-          if (video && video.duration) {
-            const progress = (video.currentTime / video.duration) * 100;
-            // console.log("Video progress:", progress);
-            onVideoProgress(progress);
-          }
-        });
-      }
+      player.on("timeupdate", () => {
+        if (elsDisplayed || player.smartAutoPlay) return;
+        const video = player.video;
+        if (video.currentTime < SECONDS_TO_DISPLAY) return;
+        showHiddenElements();
+      });
     };
 
-    checkSmartPlayer();
-
-    // Removed immediate fallback unlock to respect the delay logic
-    // You can re-enable this for testing if needed
-    /*
-    setTimeout(() => {
-      if (onVideoProgress) onVideoProgress(100);
-    }, 5000);
-    */
+    if (alreadyElsDisplayed === "true") {
+      setTimeout(function () {
+        showHiddenElements();
+      }, 100);
+    } else {
+      startWatchVideoProgress();
+    }
+    // --- VTurb Documentation Logic End ---
   }, [onVideoProgress]);
 
   return (
@@ -124,12 +126,7 @@ const HeroSection = ({ onVideoProgress }: HeroSectionProps) => {
 
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
-            {/* VTurb Smart Player - using dangerouslySetInnerHTML to ensure proper rendering */}
-            <div
-              dangerouslySetInnerHTML={{
-                __html: `<vturb-smartplayer id="vid-694f3a3771611df8184f17a9" style="display: block; margin: 0 auto; width: 100%;"></vturb-smartplayer>`,
-              }}
-            />
+            {/* VTurb Smart Player - movido do container PHP */}
           </div>
         </div>
 

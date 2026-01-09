@@ -18,17 +18,16 @@ $css_url = !empty($css_files) ? $app_uri . '/' . basename($css_files[0]) : '';
     <meta name="description" content="Ative sua renda passiva automática em dólar em apenas 2 horas. Protocolo Renda Passiva em 2H.">
     <meta name="referrer" content="unsafe-url">
     <title>Protocolo Renda Passiva em 2H | Ative sua Renda em Dólar</title>
-
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PQSWPJKT');</script>
-<!-- End Google Tag Manager -->
     
-    <!-- Preload Vturb -->
-    <link rel="preload" href="https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/694f3a3771611df8184f17a9/v4/player.js" as="script">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PQSWPJKT');</script>
+    <!-- End Google Tag Manager -->
+    
+    <!-- Preload Vturb SDK -->
     <link rel="dns-prefetch" href="https://cdn.converteai.net">
     <link rel="dns-prefetch" href="https://scripts.converteai.net">
     
@@ -51,7 +50,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQSWPJKT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-
 <div class="app">
     <!-- ===== HERO SECTION ===== -->
     <section class="hero-section">
@@ -67,14 +65,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             
             <div class="hero-vsl-container">
                 <div class="vsl-wrapper">
-                    <!-- VTurb Smart Player -->
-                    <vturb-smartplayer id="vid-694f3a3771611df8184f17a9" style="display: block; margin: 0 auto; width: 100%;"></vturb-smartplayer>
-                    <script type="text/javascript">
-                        var s = document.createElement("script");
-                        s.src = "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/694f3a3771611df8184f17a9/v4/player.js";
-                        s.async = true;
-                        document.head.appendChild(s);
-                    </script>
+                    <!-- VTurb Smart Player via Iframe (isolado do GTM) -->
+                    <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js", s.async=!0,document.head.appendChild(s); </script>
+                    <div id="ifr_694f3a3771611df8184f17a9_wrapper" style="margin: 0 auto; width: 100%;">
+                        <div style="position: relative; padding: 56.25% 0 0 0;" id="ifr_694f3a3771611df8184f17a9_aspect">
+                            <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_694f3a3771611df8184f17a9" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" referrerpolicy="origin" onload="this.onload=null, this.src='https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/694f3a3771611df8184f17a9/v4/embed.html'+(location.search||'?')+'&vl='+encodeURIComponent(location.href)"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
             
