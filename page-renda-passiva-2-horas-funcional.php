@@ -75,7 +75,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             </div>
             
-            <a href="#oferta" class="btn-primary btn-pulse hero-cta">
+            <a href="#oferta" class="btn-primary btn-pulse hero-cta" id="hero-cta" style="display: none;">
                 QUERO ATIVAR MEU SETUP POR R$&nbsp;97
             </a>
         </div>
@@ -575,14 +575,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     </div><!-- .content-gate -->
 
-    <!-- Lock Message -->
-    <div class="content-lock-message" id="lock-message">
-        <div class="lock-icon">🔒</div>
-        <p>Continue assistindo o vídeo para desbloquear o conteúdo</p>
-    </div>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/5571981954102?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Protocolo%20Renda%20Passiva%20em%202H." 
+    <a href="https://wa.me/557199512069?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Protocolo%20Renda%20Passiva%20em%202H." 
        target="_blank" 
        rel="noopener noreferrer" 
        class="whatsapp-float" 
@@ -610,131 +605,91 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
 <script>
-// ===== VTURB LOGIC (COMENTADO PARA ANÁLISE) =====
-// Para reativar, descomente o bloco abaixo e comente o showHiddenElements() imediato
-
-// DESBLOQUEIA IMEDIATAMENTE (para análise)
+// ===== LÓGICA DE DESBLOQUEIO POR TEMPO (VTurb v4) =====
 (function() {
-    var contentGate = document.getElementById('content-gate');
-    var lockMessage = document.getElementById('lock-message');
-    
-    if (contentGate) {
-        contentGate.classList.remove('locked');
-        contentGate.classList.add('unlocked');
-    }
-    if (lockMessage) {
-        lockMessage.style.display = 'none';
-    }
-    
-    // Inicializa animações
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof initScrollAnimations === 'function') {
-            initScrollAnimations();
-        }
-    });
-})();
-
-/*
-// ===== LÓGICA DE DESBLOQUEIO ORIGINAL (COMENTADA) =====
-(function() {
-    var SECONDS_TO_DISPLAY = 455;
-    var attempts = 0;
+    var SECONDS_TO_DISPLAY = 338; // 5:38 minutos
     var elsDisplayed = false;
     var alreadyDisplayedKey = 'alreadyElsDisplayed' + SECONDS_TO_DISPLAY;
     var alreadyElsDisplayed = localStorage.getItem(alreadyDisplayedKey);
+    var lastLoggedTime = -1;
 
     function showHiddenElements() {
         if (elsDisplayed) return;
         elsDisplayed = true;
-        console.log('[Vturb] Desbloqueando conteúdo!');
+        console.log('[Vturb] ✅ DESBLOQUEANDO CONTEÚDO!');
         
         var contentGate = document.getElementById('content-gate');
-        var lockMessage = document.getElementById('lock-message');
+        var heroCta = document.getElementById('hero-cta');
         
         if (contentGate) {
             contentGate.classList.remove('locked');
             contentGate.classList.add('unlocked');
         }
-        if (lockMessage) {
-            lockMessage.style.display = 'none';
+        if (heroCta) {
+            heroCta.style.display = '';
         }
         
         localStorage.setItem(alreadyDisplayedKey, 'true');
-        initScrollAnimations();
-    }
-
-    function startWatchVideoProgress() {
-        if (typeof window.smartplayer === 'undefined' || 
-            !window.smartplayer.instances || 
-            !window.smartplayer.instances.length) {
-            if (attempts >= 60) {
-                console.log('[Vturb] Timeout - player não encontrado após 60 tentativas');
-                return;
-            }
-            attempts += 1;
-            return setTimeout(startWatchVideoProgress, 1000);
-        }
-
-        console.log('[Vturb] Player encontrado! Iniciando monitoramento com setInterval...');
-        var player = window.smartplayer.instances[0];
-        
-        var checkInterval = setInterval(function() {
-            if (elsDisplayed) {
-                clearInterval(checkInterval);
-                return;
-            }
-            
-            var currentTime = 0;
-            try {
-                if (player.video && typeof player.video.currentTime === 'number') {
-                    currentTime = player.video.currentTime;
-                } else if (player.videoElement && player.videoElement.currentTime) {
-                    currentTime = player.videoElement.currentTime;
-                } else if (typeof player.getCurrentTime === 'function') {
-                    currentTime = player.getCurrentTime();
-                } else {
-                    var videoEl = document.querySelector('video');
-                    if (videoEl) {
-                        currentTime = videoEl.currentTime;
-                    }
-                }
-            } catch (e) {
-                console.log('[Vturb] Erro ao pegar currentTime:', e);
-            }
-            
-            if (currentTime > 0 && Math.floor(currentTime) % 10 === 0) {
-                console.log('[Vturb] Tempo atual: ' + Math.floor(currentTime) + 's / ' + SECONDS_TO_DISPLAY + 's');
-            }
-            
-            if (currentTime >= SECONDS_TO_DISPLAY) {
-                console.log('[Vturb] Tempo atingido! Desbloqueando...');
-                clearInterval(checkInterval);
-                showHiddenElements();
-            }
-        }, 1000);
         
         setTimeout(function() {
-            var videoEl = document.querySelector('video');
-            if (videoEl) {
-                console.log('[Vturb] Elemento video encontrado, adicionando listener ended');
-                videoEl.addEventListener('ended', function() {
-                    console.log('[Vturb] Vídeo terminou - desbloqueando');
-                    clearInterval(checkInterval);
-                    showHiddenElements();
-                });
+            if (typeof initScrollAnimations === 'function') {
+                initScrollAnimations();
             }
-        }, 3000);
+        }, 100);
     }
 
-    if (alreadyElsDisplayed === 'true') {
-        console.log('[Vturb] Já foi desbloqueado anteriormente');
-        setTimeout(showHiddenElements, 100);
-    } else {
-        console.log('[Vturb] Iniciando monitoramento...');
-        startWatchVideoProgress();
+    function checkTime(currentTime) {
+        if (elsDisplayed) return;
+        
+        var roundedTime = Math.floor(currentTime / 30) * 30;
+        if (roundedTime > 0 && roundedTime !== lastLoggedTime) {
+            lastLoggedTime = roundedTime;
+            console.log('[Vturb] ⏱️ Tempo: ' + Math.floor(currentTime) + 's / ' + SECONDS_TO_DISPLAY + 's');
+        }
+        
+        if (currentTime >= SECONDS_TO_DISPLAY) {
+            console.log('[Vturb] ✅ Tempo atingido! (' + Math.floor(currentTime) + 's)');
+            showHiddenElements();
+        }
     }
+
+    // Verifica se já foi desbloqueado anteriormente
+    if (alreadyElsDisplayed === 'true') {
+        console.log('[Vturb] ✅ Já foi desbloqueado anteriormente');
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', showHiddenElements);
+        } else {
+            showHiddenElements();
+        }
+        return;
+    }
+
+    console.log('[Vturb] 🎬 Iniciando monitoramento do vídeo...');
+
+    // MÉTODO PRINCIPAL: Intercepta TODOS os eventos dispatchEvent
+    // O VTurb dispara eventos em elementos internos, não no window
+    var originalDispatchEvent = EventTarget.prototype.dispatchEvent;
+    EventTarget.prototype.dispatchEvent = function(event) {
+        if (event && event.type && !elsDisplayed) {
+            // Captura video:timeupdate
+            if (event.type === 'video:timeupdate') {
+                var detail = event.detail || {};
+                var time = detail.time || 0;
+                if (time > 0) {
+                    checkTime(time);
+                }
+            }
+            
+            // Captura eventos de fim do vídeo
+            if (event.type === 'video:ended' || event.type === 'video:end' || event.type === 'video:finish') {
+                console.log('[Vturb] 🏁 Vídeo terminou!');
+                showHiddenElements();
+            }
+        }
+        return originalDispatchEvent.apply(this, arguments);
+    };
+
 })();
-*/
 
 // ===== GSAP =====
 function initScrollAnimations() {

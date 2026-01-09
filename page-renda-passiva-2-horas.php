@@ -578,14 +578,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     </div><!-- .content-gate -->
 
-    <!-- Lock Message -->
-    <div class="content-lock-message" id="lock-message">
-        <div class="lock-icon">🔒</div>
-        <p>Continue assistindo o vídeo para desbloquear o conteúdo</p>
-    </div>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/5571981954102?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Protocolo%20Renda%20Passiva%20em%202H." 
+    <a href="https://wa.me/557199512069?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Protocolo%20Renda%20Passiva%20em%202H." 
        target="_blank" 
        rel="noopener noreferrer" 
        class="whatsapp-float" 
@@ -613,34 +608,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
 <script>
-// ===== VTURB LOGIC (COMENTADO PARA ANÁLISE) =====
-// Para reativar, descomente o bloco abaixo e comente o showHiddenElements() imediato
-
-// DESBLOQUEIA IMEDIATAMENTE (para análise)
+// ===== LÓGICA DE DESBLOQUEIO POR TEMPO =====
 (function() {
-    var contentGate = document.getElementById('content-gate');
-    var lockMessage = document.getElementById('lock-message');
-    
-    if (contentGate) {
-        contentGate.classList.remove('locked');
-        contentGate.classList.add('unlocked');
-    }
-    if (lockMessage) {
-        lockMessage.style.display = 'none';
-    }
-    
-    // Inicializa animações
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof initScrollAnimations === 'function') {
-            initScrollAnimations();
-        }
-    });
-})();
-
-/*
-// ===== LÓGICA DE DESBLOQUEIO ORIGINAL (COMENTADA) =====
-(function() {
-    var SECONDS_TO_DISPLAY = 455;
+    var SECONDS_TO_DISPLAY = 338; // 5:38 minutos
     var attempts = 0;
     var elsDisplayed = false;
     var alreadyDisplayedKey = 'alreadyElsDisplayed' + SECONDS_TO_DISPLAY;
@@ -652,14 +622,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         console.log('[Vturb] Desbloqueando conteúdo!');
         
         var contentGate = document.getElementById('content-gate');
-        var lockMessage = document.getElementById('lock-message');
         
         if (contentGate) {
             contentGate.classList.remove('locked');
             contentGate.classList.add('unlocked');
-        }
-        if (lockMessage) {
-            lockMessage.style.display = 'none';
         }
         
         localStorage.setItem(alreadyDisplayedKey, 'true');
@@ -737,7 +703,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         startWatchVideoProgress();
     }
 })();
-*/
 
 // ===== GSAP =====
 function initScrollAnimations() {
