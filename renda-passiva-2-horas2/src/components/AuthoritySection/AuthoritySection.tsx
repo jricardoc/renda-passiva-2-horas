@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./AuthoritySection.css";
+import hendiImg from "../../assets/images/hendi.jpeg";
+import graphImg from "../../assets/images/grafico-dados.jpeg";
+import groupImg from "../../assets/images/group.jpeg";
 
 const AuthoritySection = () => {
   const [showGraphLightbox, setShowGraphLightbox] = useState(false);
@@ -12,7 +15,7 @@ const AuthoritySection = () => {
           <div className="authority-image-wrapper">
             <div className="authority-image-glow"></div>
             <img
-              src="https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/hendi.jpeg"
+              src={hendiImg}
               alt="Hendi - Especialista em Renda Passiva"
               className="authority-image"
               width="533"
@@ -49,7 +52,7 @@ const AuthoritySection = () => {
               onClick={() => setShowGraphLightbox(true)}
             >
               <img
-                src="https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/grafico-dados.jpeg"
+                src={graphImg}
                 alt="Gráfico de resultados da estratégia"
                 className="strategy-graph"
                 width="1572"
@@ -72,7 +75,7 @@ const AuthoritySection = () => {
                     ✕
                   </button>
                   <img
-                    src="https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/grafico-dados.jpeg"
+                    src={graphImg}
                     alt="Gráfico de resultados da estratégia"
                   />
                 </div>
@@ -116,7 +119,7 @@ const AuthoritySection = () => {
         {/* Group image - full width below the main content */}
         <div className="group-section">
           <img
-            src="https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/group.jpeg"
+            src={groupImg}
             alt="Grupo de alunos do Protocolo"
             className="group-image"
             width="800"

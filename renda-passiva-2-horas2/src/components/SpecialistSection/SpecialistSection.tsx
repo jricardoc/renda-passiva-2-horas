@@ -4,19 +4,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "./SpecialistSection.css";
 
+import p1 from "../../assets/images/p-1.webp";
+import p2 from "../../assets/images/p-2.webp";
+import p3 from "../../assets/images/p-3.webp";
+import p4 from "../../assets/images/p-4.webp";
+import p5 from "../../assets/images/p-5.webp";
+import p6 from "../../assets/images/p-6.webp";
+import p7 from "../../assets/images/p-7.webp";
+import p8 from "../../assets/images/p-8.webp";
+import p9 from "../../assets/images/p-9.webp";
+import p10 from "../../assets/images/p-10.webp";
+
 const SpecialistSection = () => {
-  const images = [
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-1.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-2.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-3.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-4.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-5.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-6.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-7.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-8.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-9.webp",
-    "https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/p-10.webp",
-  ];
+  const images = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
 
   return (
     <section className="specialist-section animate-section">
