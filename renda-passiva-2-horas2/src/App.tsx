@@ -16,18 +16,20 @@ gsap.registerPlugin(ScrollTrigger);
 function App() {
   return (
     <div className="app">
-      <HeroSection />
+      <main>
+        <HeroSection />
 
-      {/* Content sections - controlled by Vturb via #content-gate */}
-      <div id="content-gate" style={{ display: "none" }}>
-        <AuthoritySection />
-        <ComparisonSection />
-        <ContentCards />
-        <SocialProof />
-        <GuaranteeSection />
-        <SpecialistSection />
-        <Footer />
-      </div>
+        {/* Content sections - controlled by Vturb via #content-gate */}
+        <div id="content-gate" style={{ display: "none" }}>
+          <AuthoritySection />
+          <ComparisonSection />
+          <ContentCards />
+          <SocialProof />
+          <GuaranteeSection />
+          <SpecialistSection />
+          <Footer />
+        </div>
+      </main>
 
       {/* Floating WhatsApp Button */}
       <WhatsAppButton />

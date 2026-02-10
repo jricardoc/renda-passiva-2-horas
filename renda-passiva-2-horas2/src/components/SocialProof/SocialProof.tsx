@@ -78,7 +78,7 @@ const SocialProof = () => {
           start: "top 85%",
           toggleActions: "play none none none",
         },
-      }
+      },
     );
 
     return () => {
@@ -151,6 +151,8 @@ const SocialProof = () => {
                       alt={image.caption}
                       className="proof-image"
                       loading="lazy"
+                      width="300"
+                      height="400"
                     />
                     <div className="proof-overlay">
                       <span className="icon-check">✓</span>

@@ -29,12 +29,55 @@
     rel="stylesheet">
 
   <meta name="referrer" content="unsafe-url" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://protocolorendapassiva.com.br/" />
+  <meta property="og:title" content="Protocolo Renda Passiva em 2H | Ative sua Renda em Dólar" />
+  <meta property="og:description"
+    content="Ative sua renda passiva automática em dólar em apenas 2 horas. Protocolo Renda Passiva em 2H." />
+  <meta property="og:image" content="https://protocolorendapassiva.com.br/assets/og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://protocolorendapassiva.com.br/" />
+  <meta property="twitter:title" content="Protocolo Renda Passiva em 2H | Ative sua Renda em Dólar" />
+  <meta property="twitter:description"
+    content="Ative sua renda passiva automática em dólar em apenas 2 horas. Protocolo Renda Passiva em 2H." />
+  <meta property="twitter:image" content="https://protocolorendapassiva.com.br/assets/og-image.jpg" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Product",
+          "name": "Protocolo Renda Passiva em 2H",
+          "description": "Ative sua renda passiva automática em dólar em apenas 2 horas.",
+          "offers": {
+            "@type": "Offer",
+            "price": "97.00",
+            "priceCurrency": "BRL",
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "Organization",
+          "name": "JRicardoDev",
+          "url": "https://protocolorendapassiva.com.br/",
+          "logo": "https://protocolorendapassiva.com.br/favicon.svg"
+        }
+      ]
+    }
+  </script>
+
   <title>Protocolo Renda Passiva em 2H | Ative sua Renda em Dólar</title>
 </head>
 
 <body>
   <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+  <script type="module" src="/src/main.tsx" defer></script>
 </body>
 
 </html>

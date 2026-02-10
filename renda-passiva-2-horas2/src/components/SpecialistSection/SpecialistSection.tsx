@@ -65,6 +65,9 @@ const SpecialistSection = () => {
                   src={src}
                   alt={`Hendi - Foto ${index + 1}`}
                   className="specialist-image"
+                  width="300"
+                  height="400"
+                  loading="lazy"
                 />
               </div>
             </SwiperSlide>

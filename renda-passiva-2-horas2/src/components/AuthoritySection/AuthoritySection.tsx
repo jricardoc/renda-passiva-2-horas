@@ -15,6 +15,8 @@ const AuthoritySection = () => {
               src="https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/hendi.jpeg"
               alt="Hendi - Especialista em Renda Passiva"
               className="authority-image"
+              width="533"
+              height="800"
             />
             <div className="authority-badge">
               <span className="badge-icon">✓</span>
@@ -50,6 +52,8 @@ const AuthoritySection = () => {
                 src="https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/grafico-dados.jpeg"
                 alt="Gráfico de resultados da estratégia"
                 className="strategy-graph"
+                width="1572"
+                height="685"
               />
               <span className="graph-zoom-hint">🔍 Clique para ampliar</span>
             </div>
@@ -115,6 +119,9 @@ const AuthoritySection = () => {
             src="https://www.ocaradocopytrade.com/wp-content/uploads/2025/12/group.jpeg"
             alt="Grupo de alunos do Protocolo"
             className="group-image"
+            width="800"
+            height="533"
+            loading="lazy"
           />
           <p className="group-caption">Alunos que já ativaram o Protocolo</p>
         </div>
