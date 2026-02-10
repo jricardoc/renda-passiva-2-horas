@@ -2,12 +2,39 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import "./HeroSection.css";
 
+declare global {
+  interface Window {
+    smartplayer: any;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "vturb-smartplayer": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      > & { id?: string; style?: React.CSSProperties };
+    }
+  }
+}
+
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    // Check if script already exists to avoid duplicates
+    const scriptId = "vturb-script-698b7e5b";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src =
+        "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/698b7e5b8fab3a91a575ceae/v4/player.js";
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }, []);
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -58,38 +85,11 @@ const HeroSection = () => {
 
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
-            {/* VTurb Smart Player via Iframe */}
-            <div
-              id="ifr_698b7e5b8fab3a91a575ceae_wrapper"
-              style={{ margin: "0 auto", width: "100%" }}
-            >
-              <div
-                style={{ position: "relative", padding: "56.25% 0 0 0" }}
-                id="ifr_698b7e5b8fab3a91a575ceae_aspect"
-              >
-                <iframe
-                  frameBorder="0"
-                  allowFullScreen
-                  src="about:blank"
-                  id="ifr_698b7e5b8fab3a91a575ceae"
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  referrerPolicy="origin"
-                  onLoad={(e) => {
-                    const iframe = e.currentTarget;
-                    if (iframe.src === "about:blank") {
-                      iframe.onload = null;
-                      iframe.src = `https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/698b7e5b8fab3a91a575ceae/v4/embed.html${window.location.search || "?"}&vl=${encodeURIComponent(window.location.href)}&t=0`;
-                    }
-                  }}
-                ></iframe>
-              </div>
-            </div>
+            {/* VTurb Smart Player JS */}
+            <vturb-smartplayer
+              id="vid-698b7e5b8fab3a91a575ceae"
+              style={{ display: "block", margin: "0 auto", width: "100%" }}
+            ></vturb-smartplayer>
           </div>
         </div>
 
