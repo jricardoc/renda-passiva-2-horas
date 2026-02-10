@@ -26,6 +26,8 @@ COPY --from=builder2 /app/dist /usr/share/nginx/html/renda-passiva-2-horas2
 # (Opcional) Cria um index na raiz para não dar erro 403 se acessarem o domínio puro
 RUN echo "<h1>Acesse <a href='/renda-passiva-2-horas/'>Site 1</a> ou <a href='/renda-passiva-2-horas2/'>Site 2</a></h1>" > /usr/share/nginx/html/index.html
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Configuração necessária para o React Router não quebrar em subpastas (SPA)
 # Se der erro 404 ao atualizar a página, me avise que ajustamos o nginx.conf
 EXPOSE 80
