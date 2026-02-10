@@ -19,8 +19,8 @@ function App() {
       <main>
         <HeroSection />
 
-        {/* Content sections - controlled by Vturb via #content-gate */}
-        <div id="content-gate">
+        {/* Content sections - Open Version (Always Visible) */}
+        <div id="content-container">
           <AuthoritySection />
           <ComparisonSection />
           <ContentCards />
