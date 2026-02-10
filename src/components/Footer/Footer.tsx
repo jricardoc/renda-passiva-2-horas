@@ -16,7 +16,10 @@ const Footer = () => {
             Garantia de 7 dias ou seu dinheiro de volta.
           </p>
 
-          <a href="#oferta" className="btn-primary btn-pulse footer-cta">
+          <a
+            href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
+            className="btn-primary btn-pulse footer-cta"
+          >
             QUERO COMEÇAR AGORA
           </a>
         </div>
@@ -52,11 +55,11 @@ const Footer = () => {
             </a>{" "}
             /{" "}
             <a
-              href="https://www.instagram.com/jricardodev/"
+              href="https://www.instagram.com/riccs.dev/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              @jricardodev
+              @riccs.dev
             </a>
           </p>
         </div>

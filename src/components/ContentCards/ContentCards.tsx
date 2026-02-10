@@ -57,7 +57,7 @@ const ContentCards = () => {
           start: "top 80%",
           toggleActions: "play none none none",
         },
-      }
+      },
     );
 
     return () => {
@@ -81,6 +81,23 @@ const ContentCards = () => {
               <p className="card-description">{card.description}</p>
             </div>
           ))}
+        </div>
+        <div
+          className="button-vsl-wrapper"
+          style={{ textAlign: "center", marginTop: "20px" }}
+        >
+          <a
+            href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
+            className="button-vsl btn-primary btn-pulse"
+            style={{
+              display: "inline-block",
+              width: "100%",
+              maxWidth: "400px",
+              textAlign: "center",
+            }}
+          >
+            QUERO COMPRAR AGORA
+          </a>
         </div>
       </div>
     </section>

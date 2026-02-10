@@ -2,18 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import "./HeroSection.css";
 
-// Declare global smartplayer variable
-declare global {
-  interface Window {
-    smartplayer: any;
-  }
-}
-
-interface HeroSectionProps {
-  onVideoProgress?: (progress: number) => void;
-}
-
-const HeroSection = ({ onVideoProgress }: HeroSectionProps) => {
+const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
@@ -26,84 +15,27 @@ const HeroSection = ({ onVideoProgress }: HeroSectionProps) => {
     tl.fromTo(
       headlineRef.current,
       { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1 }
+      { opacity: 1, y: 0, duration: 1 },
     )
       .fromTo(
         subheadlineRef.current,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8 },
-        "-=0.5"
+        "-=0.5",
       )
       .fromTo(
         videoRef.current,
         { opacity: 0, scale: 0.95 },
         { opacity: 1, scale: 1, duration: 0.8 },
-        "-=0.4"
+        "-=0.4",
       )
       .fromTo(
         ctaRef.current,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6 },
-        "-=0.3"
+        "-=0.3",
       );
   }, []);
-
-  // Move o player Vturb do container PHP para dentro do React
-  useEffect(() => {
-    const vturbContainer = document.getElementById("vturb-container");
-    const vturbPlayer = vturbContainer?.querySelector("vturb-smartplayer");
-    const targetWrapper = document.querySelector(".vsl-wrapper");
-
-    if (vturbPlayer && targetWrapper && !targetWrapper.querySelector("vturb-smartplayer")) {
-      targetWrapper.appendChild(vturbPlayer);
-      vturbContainer!.style.display = "none";
-    }
-
-    // --- VTurb Documentation Logic Start ---
-    const SECONDS_TO_DISPLAY = 455;
-    let attempts = 0;
-    let elsDisplayed = false;
-    const alreadyDisplayedKey = `alreadyElsDisplayed${SECONDS_TO_DISPLAY}`;
-    const alreadyElsDisplayed = localStorage.getItem(alreadyDisplayedKey);
-
-    const showHiddenElements = function () {
-      elsDisplayed = true;
-      if (onVideoProgress) onVideoProgress(100);
-      localStorage.setItem(alreadyDisplayedKey, "true");
-    };
-
-    const startWatchVideoProgress = function () {
-      if (
-        typeof window.smartplayer === "undefined" ||
-        !window.smartplayer.instances ||
-        !window.smartplayer.instances.length
-      ) {
-        if (attempts >= 60) return;
-        attempts += 1;
-        return setTimeout(function () {
-          startWatchVideoProgress();
-        }, 1000);
-      }
-
-      const player = window.smartplayer.instances[0];
-
-      player.on("timeupdate", () => {
-        if (elsDisplayed || player.smartAutoPlay) return;
-        const video = player.video;
-        if (video.currentTime < SECONDS_TO_DISPLAY) return;
-        showHiddenElements();
-      });
-    };
-
-    if (alreadyElsDisplayed === "true") {
-      setTimeout(function () {
-        showHiddenElements();
-      }, 100);
-    } else {
-      startWatchVideoProgress();
-    }
-    // --- VTurb Documentation Logic End ---
-  }, [onVideoProgress]);
 
   return (
     <section className="hero-section" ref={sectionRef}>
@@ -126,16 +58,49 @@ const HeroSection = ({ onVideoProgress }: HeroSectionProps) => {
 
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
-            {/* VTurb Smart Player - movido do container PHP */}
+            {/* VTurb Smart Player via Iframe */}
+            <div
+              id="ifr_698b7e5b8fab3a91a575ceae_wrapper"
+              style={{ margin: "0 auto", width: "100%" }}
+            >
+              <div
+                style={{ position: "relative", padding: "56.25% 0 0 0" }}
+                id="ifr_698b7e5b8fab3a91a575ceae_aspect"
+              >
+                <iframe
+                  frameBorder="0"
+                  allowFullScreen
+                  src="about:blank"
+                  id="ifr_698b7e5b8fab3a91a575ceae"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  referrerPolicy="origin"
+                  onLoad={(e) => {
+                    const iframe = e.currentTarget;
+                    if (iframe.src === "about:blank") {
+                      iframe.onload = null;
+                      iframe.src = `https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/698b7e5b8fab3a91a575ceae/v4/embed.html${window.location.search || "?"}&vl=${encodeURIComponent(window.location.href)}&t=0`;
+                    }
+                  }}
+                ></iframe>
+              </div>
+            </div>
           </div>
         </div>
 
         <a
-          href="#oferta"
+          href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
           className="btn-primary btn-pulse hero-cta"
           ref={ctaRef}
+          id="hero-cta"
+          style={{ display: "none" }}
         >
-          QUERO ATIVAR MEU SETUP POR R$&nbsp;97
+          GARANTA O PROTOCOLO POR R$&nbsp;97,00
         </a>
       </div>
     </section>

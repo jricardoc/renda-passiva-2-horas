@@ -64,8 +64,11 @@ const ComparisonSection = () => {
         </p>
 
         <div className="comparison-cta-wrapper">
-          <a href="#oferta" className="btn-primary btn-pulse">
-            QUERO ATIVAR MEU SETUP POR R$&nbsp;97
+          <a
+            href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
+            className="btn-primary btn-pulse"
+          >
+            GARANTA O PROTOCOLO POR R$&nbsp;97,00
           </a>
         </div>
       </div>

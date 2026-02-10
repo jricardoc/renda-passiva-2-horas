@@ -83,7 +83,7 @@ const GuaranteeSection = () => {
             <span className="price-installments">ou 12x de R$ 9,70</span>
 
             <a
-              href="https://pay.hotmart.com/N103487414R?bid=1766848545032"
+              href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary btn-pulse offer-cta"
