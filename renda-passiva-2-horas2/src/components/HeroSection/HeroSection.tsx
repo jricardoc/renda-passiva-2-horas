@@ -71,16 +71,14 @@ const HeroSection = () => {
       <div className="container hero-container">
         <h1 className="hero-headline" ref={headlineRef}>
           Ative sua{" "}
-          <span className="text-orange">renda passiva automática em dólar</span>{" "}
-          — e faça sua conta trabalhar por você,{" "}
-          <span className="text-green">todos os dias</span>
+          <span className="text-orange">renda passiva automática</span> em dólar
+          em <span className="text-green">duas horas</span>
         </h1>
 
         <p className="hero-subheadline" ref={subheadlineRef}>
-          Depois de anos investindo com estratégias automatizadas e validando um
-          método que funciona na minha própria conta e na de centenas de alunos,
-          eu empacotei tudo em um passo a passo direto ao ponto para você ativar
-          hoje mesmo, sem enrolação.
+          E faça seu{" "}
+          <span className="text-orange">dinheiro trabalhar por você</span>,
+          todos os dias, com um passo a passo direto sem enrolação
         </p>
 
         <div className="hero-vsl-container" ref={videoRef}>
