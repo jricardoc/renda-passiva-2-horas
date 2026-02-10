@@ -4,8 +4,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
 
-  // AQUI ESTÁ O SEGREDO: Caminho absoluto para a pasta dentro do tema
-  base: "/wp-content/themes/jricardodev/app-renda-passiva/",
+  // Base path relative to root
+  base: "/",
 
   build: {
     manifest: true,
