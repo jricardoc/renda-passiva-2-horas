@@ -1,0 +1,170 @@
+/* ============================================
+   SPECIALIST SECTION - Authority Slider
+   ============================================ */
+
+.specialist-section {
+  padding: 80px 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 99, 0, 0.02) 50%,
+    transparent 100%
+  );
+}
+
+/* Header */
+.specialist-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.specialist-badge {
+  display: inline-block;
+  background: rgba(255, 99, 0, 0.1);
+  color: var(--accent-orange);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.specialist-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.specialist-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-gray);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Slider Fullwidth */
+.specialist-slider-fullwidth {
+  padding: 0 10px;
+  position: relative;
+}
+
+.specialist-swiper {
+  padding: 10px 0;
+}
+
+/* Navigation Arrows - Premium Design */
+.specialist-swiper .swiper-button-prev,
+.specialist-swiper .swiper-button-next {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 99, 0, 0.9) 0%,
+    rgba(229, 85, 0, 0.9) 100%
+  );
+  border: none;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(255, 99, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.specialist-swiper .swiper-button-prev::after {
+  content: "‹";
+  font-size: 24px;
+  color: #fff;
+  font-weight: 300;
+  font-family: sans-serif;
+}
+
+.specialist-swiper .swiper-button-next::after {
+  content: "›";
+  font-size: 24px;
+  color: #fff;
+  font-weight: 300;
+  font-family: sans-serif;
+}
+
+/* Hide default Swiper SVG icons */
+.specialist-swiper .swiper-button-prev svg,
+.specialist-swiper .swiper-button-next svg {
+  display: none !important;
+}
+
+.specialist-swiper .swiper-button-prev:hover,
+.specialist-swiper .swiper-button-next:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(255, 99, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.specialist-swiper .swiper-button-prev:active,
+.specialist-swiper .swiper-button-next:active {
+  transform: scale(0.95);
+}
+
+.specialist-swiper .swiper-button-prev {
+  left: 30px;
+}
+
+.specialist-swiper .swiper-button-next {
+  right: 30px;
+}
+
+/* Slide Item */
+.specialist-slide {
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: grab;
+  background: var(--bg-secondary);
+}
+
+.specialist-slide:active {
+  cursor: grabbing;
+}
+
+.specialist-image {
+  width: 100%;
+  height: 630px;
+  max-width: 450px;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .specialist-section {
+    padding: 30px 0;
+  }
+
+  .specialist-header {
+    padding: 0 16px;
+    margin-bottom: 40px;
+  }
+
+  .specialist-image {
+    height: 240px;
+    max-width: 170px;
+  }
+
+  .specialist-swiper .swiper-button-prev,
+  .specialist-swiper .swiper-button-next {
+    width: 36px;
+    height: 36px;
+  }
+
+  .specialist-swiper .swiper-button-prev::after,
+  .specialist-swiper .swiper-button-next::after {
+    font-size: 24px;
+  }
+
+  .specialist-swiper .swiper-button-prev {
+    left: 10px;
+  }
+
+  .specialist-swiper .swiper-button-next {
+    right: 10px;
+  }
+}

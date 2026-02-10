@@ -1,0 +1,46 @@
+.app {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Content Gate */
+.content-gate {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.content-gate.locked {
+  opacity: 0;
+  pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.content-gate.unlocked {
+  opacity: 1;
+  pointer-events: auto;
+  max-height: none;
+}
+
+/* Lock Message */
+.content-lock-message {
+  text-align: center;
+  padding: 30px 20px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 99, 0, 0.05) 100%
+  );
+}
+
+.lock-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+.content-lock-message p {
+  font-size: 1.1rem;
+  color: var(--text-gray);
+  max-width: 400px;
+  margin: 0 auto;
+}
