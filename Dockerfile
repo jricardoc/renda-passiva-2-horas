@@ -14,7 +14,15 @@ RUN npm install
 COPY renda-passiva-2-horas2/ .
 RUN npm run build
 
-# --- ETAPA 3: Servir tudo com Nginx ---
+# --- ETAPA 3: Construir o Site 3 ---
+FROM node:18-alpine as builder3
+WORKDIR /app
+COPY renda-passiva-2-horas3/package*.json ./
+RUN npm install
+COPY renda-passiva-2-horas3/ .
+RUN npm run build
+
+# --- ETAPA 4: Servir tudo com Nginx ---
 FROM nginx:alpine
 
 # Copia o resultado do Site 1 para a pasta pública com o nome da rota

@@ -1,0 +1,349 @@
+/* ============================================
+   OFFER SECTION - Premium Design
+   ============================================ */
+
+.offer-section {
+  padding: 100px 20px 80px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 99, 0, 0.03) 0%,
+    rgba(0, 255, 0, 0.02) 50%,
+    transparent 100%
+  );
+  position: relative;
+}
+
+/* Offer Header */
+.offer-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.offer-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent-orange) 0%, #e55500 100%);
+  color: var(--bg-primary);
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  animation: pulse 2s infinite;
+}
+
+.offer-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.offer-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-gray-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Main Offer Box */
+.offer-main-box {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto 50px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* What's Included */
+.offer-includes {
+  padding-right: 20px;
+}
+
+.includes-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: var(--text-white);
+}
+
+.includes-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.includes-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.includes-list .icon-check {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 255, 0, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.include-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.include-item strong {
+  color: var(--text-white);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.include-item .include-value {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+/* Price Box */
+.price-box {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 99, 0, 0.1) 0%,
+    rgba(0, 255, 0, 0.05) 100%
+  );
+  border: 2px solid var(--accent-orange);
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 0 40px rgba(255, 99, 0, 0.15),
+    inset 0 0 60px rgba(255, 99, 0, 0.05);
+}
+
+.price-top {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-from {
+  font-size: 1rem;
+  color: var(--text-gray);
+}
+
+.price-from s {
+  color: var(--error-red);
+  opacity: 0.7;
+}
+
+.price-to {
+  font-size: 1.1rem;
+  color: var(--text-gray-light);
+  font-weight: 500;
+}
+
+.price-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.price-currency {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--cta-green);
+  margin-top: 10px;
+}
+
+.price-value {
+  font-size: 5rem;
+  font-weight: 900;
+  color: var(--cta-green);
+  line-height: 1;
+  text-shadow: 0 0 40px var(--cta-green-glow);
+}
+
+.price-installments {
+  font-size: 0.95rem;
+  color: var(--text-gray);
+  margin-top: -8px;
+}
+
+.offer-cta {
+  width: 100%;
+  padding: 20px 24px;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.payment-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-gray);
+}
+
+/* Guarantee Strip */
+.guarantee-strip {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.08) 0%,
+    rgba(255, 215, 0, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 16px;
+  padding: 28px 36px;
+}
+
+.guarantee-badge-small {
+  flex-shrink: 0;
+}
+
+.badge-inner-small {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.badge-days-small {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--bg-primary);
+  line-height: 1;
+}
+
+.badge-text-small {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--bg-primary);
+  letter-spacing: 1px;
+}
+
+.guarantee-info {
+  flex: 1;
+}
+
+.guarantee-heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.guarantee-desc {
+  font-size: 1rem;
+  color: var(--text-gray);
+  line-height: 1.6;
+}
+
+/* Urgency Bar */
+.urgency-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px 28px;
+  background: rgba(255, 99, 0, 0.05);
+  border: 1px solid rgba(255, 99, 0, 0.15);
+  border-radius: 12px;
+}
+
+.urgency-icon {
+  font-size: 1.5rem;
+  animation: pulse 1.5s infinite;
+}
+
+.urgency-text {
+  font-size: 1rem;
+  color: var(--text-gray-light);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .offer-main-box {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px;
+  }
+
+  .offer-includes {
+    padding-right: 0;
+  }
+
+  .price-box {
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .offer-section {
+    padding: 30px 16px;
+  }
+
+  .offer-header {
+    margin-bottom: 40px;
+  }
+
+  .offer-badge {
+    font-size: 0.8rem;
+    padding: 8px 20px;
+  }
+
+  .offer-main-box {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .includes-list {
+    gap: 16px;
+  }
+
+  .price-value {
+    font-size: 4rem;
+  }
+
+  .price-currency {
+    font-size: 1.5rem;
+  }
+
+  .guarantee-strip {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .urgency-bar {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
