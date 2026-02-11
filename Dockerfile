@@ -31,8 +31,11 @@ COPY --from=builder1 /app/dist /usr/share/nginx/html/renda-passiva-2-horas
 # Copia o resultado do Site 2 para a outra pasta
 COPY --from=builder2 /app/dist /usr/share/nginx/html/renda-passiva-2-horas2
 
+# Copia o resultado do Site 3 para a outra pasta
+COPY --from=builder3 /app/dist /usr/share/nginx/html/renda-passiva-2-horas3
+
 # (Opcional) Cria um index na raiz para não dar erro 403 se acessarem o domínio puro
-RUN echo "<h1>Acesse <a href='/renda-passiva-2-horas/'>Site 1</a> ou <a href='/renda-passiva-2-horas2/'>Site 2</a></h1>" > /usr/share/nginx/html/index.html
+RUN echo "<h1>Acesse <a href='/renda-passiva-2-horas/'>Site 1</a> ou <a href='/renda-passiva-2-horas2/'>Site 2</a> ou <a href='/renda-passiva-2-horas3/'>Site 3</a></h1>" > /usr/share/nginx/html/index.html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
