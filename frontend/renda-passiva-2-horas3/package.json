@@ -1,0 +1,51 @@
+{
+  "name": "lp-protocolo-renda-passiva-3",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "analyze": "vite build --mode analyze && open dist/stats.html",
+    "audit": "npm run build && npm run preview & sleep 3 && node scripts/audit.js http://localhost:4173 && killall node",
+    "audit:prod": "node scripts/audit.js https://yourdomain.com",
+    "audit:ci": "node scripts/audit.js --ci",
+    "audit:compare": "node scripts/audit.js --compare",
+    "check-budgets": "node -e \"require('./vite-plugins/performance-analyzer').default\"",
+    "optimize:images": "npm run build",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clerk/clerk-react": "^5.60.0",
+    "@tanstack/react-query": "^5.90.16",
+    "@types/react-helmet": "^6.1.11",
+    "axios": "^1.6.7",
+    "gsap": "^3.12.5",
+    "lightweight-charts": "^5.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^6.22.3",
+    "recharts": "^3.2.1",
+    "styled-components": "^6.1.19",
+    "swiper": "^12.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "chrome-launcher": "^1.1.0",
+    "eslint": "^9.15.0",
+    "globals": "^15.12.0",
+    "lighthouse": "^11.5.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "sharp": "^0.34.5",
+    "terser": "^5.46.0",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-image-optimizer": "^1.1.7"
+  }
+}

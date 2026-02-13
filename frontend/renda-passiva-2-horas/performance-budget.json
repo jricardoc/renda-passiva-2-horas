@@ -1,0 +1,56 @@
+{
+  "budgets": [
+    {
+      "resourceType": "script",
+      "budget": 250000,
+      "description": "JavaScript bundle (244 KB target)"
+    },
+    {
+      "resourceType": "stylesheet",
+      "budget": 100000,
+      "description": "CSS files (100 KB target)"
+    },
+    {
+      "resourceType": "image",
+      "budget": 500000,
+      "description": "Total images per page (500 KB target)"
+    },
+    {
+      "resourceType": "font",
+      "budget": 100000,
+      "description": "Web fonts (100 KB target)"
+    },
+    {
+      "resourceType": "total",
+      "budget": 1000000,
+      "description": "Total page weight (1 MB target)"
+    }
+  ],
+  "timings": [
+    {
+      "metric": "interactive",
+      "budget": 5000,
+      "description": "Time to Interactive (5s target)"
+    },
+    {
+      "metric": "first-contentful-paint",
+      "budget": 2000,
+      "description": "First Contentful Paint (2s target)"
+    },
+    {
+      "metric": "largest-contentful-paint",
+      "budget": 2500,
+      "description": "Largest Contentful Paint (2.5s target)"
+    },
+    {
+      "metric": "cumulative-layout-shift",
+      "budget": 0.1,
+      "description": "Cumulative Layout Shift (0.1 target)"
+    },
+    {
+      "metric": "total-blocking-time",
+      "budget": 300,
+      "description": "Total Blocking Time (300ms target)"
+    }
+  ]
+}
