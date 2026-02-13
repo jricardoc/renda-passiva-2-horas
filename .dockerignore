@@ -1,0 +1,9 @@
+node_modules
+frontend/*/node_modules
+frontend/*/dist
+.git
+.vscode
+.idea
+*.log
+build_log.txt
+build_log_v2.txt

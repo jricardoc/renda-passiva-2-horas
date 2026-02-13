@@ -1,0 +1,178 @@
+name: Performance Audit
+
+on:
+  pull_request:
+    paths:
+      - 'frontend/**'
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 3 * * *'  # Daily at 3 AM UTC
+  workflow_dispatch:
+
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Build production
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Check bundle size
+        run: |
+          echo "📦 Bundle Analysis:"
+          du -sh dist
+          du -sh dist/assets/js
+          du -sh dist/assets/css
+          du -sh dist/assets/images
+
+      - name: Start preview server
+        run: |
+          npm run preview &
+          echo $! > preview.pid
+          sleep 5
+          curl -f http://localhost:4173 || exit 1
+
+      - name: Run Lighthouse Audit
+        id: lighthouse
+        run: |
+          node scripts/audit.js http://localhost:4173
+        continue-on-error: true
+
+      - name: Stop preview server
+        if: always()
+        run: |
+          if [ -f preview.pid ]; then
+            kill $(cat preview.pid) || true
+          fi
+
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-report-${{ github.sha }}
+          path: frontend/.tmp/audits/
+          retention-days: 30
+
+      - name: Upload Bundle Stats
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bundle-stats-${{ github.sha }}
+          path: frontend/dist/stats.html
+          retention-days: 30
+
+      - name: Comment PR with results
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request' && always()
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            try {
+              const reportPath = path.join('frontend', '.tmp', 'audits', 'current.json');
+              const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+              
+              const scores = report.scores;
+              const vitals = report.vitals;
+              
+              const scoreEmoji = (score) => score >= 90 ? '✅' : score >= 50 ? '⚠️' : '❌';
+              const vitalEmoji = (metric, value) => {
+                if (metric === 'lcp') return value < 2.5 ? '✅' : value < 4.0 ? '⚠️' : '❌';
+                if (metric === 'tbt') return value < 300 ? '✅' : value < 600 ? '⚠️' : '❌';
+                if (metric === 'cls') return value < 0.1 ? '✅' : value < 0.25 ? '⚠️' : '❌';
+                return '❓';
+              };
+              
+              const comment = `
+## 📊 Lighthouse Performance Audit
+
+### Category Scores
+
+| Category | Score | Status |
+|----------|-------|--------|
+| 🚀 Performance | ${scores.performance}/100 | ${scoreEmoji(scores.performance)} |
+| ♿ Accessibility | ${scores.accessibility}/100 | ${scoreEmoji(scores.accessibility)} |
+| 🔍 SEO | ${scores.seo}/100 | ${scoreEmoji(scores.seo)} |
+| ✅ Best Practices | ${scores.bestPractices}/100 | ${scoreEmoji(scores.bestPractices)} |
+
+### Core Web Vitals
+
+| Metric | Value | Target | Status |
+|--------|-------|--------|--------|
+| LCP (Largest Contentful Paint) | ${vitals.lcp.toFixed(2)}s | < 2.5s | ${vitalEmoji('lcp', vitals.lcp)} |
+| TBT (Total Blocking Time) | ${vitals.tbt.toFixed(0)}ms | < 300ms | ${vitalEmoji('tbt', vitals.tbt)} |
+| CLS (Cumulative Layout Shift) | ${vitals.cls.toFixed(3)} | < 0.1 | ${vitalEmoji('cls', vitals.cls)} |
+
+---
+
+📁 [Download Full Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              `;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            } catch (error) {
+              console.error('Failed to post comment:', error);
+            }
+
+      - name: Fail if performance targets not met
+        if: steps.lighthouse.outcome == 'failure'
+        run: |
+          echo "❌ Performance audit failed. Check the report for details."
+          exit 1
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: build-and-audit
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Check Docker image size
+        run: |
+          docker images frontend:latest --format "{{.Size}}"
+          SIZE=$(docker images frontend:latest --format "{{.Size}}")
+          echo "📦 Docker image size: $SIZE"
