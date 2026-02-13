@@ -217,3 +217,54 @@
     padding: 18px 32px;
   }
 }
+
+/* Animation Keyframes using pure CSS instead of GSAP */
+.hero-headline,
+.hero-subheadline,
+.hero-vsl-container,
+.hero-cta {
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.hero-headline {
+  animation: heroFadeUp 1s forwards;
+  animation-delay: 0.2s;
+}
+
+.hero-subheadline {
+  animation: heroFadeUp 0.8s forwards;
+  animation-delay: 0.6s;
+}
+
+.hero-vsl-container {
+  animation: heroZoomIn 0.8s forwards;
+  animation-delay: 1s;
+}
+
+.hero-cta {
+  animation: heroFadeUp 0.6s forwards;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

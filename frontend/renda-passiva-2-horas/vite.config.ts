@@ -38,11 +38,11 @@ export default defineConfig(({ mode }) => {
               "sortAttrs",
             ],
           },
-          png: { quality: 85 },
-          jpeg: { quality: 85, progressive: true },
-          jpg: { quality: 85, progressive: true },
-          webp: { quality: 85 },
-          avif: { quality: 85, effort: 4 },
+          png: { quality: 75 },
+          jpeg: { quality: 75, progressive: true },
+          jpg: { quality: 75, progressive: true },
+          webp: { quality: 75 },
+          avif: { quality: 75, effort: 4 },
         }),
 
       // Gzip compression

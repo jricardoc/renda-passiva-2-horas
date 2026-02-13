@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+// GSAP removed for performance optimization (using CSS animations)
 import "./HeroSection.css";
 
 declare global {
@@ -49,33 +49,7 @@ const HeroSection = () => {
     }
   }, [isVideoActive]);
 
-  useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    tl.fromTo(
-      headlineRef.current,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1 },
-    )
-      .fromTo(
-        subheadlineRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        "-=0.5",
-      )
-      .fromTo(
-        videoRef.current,
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.8 },
-        "-=0.4",
-      )
-      .fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        "-=0.3",
-      );
-  }, []);
+  // GSAP animation useEffect removed - handled by CSS classes
 
   return (
     <section className="hero-section" ref={sectionRef}>
