@@ -26,6 +26,15 @@ const HeroSection = () => {
   const [isVideoActive, setIsVideoActive] = useState(false);
 
   useEffect(() => {
+    // Delay video loading to prioritize LCP (Lighthouse score)
+    const timer = setTimeout(() => {
+      setIsVideoActive(true);
+    }, 3500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     if (!isVideoActive) return;
 
     // Check if script already exists to avoid duplicates
@@ -88,29 +97,8 @@ const HeroSection = () => {
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
             {!isVideoActive ? (
-              <div
-                className="vsl-placeholder"
-                onClick={() => setIsVideoActive(true)}
-              >
-                <div className="vsl-play-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <p className="vsl-text">Seu vídeo já começou</p>
-                <p
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "rgba(255,255,255,0.6)",
-                    marginTop: "8px",
-                  }}
-                >
-                  🔊 Clique para ouvir
-                </p>
+              <div className="vsl-placeholder">
+                <div className="loading-spinner"></div>
               </div>
             ) : (
               <vturb-smartplayer
