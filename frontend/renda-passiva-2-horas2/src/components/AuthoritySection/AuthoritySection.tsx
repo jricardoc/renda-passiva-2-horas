@@ -20,6 +20,7 @@ const AuthoritySection = () => {
               className="authority-image"
               width="533"
               height="800"
+              loading="lazy"
             />
             <div className="authority-badge">
               <span className="badge-icon">✓</span>
@@ -57,6 +58,7 @@ const AuthoritySection = () => {
                 className="strategy-graph"
                 width="1572"
                 height="685"
+                loading="lazy"
               />
               <span className="graph-zoom-hint">🔍 Clique para ampliar</span>
             </div>
