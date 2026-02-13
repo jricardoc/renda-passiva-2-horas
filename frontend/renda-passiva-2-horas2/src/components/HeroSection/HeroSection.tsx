@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import "./HeroSection.css";
 
@@ -23,7 +23,11 @@ const HeroSection = () => {
   const videoRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
 
+  const [isVideoActive, setIsVideoActive] = useState(false);
+
   useEffect(() => {
+    if (!isVideoActive) return;
+
     // Check if script already exists to avoid duplicates
     const scriptId = "vturb-script-698b7e5b";
     if (!document.getElementById(scriptId)) {
@@ -34,7 +38,7 @@ const HeroSection = () => {
       script.async = true;
       document.head.appendChild(script);
     }
-  }, []);
+  }, [isVideoActive]);
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -83,11 +87,37 @@ const HeroSection = () => {
 
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
-            {/* VTurb Smart Player JS */}
-            <vturb-smartplayer
-              id="vid-698b7e5b8fab3a91a575ceae"
-              style={{ display: "block", margin: "0 auto", width: "100%" }}
-            ></vturb-smartplayer>
+            {!isVideoActive ? (
+              <div
+                className="vsl-placeholder"
+                onClick={() => setIsVideoActive(true)}
+              >
+                <div className="vsl-play-button">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <p className="vsl-text">Seu vídeo já começou</p>
+                <p
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "rgba(255,255,255,0.6)",
+                    marginTop: "8px",
+                  }}
+                >
+                  🔊 Clique para ouvir
+                </p>
+              </div>
+            ) : (
+              <vturb-smartplayer
+                id="vid-698b7e5b8fab3a91a575ceae"
+                style={{ display: "block", margin: "0 auto", width: "100%" }}
+              ></vturb-smartplayer>
+            )}
           </div>
         </div>
 
