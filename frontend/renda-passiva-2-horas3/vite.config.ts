@@ -94,7 +94,6 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             vendor: ["react", "react-dom"],
-            ui: ["gsap", "swiper"],
           },
           chunkFileNames: "assets/js/[name]-[hash].js",
           entryFileNames: "assets/js/[name]-[hash].js",

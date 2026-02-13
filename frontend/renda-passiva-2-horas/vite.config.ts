@@ -38,11 +38,11 @@ export default defineConfig(({ mode }) => {
               "sortAttrs",
             ],
           },
-          png: { quality: 85 },
-          jpeg: { quality: 85, progressive: true },
-          jpg: { quality: 85, progressive: true },
-          webp: { quality: 85 },
-          avif: { quality: 85, effort: 4 },
+          png: { quality: 60 },
+          jpeg: { quality: 60, progressive: true },
+          jpg: { quality: 60, progressive: true },
+          webp: { quality: 60 },
+          avif: { quality: 60, effort: 4 },
         }),
 
       // Gzip compression
@@ -94,7 +94,6 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             vendor: ["react", "react-dom"],
-            ui: ["gsap", "swiper"],
           },
           chunkFileNames: "assets/js/[name]-[hash].js",
           entryFileNames: "assets/js/[name]-[hash].js",

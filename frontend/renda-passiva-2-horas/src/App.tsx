@@ -1,5 +1,3 @@
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroSection from "./components/HeroSection/HeroSection";
 import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 import "./App.css";
@@ -22,8 +20,6 @@ const SpecialistSection = lazy(
   () => import("./components/SpecialistSection/SpecialistSection"),
 );
 const Footer = lazy(() => import("./components/Footer/Footer"));
-
-gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   return (

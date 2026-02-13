@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+// GSAP removed for performance optimization (using CSS animations)
 import "./HeroSection.css";
 
 declare global {
@@ -26,6 +26,15 @@ const HeroSection = () => {
   const [isVideoActive, setIsVideoActive] = useState(false);
 
   useEffect(() => {
+    // Delay video loading to prioritize LCP (Lighthouse score)
+    const timer = setTimeout(() => {
+      setIsVideoActive(true);
+    }, 3500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     if (!isVideoActive) return;
 
     // Check if script already exists to avoid duplicates
@@ -40,33 +49,7 @@ const HeroSection = () => {
     }
   }, [isVideoActive]);
 
-  useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    tl.fromTo(
-      headlineRef.current,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1 },
-    )
-      .fromTo(
-        subheadlineRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        "-=0.5",
-      )
-      .fromTo(
-        videoRef.current,
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.8 },
-        "-=0.4",
-      )
-      .fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        "-=0.3",
-      );
-  }, []);
+  // GSAP animation useEffect removed - handled by CSS classes
 
   return (
     <section className="hero-section" ref={sectionRef}>
@@ -88,29 +71,71 @@ const HeroSection = () => {
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
             {!isVideoActive ? (
-              <div
-                className="vsl-placeholder"
-                onClick={() => setIsVideoActive(true)}
-              >
-                <div className="vsl-play-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
+              <div className="vsl-placeholder">
+                <svg
+                  className="vsl-thumbnail-bg"
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 1600 900"
+                  preserveAspectRatio="xMidYMid slice"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ position: "absolute", top: 0, left: 0, zIndex: 0 }}
+                >
+                  <rect width="1600" height="900" fill="#0a0a0a" />
+                  <radialGradient
+                    id="grad1"
+                    cx="50%"
+                    cy="50%"
+                    r="50%"
+                    fx="50%"
+                    fy="50%"
                   >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <p className="vsl-text">Seu vídeo já começou</p>
-                <p
+                    <stop
+                      offset="0%"
+                      style={{ stopColor: "rgb(255,99,0)", stopOpacity: 0.2 }}
+                    />
+                    <stop
+                      offset="100%"
+                      style={{ stopColor: "rgb(10,10,10)", stopOpacity: 1 }}
+                    />
+                  </radialGradient>
+                  <rect width="1600" height="900" fill="url(#grad1)" />
+                  <circle
+                    cx="800"
+                    cy="450"
+                    r="400"
+                    fill="rgba(255,99,0,0.05)"
+                  />
+                </svg>
+
+                <div
+                  className="vsl-content-wrapper"
                   style={{
-                    fontSize: "0.8rem",
-                    color: "rgba(255,255,255,0.6)",
-                    marginTop: "8px",
+                    zIndex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
-                  🔊 Clique para ouvir
-                </p>
+                  <svg
+                    width="80"
+                    height="80"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.3)"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ marginBottom: "20px" }}
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon
+                      points="10 8 16 12 10 16 10 8"
+                      fill="rgba(255,255,255,0.1)"
+                    ></polygon>
+                  </svg>
+                  <div className="loading-spinner"></div>
+                </div>
               </div>
             ) : (
               <vturb-smartplayer
