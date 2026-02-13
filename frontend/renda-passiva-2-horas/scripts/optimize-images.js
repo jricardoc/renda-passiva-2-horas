@@ -8,6 +8,8 @@ const __dirname = path.dirname(__filename);
 
 const targetDirs = [
     path.join(__dirname, '../src/assets/images'),
+    path.join(__dirname, '../../renda-passiva-2-horas2/src/assets/images'),
+    path.join(__dirname, '../../renda-passiva-2-horas3/src/assets/images'),
 ];
 
 const MAX_WIDTH = 800;
