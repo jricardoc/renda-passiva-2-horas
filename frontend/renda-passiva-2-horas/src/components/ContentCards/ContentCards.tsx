@@ -36,6 +36,9 @@ const ContentCards = () => {
   ];
 
   useEffect(() => {
+    // Disable GSAP animations on mobile for performance
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+
     if (!cardsRef.current) return;
 
     const cardElements = cardsRef.current.querySelectorAll(".content-card");

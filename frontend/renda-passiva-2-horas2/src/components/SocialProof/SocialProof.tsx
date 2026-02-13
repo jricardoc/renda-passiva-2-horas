@@ -78,6 +78,9 @@ const SocialProof = () => {
   ];
 
   useEffect(() => {
+    // Disable GSAP animations on mobile for performance
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+
     if (!sectionRef.current) return;
 
     gsap.fromTo(
@@ -166,6 +169,7 @@ const SocialProof = () => {
                       alt={image.caption}
                       className="proof-image"
                       loading="lazy"
+                      decoding="async"
                       width="300"
                       height="400"
                     />
