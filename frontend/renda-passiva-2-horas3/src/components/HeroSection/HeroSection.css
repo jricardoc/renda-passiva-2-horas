@@ -222,6 +222,15 @@
     font-size: 1rem;
     padding: 18px 32px;
   }
+
+  /* Disable animations on mobile for instant LCP */
+  .hero-headline,
+  .hero-subheadline,
+  .hero-cta {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* Animation Keyframes using pure CSS instead of GSAP */

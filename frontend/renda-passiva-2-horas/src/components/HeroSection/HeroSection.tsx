@@ -29,7 +29,7 @@ const HeroSection = () => {
     // Delay video loading to prioritize LCP (Lighthouse score)
     const timer = setTimeout(() => {
       setIsVideoActive(true);
-    }, 2500);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);
