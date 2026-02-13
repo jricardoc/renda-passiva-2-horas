@@ -29,7 +29,7 @@ const HeroSection = () => {
     // Delay video loading to prioritize LCP (Lighthouse score)
     const timer = setTimeout(() => {
       setIsVideoActive(true);
-    }, 3500);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -72,6 +72,23 @@ const HeroSection = () => {
           <div className="vsl-wrapper">
             {!isVideoActive ? (
               <div className="vsl-placeholder">
+                <svg
+                  width="80"
+                  height="80"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ marginBottom: "20px" }}
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon
+                    points="10 8 16 12 10 16 10 8"
+                    fill="rgba(255,255,255,0.1)"
+                  ></polygon>
+                </svg>
                 <div className="loading-spinner"></div>
               </div>
             ) : (
