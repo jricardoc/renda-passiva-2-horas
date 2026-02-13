@@ -13,7 +13,7 @@ const targetDirs = [
 ];
 
 const MAX_WIDTH = 800;
-const QUALITY = 80;
+const QUALITY = 60;
 
 async function processDirectory(directory) {
     if (!fs.existsSync(directory)) {
@@ -24,22 +24,37 @@ async function processDirectory(directory) {
     const files = fs.readdirSync(directory);
 
     for (const file of files) {
-        if (!file.match(/\.(jpg|jpeg|png)$/i)) continue;
+        // Updated regex to include webp
+        if (!file.match(/\.(jpg|jpeg|png|webp)$/i)) continue;
 
         const filePath = path.join(directory, file);
         const tempPath = path.join(directory, `temp-${file}`);
+        const ext = path.extname(file).toLowerCase(); // Get file extension
 
         try {
+            const stats = fs.statSync(filePath);
             const metadata = await sharp(filePath).metadata();
 
-            if (metadata.width > MAX_WIDTH) {
-                console.log(`Resizing ${file} (${metadata.width}px -> ${MAX_WIDTH}px)...`);
+            if (metadata.width > MAX_WIDTH || stats.size > 100000) {
+                console.log(`Resizing/Compressing ${file} (${metadata.width}px, ${(stats.size / 1024).toFixed(2)}KB)...`);
 
-                await sharp(filePath)
-                    .resize({ width: MAX_WIDTH })
-                    .jpeg({ quality: QUALITY, mozjpeg: true })
-                    .png({ quality: QUALITY, compressionLevel: 8 })
-                    .toFile(tempPath);
+                // New conditional logic for different file types
+                if (ext === '.jpg' || ext === '.jpeg') {
+                    await sharp(filePath)
+                        .resize({ width: MAX_WIDTH, withoutEnlargement: true }) // Added withoutEnlargement
+                        .jpeg({ quality: QUALITY, progressive: true, mozjpeg: true }) // Added progressive: true, used QUALITY constant
+                        .toFile(tempPath);
+                } else if (ext === '.png') {
+                    await sharp(filePath)
+                        .resize({ width: MAX_WIDTH, withoutEnlargement: true }) // Added withoutEnlargement
+                        .png({ quality: QUALITY, compressionLevel: 8 }) // Used QUALITY constant
+                        .toFile(tempPath);
+                } else if (ext === '.webp') { // Added webp support
+                    await sharp(filePath)
+                        .resize({ width: MAX_WIDTH, withoutEnlargement: true })
+                        .webp({ quality: QUALITY }) // Used QUALITY constant
+                        .toFile(tempPath);
+                }
 
                 // Replace original with optimized version
                 fs.unlinkSync(filePath);

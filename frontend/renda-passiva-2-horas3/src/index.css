@@ -66,7 +66,8 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(rgba(255, 99, 0, 0.03) 1px, transparent 1px),
+  background-image:
+    linear-gradient(rgba(255, 99, 0, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 99, 0, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
@@ -144,13 +145,17 @@ a:hover {
   border-radius: 8px;
   cursor: pointer;
   transition: var(--transition-smooth);
-  box-shadow: 0 0 20px var(--cta-green-glow), 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 20px var(--cta-green-glow),
+    0 4px 20px rgba(0, 0, 0, 0.3);
   text-decoration: none;
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 40px var(--cta-green-glow), 0 8px 30px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 0 40px var(--cta-green-glow),
+    0 8px 30px rgba(0, 0, 0, 0.4);
   color: var(--bg-primary);
 }
 
@@ -251,10 +256,14 @@ section {
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 20px var(--cta-green-glow), 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      0 0 20px var(--cta-green-glow),
+      0 4px 20px rgba(0, 0, 0, 0.3);
   }
   50% {
-    box-shadow: 0 0 40px var(--cta-green-glow), 0 0 60px var(--cta-green-glow),
+    box-shadow:
+      0 0 40px var(--cta-green-glow),
+      0 0 60px var(--cta-green-glow),
       0 8px 30px rgba(0, 0, 0, 0.4);
   }
 }
@@ -275,4 +284,40 @@ section {
 
 .float {
   animation: float 3s ease-in-out infinite;
+}
+
+/* AGGRESSIVE MOBILE OPTIMIZATION - "Zero Effects" */
+@media (max-width: 768px) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .btn-pulse,
+  .float {
+    animation: none !important;
+  }
+
+  /* Reset hover/focus effects */
+  .btn-primary:hover,
+  .btn-primary:focus,
+  .btn-primary:active,
+  a:hover,
+  .glass-card:hover {
+    transform: none !important;
+    box-shadow: initial !important;
+    /* Restore base shadow for button visibility if needed, or keep flat */
+  }
+
+  /* Ensure visibility */
+  .hero-headline,
+  .hero-subheadline,
+  .hero-vsl-container,
+  .hero-cta {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
 }
