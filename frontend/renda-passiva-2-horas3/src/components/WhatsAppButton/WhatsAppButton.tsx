@@ -1,9 +1,9 @@
 import "./WhatsAppButton.css";
 
 const WhatsAppButton = () => {
-  const phoneNumber = "5571981954102"; // +55 71 8195-4102 formatted for WhatsApp
+  const phoneNumber = "557199512069"; // +55 71 9951-2069 formatted for WhatsApp
   const message = encodeURIComponent(
-    "Olá! Gostaria de saber mais sobre o Protocolo Renda Passiva em 2H."
+    "Olá! Gostaria de saber mais sobre o Protocolo Renda Passiva em 2H.",
   );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
