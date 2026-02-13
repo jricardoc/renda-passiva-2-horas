@@ -3,6 +3,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./ContentCards.css";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const ContentCards = () => {
   const cardsRef = useRef<HTMLDivElement>(null);
 
