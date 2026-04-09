@@ -71,7 +71,7 @@ const HeroSection = () => {
           id="hero-cta"
           style={{ display: "none" }}
         >
-          GARANTA O PROTOCOLO POR R$&nbsp;97,00
+          GARANTA O PROTOCOLO POR 12x DE R$&nbsp;30,72
         </a>
       </div>
     </section>

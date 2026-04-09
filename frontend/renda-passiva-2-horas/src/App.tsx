@@ -1,5 +1,4 @@
 import HeroSection from "./components/HeroSection/HeroSection";
-import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 import "./App.css";
 import { Suspense, lazy } from "react";
 
@@ -27,8 +26,8 @@ function App() {
       <main>
         <HeroSection />
 
-        {/* Content sections - Open Version (Always Visible) */}
-        <div id="content-container">
+        {/* Content sections - controlled by Vturb via #content-gate */}
+        <div id="content-gate" style={{ display: "none" }}>
           <Suspense fallback={<div style={{ height: "100vh" }} />}>
             <AuthoritySection />
             <ComparisonSection />
@@ -40,9 +39,6 @@ function App() {
           </Suspense>
         </div>
       </main>
-
-      {/* Floating WhatsApp Button */}
-      <WhatsAppButton />
     </div>
   );
 }

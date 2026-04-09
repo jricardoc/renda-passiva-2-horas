@@ -77,10 +77,10 @@ const GuaranteeSection = () => {
 
             <div className="price-main">
               <span className="price-currency">R$</span>
-              <span className="price-value">97</span>
+              <span className="price-value">297</span>
             </div>
 
-            <span className="price-installments">ou 12x de R$ 9,70</span>
+            <span className="price-installments">ou 12x de R$ 30,72</span>
 
             <a
               href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
@@ -124,7 +124,7 @@ const GuaranteeSection = () => {
         <div className="urgency-bar">
           <span className="urgency-icon">⚡</span>
           <p className="urgency-text">
-            O investimento de <strong className="text-green">R$ 97</strong> é um
+            O investimento de <strong className="text-green">R$ 297</strong> é um
             valor simbólico. Você está estruturando um fluxo de renda em dólar
             com base real e validação prática.
           </p>
