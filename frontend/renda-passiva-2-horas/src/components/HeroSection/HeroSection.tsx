@@ -25,12 +25,12 @@ const HeroSection = () => {
 
   useEffect(() => {
     // Check if script already exists to avoid duplicates
-    const scriptId = "vturb-script-698b8008";
+    const scriptId = "vturb-script-ab-69d682404aa337508203baf6";
     if (!document.getElementById(scriptId)) {
       const script = document.createElement("script");
       script.id = scriptId;
       script.src =
-        "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/698b8008aa8949c7cb355734/v4/player.js";
+        "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/ab-test/69d682404aa337508203baf6/player.js";
       script.async = true;
       document.head.appendChild(script);
     }
@@ -58,7 +58,7 @@ const HeroSection = () => {
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
             <vturb-smartplayer
-              id="vid-698b8008aa8949c7cb355734"
+              id="ab-69d682404aa337508203baf6"
               style={{ display: "block", margin: "0 auto", width: "100%" }}
             ></vturb-smartplayer>
           </div>
