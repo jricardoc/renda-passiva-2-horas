@@ -12,7 +12,7 @@ const Footer = () => {
           </h2>
 
           <p className="footer-subtext">
-            Com apenas R$ 97 você ativa seu setup de renda passiva em dólar.
+            Com apenas R$ 297 você ativa seu setup de renda passiva em dólar.
             Garantia de 7 dias ou seu dinheiro de volta.
           </p>
 
