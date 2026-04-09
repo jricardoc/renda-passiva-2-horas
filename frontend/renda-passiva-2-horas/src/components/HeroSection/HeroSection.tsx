@@ -65,7 +65,7 @@ const HeroSection = () => {
         </div>
 
         <a
-          href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
+          href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
           className="btn-primary btn-pulse hero-cta"
           ref={ctaRef}
           id="hero-cta"
