@@ -83,17 +83,21 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: "dist",
       assetsDir: "assets",
+      target: "es2022",
       minify: "terser",
       terserOptions: {
         compress: {
           drop_console: isProduction,
           drop_debugger: isProduction,
+          passes: 2,
         },
       },
       rollupOptions: {
         output: {
           manualChunks: {
             vendor: ["react", "react-dom"],
+            gsap: ["gsap", "gsap/ScrollTrigger"],
+            swiper: ["swiper", "swiper/react", "swiper/modules"],
           },
           chunkFileNames: "assets/js/[name]-[hash].js",
           entryFileNames: "assets/js/[name]-[hash].js",
