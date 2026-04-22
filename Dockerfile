@@ -13,8 +13,9 @@ RUN npm run build
 # --- ETAPA 2: Servir com Nginx ---
 FROM nginx:alpine
 
-# Copia os arquivos do build para o diretório padrão do Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Como o Vite está configurado com base: "/renda-passiva-2-horas/", 
+# os arquivos precisam estar nessa subpasta dentro do container.
+COPY --from=builder /app/dist /usr/share/nginx/html/renda-passiva-2-horas
 
 # Configuração Nginx Otimizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
