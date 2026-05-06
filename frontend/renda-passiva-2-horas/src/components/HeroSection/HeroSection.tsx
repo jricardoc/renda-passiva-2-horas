@@ -68,8 +68,13 @@ const HeroSection = () => {
           href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
           className="btn-primary btn-pulse hero-cta"
           ref={ctaRef}
-          id="hero-cta"
-          style={{ display: "none" }}
+          id="content-gate"
+          style={{
+            opacity: 1,
+            display: "none",
+            maxWidth: "600px",
+            margin: "0 auto",
+          }}
         >
           GARANTA O PROTOCOLO POR 12x DE R$&nbsp;30,72
         </a>
