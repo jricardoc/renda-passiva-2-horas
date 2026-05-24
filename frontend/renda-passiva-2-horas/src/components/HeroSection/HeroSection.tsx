@@ -25,12 +25,12 @@ const HeroSection = () => {
 
   useEffect(() => {
     // Check if script already exists to avoid duplicates
-    const scriptId = "vturb-script-ab-69eeaa9ee47d7b09a8e429e2";
+    const scriptId = "vturb-script-ab-6a124f855c583dca6c7627aa";
     if (!document.getElementById(scriptId)) {
       const script = document.createElement("script");
       script.id = scriptId;
       script.src =
-        "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/ab-test/69eeaa9ee47d7b09a8e429e2/player.js";
+        "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/ab-test/6a124f855c583dca6c7627aa/player.js";
       script.async = true;
       document.head.appendChild(script);
     }
@@ -58,7 +58,7 @@ const HeroSection = () => {
         <div className="hero-vsl-container" ref={videoRef}>
           <div className="vsl-wrapper">
             <vturb-smartplayer
-              id="ab-69eeaa9ee47d7b09a8e429e2"
+              id="ab-6a124f855c583dca6c7627aa"
               style={{ display: "block", margin: "0 auto", width: "100%" }}
             ></vturb-smartplayer>
           </div>
@@ -76,7 +76,7 @@ const HeroSection = () => {
             margin: "0 auto",
           }}
         >
-          GARANTA O PROTOCOLO POR 12x DE R$&nbsp;30,72
+          GARANTA O PROTOCOLO POR 12x DE R$&nbsp;10,03
         </a>
       </div>
     </section>
