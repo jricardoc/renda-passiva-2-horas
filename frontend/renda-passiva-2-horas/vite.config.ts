@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
   const isAnalyze = mode === "analyze";
 
   return {
-    base: "/renda-passiva-2-horas/",
+    base: "/protocolo1/",
     plugins: [
       react(),
 
