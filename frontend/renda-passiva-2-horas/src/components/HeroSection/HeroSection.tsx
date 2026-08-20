@@ -44,15 +44,14 @@ const HeroSection = () => {
 
       <div className="container hero-container">
         <h1 className="hero-headline" ref={headlineRef}>
-          Ative sua{" "}
-          <span className="text-orange">renda passiva automática</span> em dólar
-          em <span className="text-green">duas horas</span>
+          Existe uma coisa que{" "}
+          <span className="text-orange">menos de 0,5% do mundo usa</span>. E não
+          é segredo de ninguém.
         </h1>
 
         <p className="hero-subheadline" ref={subheadlineRef}>
-          E faça seu{" "}
-          <span className="text-orange">dinheiro trabalhar por você</span>,
-          todos os dias, com um passo a passo direto sem enrolação
+          Está disponível há décadas. Só não te contaram.{" "}
+          <span className="text-orange">Ainda.</span>
         </p>
 
         <div className="hero-vsl-container" ref={videoRef}>
