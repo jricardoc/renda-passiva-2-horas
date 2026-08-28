@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Hendi — O Cara do Copy Trade | Links</title>
   <meta name="description"
-    content="Todos os links do Hendi em um só lugar: Academia CopyTrade do Hendi, Protocolo 0.5%, canal no YouTube e WhatsApp para tirar dúvidas." />
+    content="Todos os links do Hendi em um só lugar: Academia CopyTrade do Hendi, Protocolo 2H, canal no YouTube e WhatsApp para tirar dúvidas." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <!-- referrer completo: preserva a atribuicao nos destinos (Hotmart, Academia) -->
   <meta name="referrer" content="unsafe-url" />
@@ -21,15 +21,15 @@
   <meta property="og:url" content="https://ohendi.com.br/links/" />
   <meta property="og:title" content="Hendi — O Cara do Copy Trade" />
   <meta property="og:description"
-    content="Academia CopyTrade do Hendi, Protocolo 0.5%, YouTube e WhatsApp. Escolha por onde começar." />
+    content="Academia CopyTrade do Hendi, Protocolo 2H, YouTube e WhatsApp. Escolha por onde começar." />
   <meta property="og:image" content="https://ohendi.com.br/links/assets/hendi.jpg" />
-  <meta property="og:image:width" content="440" />
-  <meta property="og:image:height" content="440" />
+  <meta property="og:image:width" content="320" />
+  <meta property="og:image:height" content="320" />
   <meta property="twitter:card" content="summary" />
   <meta property="twitter:url" content="https://ohendi.com.br/links/" />
   <meta property="twitter:title" content="Hendi — O Cara do Copy Trade" />
   <meta property="twitter:description"
-    content="Academia CopyTrade do Hendi, Protocolo 0.5%, YouTube e WhatsApp. Escolha por onde começar." />
+    content="Academia CopyTrade do Hendi, Protocolo 2H, YouTube e WhatsApp. Escolha por onde começar." />
   <meta property="twitter:image" content="https://ohendi.com.br/links/assets/hendi.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -75,7 +75,7 @@
       font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       font-weight: 500;
       -webkit-font-smoothing: antialiased;
-      padding: 34px 16px calc(26px + env(safe-area-inset-bottom))
+      padding: 22px 16px calc(20px + env(safe-area-inset-bottom))
     }
 
     @supports (min-height:100dvh) {
@@ -109,8 +109,8 @@
     }
 
     .ava {
-      width: 106px;
-      height: 106px;
+      width: 92px;
+      height: 92px;
       margin: 0 auto;
       padding: 3px;
       border-radius: 50%;
@@ -130,8 +130,8 @@
     }
 
     h1 {
-      margin: 16px 0 0;
-      font-size: 28px;
+      margin: 12px 0 0;
+      font-size: 26px;
       font-weight: 900;
       letter-spacing: -.02em;
       line-height: 1.1
@@ -147,18 +147,26 @@
     }
 
     .handle {
-      margin: 9px 0 0;
-      font-size: 12.5px;
+      margin: 7px 0 0;
+      font-size: 12px;
       font-weight: 600;
       color: var(--gray)
     }
 
     .bio {
-      margin: 8px auto 0;
-      max-width: 33ch;
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--dim)
+      margin: 10px auto 0;
+      max-width: 40ch;
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: var(--dim);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      text-align: left
+    }
+
+    .bio span {
+      display: block
     }
 
     /* ---------- divisor rotulado ---------- */
@@ -166,7 +174,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin: 26px 2px 14px
+      margin: 18px 2px 11px
     }
 
     .div::before,
@@ -197,7 +205,7 @@
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 12px
+      gap: 10px
     }
 
     .lnk {
@@ -209,8 +217,8 @@
       align-items: center;
       gap: 14px;
       width: 100%;
-      min-height: 76px;
-      padding: 14px 14px 14px 20px;
+      min-height: 72px;
+      padding: 12px 14px 12px 20px;
       border: 1px solid var(--line);
       border-radius: var(--r);
       background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .018));
@@ -241,6 +249,10 @@
       z-index: 0;
       pointer-events: none;
       background: linear-gradient(100deg, var(--tint), rgba(0, 0, 0, 0) 60%)
+    }
+
+    .lnk--hero::after {
+      background: none
     }
 
     .lnk>* {
@@ -303,38 +315,55 @@
 
     /* botao principal: Academia. A hierarquia vem do peso do card
        (tamanho, brasao, borda, glow) — sem rotulo de destaque. */
+    /* Academia: o item principal. O destaque vem de tudo ao mesmo tempo —
+       card maior, laranja cheio, borda viva, glow e um anel externo. */
     .lnk--hero {
-      min-height: 100px;
-      border-color: rgba(255, 99, 0, .42);
-      background: linear-gradient(180deg, rgba(255, 99, 0, .16), rgba(255, 99, 0, .05));
-      box-shadow: 0 14px 40px rgba(255, 99, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .08)
+      min-height: 108px;
+      padding: 16px 14px 16px 18px;
+      border: 2px solid #ff6300;
+      border-radius: 20px;
+      background:
+        linear-gradient(150deg, rgba(255, 99, 0, .42) 0%, rgba(255, 99, 0, .20) 45%, rgba(255, 99, 0, .08) 100%),
+        #120a04;
+      box-shadow:
+        0 0 0 4px rgba(255, 99, 0, .13),
+        0 18px 46px rgba(255, 99, 0, .34),
+        inset 0 1px 0 rgba(255, 255, 255, .14)
     }
 
     .lnk--hero::before {
-      width: 5px
+      width: 0
     }
 
     .lnk--hero .lbl {
-      font-size: 18.5px;
-      font-weight: 800
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -.015em
     }
 
     .lnk--hero .sub {
-      margin-top: 5px;
-      font-size: 12px;
-      color: #ecdcd0
+      margin-top: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #f4e3d6
     }
 
     .lnk--hero .chev {
-      color: rgba(255, 255, 255, .62)
+      color: #fff
+    }
+
+    .lnk--hero .chev svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 3
     }
 
     /* o brasao mantem a proporcao real do arquivo (260x361) */
     .crest {
       flex: 0 0 auto;
       display: block;
-      width: 58px;
-      height: 70px;
+      width: 60px;
+      height: 72px;
       object-fit: contain;
       filter: drop-shadow(0 3px 10px rgba(0, 0, 0, .7))
     }
@@ -410,9 +439,9 @@
 
     /* ---------- rodape ---------- */
     .foot {
-      margin: 28px 0 0;
+      margin: 20px 0 0;
       text-align: center;
-      font-size: 10.5px;
+      font-size: 10px;
       line-height: 1.7;
       color: #7e7e7e
     }
@@ -531,15 +560,19 @@
     <header class="head rise">
       <div class="ava">
         <picture>
-          <source srcset="assets/hendi.webp?v=1" type="image/webp">
-          <img src="assets/hendi.jpg?v=1" width="440" height="440" alt="Hendi, o Cara do Copy Trade"
+          <source srcset="assets/hendi.webp?v=2" type="image/webp">
+          <img src="assets/hendi.jpg?v=2" width="320" height="320" alt="Hendi, o Cara do Copy Trade"
             fetchpriority="high" decoding="async">
         </picture>
       </div>
       <h1>Hendi</h1>
       <p class="role">O Cara do Copy Trade</p>
       <p class="handle">@OcaradoCopyTrade</p>
-      <p class="bio">Copy trade explicado sem enrolação: método, comunidade e acompanhamento de verdade.</p>
+      <p class="bio">
+        <span>&#128181; | aprenda a construir uma Renda Passiva em Dólares</span>
+        <span>&#128218; | Ajudo investidores a multiplicar seu capital com segurança</span>
+        <span>&#127891; | Entre para a Academia &#128071;&#127996;:</span>
+      </p>
     </header>
 
     <div class="div rise"><span>Escolha por onde começar</span></div>
@@ -554,31 +587,7 @@
             <img class="crest" src="assets/academia.png?v=1" width="260" height="313" alt="" decoding="async">
             <span class="txt">
               <span class="lbl">Academia do Hendi</span>
-              <span class="sub">Formação completa em copy trade, do zero ao operacional.</span>
-            </span>
-            <span class="chev" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
-                stroke-linejoin="round" focusable="false">
-                <path d="m9 5 7 7-7 7" />
-              </svg>
-            </span>
-          </a>
-        </li>
-
-        <li class="rise">
-          <a class="lnk lnk--protocolo" data-link="protocolo" target="_blank" rel="noopener"
-            href="https://ohendi.com.br/protocolo1/?utm_source=ig&amp;utm_medium=social&amp;utm_campaign=protocolo&amp;utm_content=link_in_bio&amp;src=instagram%7Cbio%7Cprotocolo">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"
-                stroke-linejoin="miter" focusable="false">
-                <path d="M3 20h18" />
-                <path d="M4 15l5-5 4 3 6-8" />
-                <path d="M15 4h5v5" />
-              </svg>
-            </span>
-            <span class="txt">
-              <span class="lbl">Protocolo 0.5%</span>
-              <span class="sub">A apresentação completa do protocolo, passo a passo.</span>
+              <span class="sub">Formação completa em copy trade e acesso a diversas carteiras de copy traders.</span>
             </span>
             <span class="chev" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
@@ -625,6 +634,30 @@
             <span class="txt">
               <span class="lbl">WhatsApp de dúvidas</span>
               <span class="sub">Fale com a equipe e tire suas dúvidas sobre copy trade.</span>
+            </span>
+            <span class="chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" focusable="false">
+                <path d="m9 5 7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        </li>
+
+        <li class="rise">
+          <a class="lnk lnk--protocolo" data-link="protocolo" target="_blank" rel="noopener"
+            href="https://ohendi.com.br/protocolo1/?utm_source=ig&amp;utm_medium=social&amp;utm_campaign=protocolo&amp;utm_content=link_in_bio&amp;src=instagram%7Cbio%7Cprotocolo">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"
+                stroke-linejoin="miter" focusable="false">
+                <path d="M3 20h18" />
+                <path d="M4 15l5-5 4 3 6-8" />
+                <path d="M15 4h5v5" />
+              </svg>
+            </span>
+            <span class="txt">
+              <span class="lbl">Protocolo 2H</span>
+              <span class="sub">Aprenda em 2h a seguir um copy trader validado por mim.</span>
             </span>
             <span class="chev" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
