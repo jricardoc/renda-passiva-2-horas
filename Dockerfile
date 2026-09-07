@@ -17,9 +17,9 @@ FROM nginx:alpine
 # os arquivos precisam estar nessa subpasta dentro do container.
 COPY --from=builder /app/dist /usr/share/nginx/html/protocolo1
 
-# Pagina de links da bio: HTML estatico puro, nao passa pelo build do Vite.
-# Copiada direto do contexto de build para /links.
-COPY frontend/links /usr/share/nginx/html/links
+# A pagina /links da bio e servida apenas em ohendi.com.br (branch novoTeste).
+# Este build (ocaradocopytrade.com) nao a inclui, para nao duplicar a pagina
+# em dois dominios. As regras de /links no nginx.conf ficam inertes aqui.
 
 # Configuração Nginx Otimizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
