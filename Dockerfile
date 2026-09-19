@@ -21,6 +21,19 @@ COPY --from=builder /app/dist /usr/share/nginx/html/protocolo1
 # Copiada direto do contexto de build para /links.
 COPY frontend/links /usr/share/nginx/html/links
 
+# Black Vitalicia: captura (/black) e obrigado (/black-obrigado), HTML estatico.
+COPY frontend/black /usr/share/nginx/html/black
+COPY frontend/black-obrigado /usr/share/nginx/html/black-obrigado
+
+# /black/config.js e gerado ao subir o container pelo envsubst da imagem do nginx,
+# com as variaveis do servico no EasyPanel. Os padroes vazios garantem a troca
+# (sem eles o ${...} ficaria literal no JS).
+COPY frontend/black-config.js.template /etc/nginx/templates/config.js.template
+ENV NGINX_ENVSUBST_OUTPUT_DIR=/usr/share/nginx/html/black \
+    GHL_WEBHOOK_URL="" \
+    BLACK_GRUPO_URL="" \
+    BLACK_VIDEO_VTURB_ID=""
+
 # Configuração Nginx Otimizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 

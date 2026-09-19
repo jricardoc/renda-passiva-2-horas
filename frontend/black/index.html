@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager (mesmo loader da VSL) -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://api.ohendi.com.br/autguzkstg.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','55r3sa=DhBOLC44SiMxPyQhKjs0UhFJQUVLUwMaWhsbDhQRDloEGx5FGAc%3D');</script>
+  <!-- End Google Tag Manager -->
+
+  <title>Black Vitalícia | Academia do Hendi de Copy Trade</title>
+  <meta name="description" content="Paga uma única vez e a Academia é sua pelo resto da vida. Inclusive o que eu ainda nem coloquei lá dentro.">
+  <link rel="canonical" href="https://ohendi.com.br/black">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ohendi.com.br/black">
+  <meta property="og:title" content="Black Vitalícia | Academia do Hendi de Copy Trade">
+  <meta property="og:description" content="Paga uma única vez e a Academia é sua pelo resto da vida. Inclusive o que eu ainda nem coloquei lá dentro.">
+  <meta name="theme-color" content="#0D0D0E">
+
+  <!-- Webhook do GHL: gerado ao subir o container a partir das variáveis do serviço -->
+  <script src="/black/config.js"></script>
+
+  <style>
+    :root {
+      --bg: #0D0D0E;
+      --card: #1C1C1F;
+      --capa-1: #252528;
+      --capa-2: #2B2B2E;
+      --laranja: #EB4618;
+      --azul: #3A95B4;
+      --azul-escuro: #2E5F72;
+      --texto: #FFFFFF;
+      --texto-2: #A8A8A2;
+      --texto-3: #78786F;
+      --texto-apagado: #5A5A56;
+      --borda-input: #2E2E30;
+      --divisor: #232326;
+      --verde-bg: #123A2C;
+      --verde: #5DCAA5;
+      --vermelho-bg: #3A1512;
+      --vermelho: #F0997B;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--texto);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 16px 20px; }
+
+    :focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    /* 1. Dobra */
+    .topo { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+    .topo-marca { color: var(--laranja); font-size: 12px; font-weight: 500; letter-spacing: 0.5px; white-space: nowrap; }
+    .topo-frase { color: var(--texto-3); font-size: 11px; text-align: right; }
+
+    .dobra { display: grid; grid-template-columns: 0.78fr 1.22fr; gap: 20px; align-items: start; }
+
+    .rotulo { color: var(--texto-3); font-size: 10px; letter-spacing: 0.5px; margin-bottom: 8px; }
+    h1 { font-size: 19px; font-weight: 500; line-height: 1.25; margin-bottom: 8px; }
+    .sub { color: var(--texto-2); font-size: 11px; line-height: 1.55; margin-bottom: 14px; }
+
+    .campo { margin-bottom: 8px; }
+    .campo input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--borda-input);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--texto);
+      font: inherit;
+      font-size: 16px; /* 16px evita o zoom automático do iOS ao focar */
+    }
+    .campo input::placeholder { color: var(--texto-3); }
+    .campo input[aria-invalid="true"] { border-color: var(--vermelho); }
+    .erro { color: var(--vermelho); font-size: 12px; margin-top: 4px; }
+    .erro:empty { display: none; }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 8px;
+      background: var(--laranja);
+      color: var(--texto);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .btn:disabled { opacity: 0.7; cursor: progress; }
+    .aviso { color: var(--texto-apagado); font-size: 10px; margin-top: 8px; }
+    #erro-envio { margin-top: 8px; }
+
+    /* Mosaico: quatro fileiras com 7px entre todos os blocos */
+    .mosaico { display: grid; gap: 7px; }
+    .fileira { display: grid; gap: 7px; }
+    .fileira-1 { grid-template-columns: repeat(4, 1fr); }
+    .fileira-2 { grid-template-columns: 1.35fr 1fr; }
+    .fileira-3 { grid-template-columns: repeat(3, 1fr); }
+    .bloco { background: var(--card); border-radius: 5px; padding: 8px; }
+    .capa { aspect-ratio: 3 / 4; border-radius: 5px; background: var(--capa-1); }
+    .capa:nth-child(even) { background: var(--capa-2); }
+    .rot { font-size: 8px; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .azul { color: var(--azul); }
+    .laranja { color: var(--laranja); }
+    .barras { display: flex; align-items: flex-end; gap: 3px; height: 30px; }
+    .barras span { flex: 1; background: var(--azul-escuro); border-radius: 1px; }
+    .barras span.destaque { background: var(--laranja); }
+    .linha { display: flex; justify-content: space-between; align-items: center; font-size: 9px; color: var(--texto-2); }
+    .linha + .linha { margin-top: 4px; }
+    .selo { font-size: 8px; border-radius: 4px; padding: 1px 5px; }
+    .passa { background: var(--verde-bg); color: var(--verde); }
+    .reprova { background: var(--vermelho-bg); color: var(--vermelho); }
+    .pronta { font-size: 9px; color: var(--texto-2); }
+    .comunidade { font-size: 9px; font-weight: 500; }
+    .investidores { font-size: 8px; color: var(--texto-2); }
+    .faixa {
+      background: var(--laranja); color: var(--texto); border-radius: 5px;
+      font-size: 10px; font-weight: 500; text-align: center; padding: 8px;
+    }
+
+    .autoridade {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 28px;
+      border-top: 1px solid var(--divisor); margin-top: 20px; padding-top: 14px;
+      color: #4A4A45; font-size: 9px; letter-spacing: 0.5px;
+    }
+
+    /* 2 e 3 */
+    section { border-top: 1px solid var(--divisor); margin-top: 28px; padding-top: 28px; }
+    h2 { font-size: 17px; font-weight: 500; line-height: 1.3; margin-bottom: 12px; }
+    section p { color: var(--texto-2); font-size: 13px; line-height: 1.6; }
+    section p + p { margin-top: 10px; }
+    .hendi { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: start; }
+    .hendi img { width: 100%; height: auto; border-radius: 10px; display: block; }
+
+    /* 4. Rodapé */
+    footer { border-top: 1px solid var(--divisor); margin-top: 28px; padding: 20px 0 8px; color: var(--texto-3); font-size: 11px; line-height: 1.6; }
+    footer p + p { margin-top: 8px; }
+
+    /* Celular: formulário primeiro, mosaico depois */
+    @media (max-width: 700px) {
+      .topo { flex-direction: column; gap: 4px; }
+      .topo-frase { text-align: left; }
+      .dobra { grid-template-columns: 1fr; }
+      h1 { font-size: 24px; }
+      .hendi { grid-template-columns: 1fr; }
+      .hendi img { max-width: 260px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="topo">
+      <span class="topo-marca">BLACK VITALÍCIA</span>
+      <span class="topo-frase">A maior oferta que eu já fiz. Tudo com acesso vitalício.</span>
+    </header>
+
+    <main>
+      <div class="dobra">
+        <div id="inscricao">
+          <p class="rotulo">28 DE OUTUBRO — AO VIVO</p>
+          <h1>Você nunca mais vai precisar renovar nada para continuar no copy trade</h1>
+          <p class="sub">Paga uma única vez e a Academia é sua pelo resto da vida. Inclusive o que eu ainda nem coloquei lá dentro.</p>
+
+          <form id="form" novalidate>
+            <div class="campo">
+              <label class="sr-only" for="nome">Nome</label>
+              <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="erro-nome">
+              <p class="erro" id="erro-nome" aria-live="polite"></p>
+            </div>
+            <div class="campo">
+              <label class="sr-only" for="email">E-mail</label>
+              <input id="email" name="email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" required aria-describedby="erro-email">
+              <p class="erro" id="erro-email" aria-live="polite"></p>
+            </div>
+            <div class="campo">
+              <label class="sr-only" for="whatsapp">WhatsApp com DDD</label>
+              <input id="whatsapp" name="whatsapp" type="tel" inputmode="numeric" placeholder="Seu WhatsApp com DDD" autocomplete="tel-national" maxlength="15" required aria-describedby="erro-whatsapp">
+              <p class="erro" id="erro-whatsapp" aria-live="polite"></p>
+            </div>
+            <button class="btn" type="submit">QUERO PARTICIPAR</button>
+            <p class="erro" id="erro-envio" aria-live="polite"></p>
+            <p class="aviso">Nunca fiz isso antes e não pretendo repetir. Depois dessa live a Academia fecha para novos alunos.</p>
+          </form>
+        </div>
+
+        <!-- Fileira 1 (capas 3:4) fica com os placeholders coloridos até existirem as capas -->
+        <div class="mosaico">
+          <div class="fileira fileira-1" aria-hidden="true">
+            <div class="capa"></div>
+            <div class="capa"></div>
+            <div class="capa"></div>
+            <div class="capa"></div>
+          </div>
+          <div class="fileira fileira-2">
+            <div class="bloco">
+              <p class="rot azul">SISTEMA DE ACOMPANHAMENTO</p>
+              <div class="barras" aria-hidden="true">
+                <span style="height:35%"></span><span style="height:62%"></span><span style="height:48%"></span><span class="destaque" style="height:100%"></span><span style="height:55%"></span><span style="height:72%"></span><span style="height:44%"></span><span style="height:66%"></span>
+              </div>
+            </div>
+            <div class="bloco">
+              <p class="rot laranja">IA DE FILTRAGEM</p>
+              <p class="linha">Copy A <span class="selo passa">passa</span></p>
+              <p class="linha">Copy B <span class="selo reprova">reprova</span></p>
+              <p class="linha">Copy C <span class="selo reprova">reprova</span></p>
+            </div>
+          </div>
+          <div class="fileira fileira-3">
+            <div class="bloco">
+              <p class="rot azul">CARTEIRA 1</p>
+              <p class="pronta">pronta e rodando</p>
+            </div>
+            <div class="bloco">
+              <p class="rot azul">CARTEIRA 2</p>
+              <p class="pronta">pronta e rodando</p>
+            </div>
+            <div class="bloco">
+              <p class="comunidade">Comunidade</p>
+              <p class="investidores">de investidores</p>
+            </div>
+          </div>
+          <p class="faixa">TUDO ISSO COM ACESSO VITALÍCIO — PAGO UMA ÚNICA VEZ</p>
+        </div>
+      </div>
+
+      <!-- Trocar pelos logos em escala de cinza quando existirem -->
+      <div class="autoridade">
+        <span>ACADEMIA DO HENDI</span>
+        <span>DRAWDOWNGUARD</span>
+        <span>ROBOFOREX</span>
+      </div>
+
+      <section>
+        <h2>O que é a Academia do Hendi de Copy Trade</h2>
+        <p>É onde eu te mostro como escolher copy traders sem depender da palavra de ninguém.</p>
+        <p>Lá dentro você tem as aulas, a comunidade aberta de investidores, um sistema exclusivo de acompanhamento e gerenciamento de carteiras, a IA que filtra copys e analisa para você e as carteiras prontas que eu mesmo uso sempre atualizadas.</p>
+        <p>É um ecossistema completo de educação e investimento em copy trade de assinatura anual. Mas por pouco tempo, no dia 28, ela será vitalícia, onde você paga uma única vez, para o resto da vida.</p>
+      </section>
+
+      <section>
+        <h2>Quem vai te mostrar isso</h2>
+        <div class="hendi">
+          <img src="/black/hendi.webp" alt="Hendi, da Academia do Hendi de Copy Trade" width="480" height="720" loading="lazy" decoding="async">
+          <div>
+            <p>Formado em engenharia da computação, engenheiro de dados da Ford e investidor em copy trade há mais de 9 anos. Eu passei os últimos anos auditando copy traders, entendendo todo o conceito e essência para se ter resultados nesse mercado. Corretora por corretora, trader por trader, operação por operação.</p>
+            <p>Construí o sistema de acompanhamento e matriz de descorrelação porque eu precisava medir o que ninguém mostrava para decidir onde colocar o meu próprio dinheiro. As carteiras que estão dentro da Academia são as mesmas que eu uso e acompanho todo dia para você ter resultados tão bons quanto os meus com conhecimento e método.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Política de Privacidade e Termos de Uso ainda sem página: entram como link quando existirem -->
+    <footer>
+      <p>Este conteúdo é educacional. Operações no mercado financeiro envolvem risco de perda. Nenhum resultado é garantido.</p>
+      <p>CNPJ: 53.724.905/0001-70 · Política de Privacidade · Termos de Uso</p>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var cfg = window.BLACK_CONFIG || {};
+      var form = document.getElementById('form');
+      var btn = form.querySelector('button');
+      var erroEnvio = document.getElementById('erro-envio');
+      var wa = form.whatsapp;
+
+      var regras = {
+        nome: function (v) { return v.trim().length >= 2 ? '' : 'Informe seu nome.'; },
+        email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Informe um e-mail válido.'; },
+        whatsapp: function (v) { return /^[1-9]{2}\d{9}$/.test(v.replace(/\D/g, '')) ? '' : 'Informe seu WhatsApp com DDD.'; }
+      };
+
+      function erro(campo, msg) {
+        document.getElementById('erro-' + campo).textContent = msg;
+        form[campo].setAttribute('aria-invalid', msg ? 'true' : 'false');
+      }
+
+      // Máscara (00) 00000-0000
+      wa.addEventListener('input', function () {
+        var d = wa.value.replace(/\D/g, '').slice(0, 11);
+        wa.value = d.length > 7 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7)
+          : d.length > 2 ? '(' + d.slice(0, 2) + ') ' + d.slice(2)
+          : d.length ? '(' + d : '';
+      });
+
+      // O erro some assim que a pessoa edita o campo
+      form.addEventListener('input', function (e) {
+        if (regras[e.target.name]) erro(e.target.name, '');
+        erroEnvio.textContent = '';
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var primeiro = null;
+        Object.keys(regras).forEach(function (campo) {
+          var msg = regras[campo](form[campo].value);
+          erro(campo, msg);
+          if (msg && !primeiro) primeiro = form[campo];
+        });
+        if (primeiro) { primeiro.focus(); return; }
+
+        var digitos = wa.value.replace(/\D/g, '');
+        var dados = {
+          name: form.nome.value.trim(),
+          email: form.email.value.trim(),
+          phone: '+55' + digitos,
+          whatsapp: wa.value,
+          pagina: 'black'
+        };
+        // UTMs (e ids de clique) da origem vão junto, para saber qual criativo trouxe o lead
+        new URLSearchParams(location.search).forEach(function (v, k) {
+          if (/^utm_/.test(k) || k === 'fbclid' || k === 'gclid') dados[k] = v;
+        });
+
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+        btn.textContent = 'ENVIANDO…';
+
+        (cfg.webhook
+          ? fetch(cfg.webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados) })
+          : Promise.reject(new Error('GHL_WEBHOOK_URL não configurado no serviço')))
+          .then(function (res) {
+            if (!res.ok) throw new Error('webhook respondeu ' + res.status);
+            try {
+              sessionStorage.setItem('black_inscrito', '1');
+              sessionStorage.removeItem('black_confirmada');
+            } catch (err) {}
+            var foi = false;
+            function irParaObrigado() {
+              if (foi) return;
+              foi = true;
+              location.href = '/black-obrigado' + location.search;
+            }
+            // Conversão só no envio bem-sucedido. Espera o GTM (ou 1,5 s, se ele estiver bloqueado).
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: 'black_lead', eventCallback: irParaObrigado, eventTimeout: 1500 });
+            setTimeout(irParaObrigado, 1600);
+          })
+          .catch(function (err) {
+            console.error('Falha no envio do formulário:', err);
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+            btn.textContent = 'QUERO PARTICIPAR';
+            erroEnvio.textContent = 'Não foi possível enviar agora. Tente de novo em instantes.';
+          });
+      });
+    })();
+  </script>
+</body>
+
+</html>

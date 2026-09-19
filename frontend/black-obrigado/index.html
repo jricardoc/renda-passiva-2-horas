@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Só quem enviou o formulário chega aqui; acesso direto volta para a captura (antes do GTM) -->
+  <script>
+    (function () {
+      var ok;
+      try { ok = sessionStorage.getItem('black_inscrito') === '1'; } catch (e) { ok = true; }
+      if (!ok) { window.blackSaindo = true; location.replace('/black' + location.search); }
+    })();
+  </script>
+
+  <!-- Google Tag Manager (mesmo loader da VSL) -->
+  <script>if (!window.blackSaindo) (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://api.ohendi.com.br/autguzkstg.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','55r3sa=DhBOLC44SiMxPyQhKjs0UhFJQUVLUwMaWhsbDhQRDloEGx5FGAc%3D');</script>
+  <!-- End Google Tag Manager -->
+
+  <title>Inscrição confirmada | Black Vitalícia</title>
+  <meta name="theme-color" content="#0D0D0E">
+
+  <!-- Link do grupo e vídeo: gerados ao subir o container a partir das variáveis do serviço -->
+  <script src="/black/config.js"></script>
+
+  <style>
+    :root {
+      --bg: #0D0D0E;
+      --card: #1C1C1F;
+      --laranja: #EB4618;
+      --texto: #FFFFFF;
+      --texto-2: #A8A8A2;
+      --texto-3: #78786F;
+      --texto-apagado: #5A5A56;
+      --divisor: #232326;
+      --verde-bg: #123A2C;
+      --verde: #5DCAA5;
+      --azul: #3A95B4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--texto);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+
+    .container { max-width: 520px; margin: 0 auto; padding: 0 20px; }
+
+    /* 1. Confirmação: ocupa a primeira tela, então o bloco 2 fica abaixo da dobra */
+    .confirmacao {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      padding: 32px 0;
+    }
+
+    .selo {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--verde-bg); color: var(--verde);
+      font-size: 11px; letter-spacing: 0.5px; border-radius: 8px; padding: 5px 12px;
+    }
+    .selo svg { width: 12px; height: 12px; }
+
+    h1 { font-size: 22px; font-weight: 500; line-height: 1.3; }
+    .sub { color: var(--texto-2); font-size: 14px; }
+
+    .video { width: 100%; max-width: 480px; border-radius: 12px; overflow: hidden; }
+
+    .btn {
+      display: block; width: 100%; text-align: center; text-decoration: none;
+      background: var(--laranja); color: var(--texto);
+      font-size: 14px; font-weight: 500; padding: 13px; border-radius: 8px;
+    }
+    /* No celular o vídeo empurra o card para baixo: o botão se repete acima dele */
+    .btn-topo { max-width: 480px; display: none; }
+
+    .card {
+      width: 100%; max-width: 480px; text-align: left;
+      background: var(--card); border-radius: 12px; padding: 20px;
+    }
+    .card p { font-size: 13px; line-height: 1.6; }
+    .card .explica { color: var(--texto-2); }
+    .card .reforco { font-weight: 500; margin: 8px 0 16px; }
+    .card .data { color: var(--texto-apagado); font-size: 11px; text-align: center; margin-top: 10px; }
+
+    /* 2. Enquanto isso */
+    .enquanto { border-top: 1px solid var(--divisor); padding: 32px 0; text-align: center; }
+    h2 { font-size: 16px; font-weight: 500; margin-bottom: 8px; }
+    .enquanto p { color: var(--texto-2); font-size: 13px; margin-bottom: 16px; }
+    .btn-sec {
+      display: inline-block; text-decoration: none; color: var(--texto);
+      border: 0.5px solid #2E2E30; border-radius: 8px; font-size: 13px; padding: 10px 20px;
+    }
+
+    /* 3. Rodapé */
+    footer { border-top: 1px solid var(--divisor); padding: 20px 0 28px; color: var(--texto-3); font-size: 11px; line-height: 1.6; text-align: center; }
+    footer p + p { margin-top: 8px; }
+
+    @media (max-width: 767px) {
+      h1 { font-size: 26px; }
+      .com-video .btn-topo { display: block; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="confirmacao" id="confirmacao">
+      <p class="selo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        INSCRIÇÃO CONFIRMADA
+      </p>
+      <h1>Sua vaga na Black Vitalícia está confirmada!</h1>
+      <p class="sub">Agora falta uma coisa só: entrar no grupo.</p>
+
+      <a class="btn btn-topo btn-grupo" href="#" target="_blank" rel="noopener">ENTRAR NO GRUPO DA BLACK</a>
+
+      <!-- Vídeo de boas-vindas (VTurb): só aparece com BLACK_VIDEO_VTURB_ID configurado -->
+      <div class="video" id="video" hidden></div>
+
+      <div class="card">
+        <p class="explica">É no grupo que eu vou avisar o horário, mandar o link de entrada e contar o que vai ter na oferta.</p>
+        <p class="reforco">Se você não estiver lá, não vai ficar sabendo.</p>
+        <a class="btn btn-grupo" href="#" target="_blank" rel="noopener">ENTRAR NO GRUPO DA BLACK</a>
+        <p class="data">Dia 28 de outubro, ao vivo.</p>
+      </div>
+    </div>
+
+    <div class="enquanto">
+      <h2>Enquanto o dia 28 não chega</h2>
+      <p>Me segue no Instagram e acompanha comigo essa BLACK ÚNICA da Academia!</p>
+      <a class="btn-sec" href="https://www.instagram.com/ocaradocopytrade/" target="_blank" rel="noopener">SEGUIR NO INSTAGRAM</a>
+    </div>
+
+    <!-- Política de Privacidade e Termos de Uso ainda sem página: entram como link quando existirem -->
+    <footer>
+      <p>Este conteúdo é educacional. Operações no mercado financeiro envolvem risco de perda. Nenhum resultado é garantido.</p>
+      <p>CNPJ: 53.724.905/0001-70 · Política de Privacidade · Termos de Uso</p>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      if (window.blackSaindo) return;
+      var cfg = window.BLACK_CONFIG || {};
+      window.dataLayer = window.dataLayer || [];
+
+      // Conversão de inscrição: esta página só abre depois do envio do formulário. Uma vez por sessão.
+      try {
+        if (!sessionStorage.getItem('black_confirmada')) {
+          window.dataLayer.push({ event: 'black_inscricao_confirmada' });
+          sessionStorage.setItem('black_confirmada', '1');
+        }
+      } catch (e) {
+        window.dataLayer.push({ event: 'black_inscricao_confirmada' });
+      }
+
+      document.querySelectorAll('.btn-grupo').forEach(function (a) {
+        if (cfg.grupo) a.href = cfg.grupo;
+        else console.error('BLACK_GRUPO_URL não configurado no serviço');
+        a.addEventListener('click', function () {
+          window.dataLayer.push({ event: 'black_clique_grupo' });
+        });
+      });
+
+      if (!cfg.vturb) return;
+      var box = document.getElementById('video');
+      var player = document.createElement('vturb-smartplayer');
+      player.id = 'vid-' + cfg.vturb;
+      player.style.cssText = 'display:block;margin:0 auto;width:100%';
+      box.appendChild(player);
+      box.hidden = false;
+      document.getElementById('confirmacao').classList.add('com-video');
+
+      // Play de verdade: ignora a prévia muda do smart autoplay
+      var contou = false;
+      document.addEventListener('player:ready', function (e) {
+        var p = e.detail.player;
+        p.addEventListener('video:play', function () {
+          if (contou || p.inSmartAutoPlay) return;
+          contou = true;
+          window.dataLayer.push({ event: 'black_play_video' });
+        });
+      });
+
+      var s = document.createElement('script');
+      s.src = 'https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/' + cfg.vturb + '/v4/player.js';
+      s.async = true;
+      document.head.appendChild(s);
+    })();
+  </script>
+</body>
+
+</html>
