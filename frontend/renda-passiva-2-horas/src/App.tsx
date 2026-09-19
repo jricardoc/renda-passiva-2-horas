@@ -1,4 +1,4 @@
-import HeroSection from "./components/HeroSection/HeroSection";
+import HeroSection, { HeroCta } from "./components/HeroSection/HeroSection";
 import "./App.css";
 import { Suspense, lazy } from "react";
 
@@ -27,7 +27,10 @@ function App() {
         <HeroSection />
 
         {/* Content sections - controlled by Vturb via #content-gate */}
+        {/* Um único #content-gate: o player faz querySelectorAll("#content-gate")
+            e aplica display:block !important. O CTA do hero é o primeiro filho. */}
         <div id="content-gate" style={{ display: "none" }}>
+          <HeroCta />
           <Suspense fallback={<div style={{ height: "100vh" }} />}>
             <AuthoritySection />
             <ComparisonSection />

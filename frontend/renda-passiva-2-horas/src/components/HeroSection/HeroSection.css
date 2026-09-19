@@ -1,286 +1,216 @@
+/* Hero em formato de reel: fundo preto, VSL vertical centralizada e uma camada
+   visual de post por cima do vídeo (ícones, gradiente e legenda). */
 .hero-section {
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px 100px;
-  position: relative;
-  overflow: hidden;
+  padding: 0;
+  background: #000;
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.hero-glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.15;
-}
-
-.hero-glow-1 {
-  width: 600px;
-  height: 600px;
-  background: var(--accent-orange);
-  top: -200px;
-  right: -200px;
-}
-
-.hero-glow-2 {
-  width: 400px;
-  height: 400px;
-  background: var(--cta-green);
-  bottom: -100px;
-  left: -100px;
-  opacity: 0.1;
-}
-
-.hero-container {
-  text-align: center;
-  max-width: 1000px;
-  z-index: 1;
-}
-
-.hero-headline {
-  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
-  font-weight: 800;
-  line-height: 1.25;
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
-}
-
-.hero-subheadline {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--text-gray-light);
-  max-width: 800px;
-  margin: 0 auto 48px;
-  line-height: 1.7;
-}
-
-/* VSL Video Container */
+/* Mesma largura que o player vertical assume na referência: tela inteira até 450px e
+   400px acima disso. Em tela baixa o reel mantém a altura e a página rola, como lá. */
 .hero-vsl-container {
+  position: relative;
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto 48px;
 }
 
+@media (min-width: 451px) {
+  .hero-vsl-container {
+    max-width: 400px;
+  }
+}
+
+/* Sem fundo, como o contêiner do player na referência */
 .vsl-wrapper {
   position: relative;
-  background: linear-gradient(
-    135deg,
-    rgba(20, 20, 20, 0.9) 0%,
-    rgba(10, 10, 10, 0.95) 100%
-  );
   aspect-ratio: 9 / 16;
-  border: 1px solid rgba(255, 99, 0, 0.2);
-  border-radius: 16px;
-  /* overflow: hidden; */
   contain: layout paint;
-  box-shadow:
-    0 0 40px rgba(255, 99, 0, 0.1),
-    0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-/* VTurb Smart Player - let it control its own size */
 .vsl-wrapper vturb-smartplayer {
   display: block;
   width: 100%;
-  border-radius: 16px;
 }
 
-.vsl-video {
+/* Área 9:16 do vídeo; pointer-events: none deixa todo clique chegar ao player.
+   Regras copiadas da referência (#reels-mask e .reels-*), inclusive a altura de
+   linha 1.5 que lá vem herdada do body. */
+.reel-overlay {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 16px;
+  aspect-ratio: 9 / 16;
+  pointer-events: none;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 1.5;
 }
 
-.vturb-container {
-  width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.vturb-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.vsl-placeholder {
+.reel-overlay::before {
+  content: "";
   position: absolute;
-  top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  height: 40%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    transparent 100%
+  );
+}
+
+.reel-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 99, 0, 0.15) 0%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+  gap: 18px;
+}
+
+.reel-action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.reel-actions svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.7));
+}
+
+.reel-action-count {
+  font-size: 12px;
+  font-weight: 600;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.reel-like-btn {
+  pointer-events: auto;
   cursor: pointer;
-  transition: var(--transition-smooth);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.vsl-placeholder:hover .vsl-play-button {
-  transform: scale(1.1);
-  box-shadow: 0 0 40px var(--accent-orange-glow);
+.reel-like-btn.liked svg {
+  fill: #ff2d55;
+  stroke: #ff2d55;
+  animation: reel-like-pop 0.5s ease;
 }
 
-.vsl-play-button {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, var(--accent-orange) 0%, #e55500 100%);
-  border-radius: 50%;
+@keyframes reel-like-pop {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.35); }
+  30% { transform: scale(0.9); }
+  45% { transform: scale(1.1); }
+  60% { transform: scale(1); }
+}
+
+.reel-caption {
+  position: absolute;
+  right: 56px;
+  bottom: 14px;
+  left: 14px;
+}
+
+.reel-liked {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 30px var(--accent-orange-glow);
-  transition: var(--transition-smooth);
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.vsl-play-button svg {
-  width: 32px;
-  height: 32px;
-  color: var(--text-white);
-  margin-left: 4px;
+.reel-liked-text {
+  font-size: 12.5px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
-.vsl-text {
-  color: white;
-  margin-top: 15px;
-  font-weight: 600;
-  font-size: 1.1rem;
+.reel-user-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid rgba(255, 99, 0, 0.3);
-  border-top-color: #ff6300;
+.reel-liked-avatar,
+.reel-avatar {
+  flex-shrink: 0;
   border-radius: 50%;
-  animation: spinner 1s linear infinite;
+  object-fit: cover;
 }
 
-@keyframes spinner {
-  to {
-    transform: rotate(360deg);
-  }
+.reel-liked-avatar {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid #fff;
 }
 
-/* Hero CTA */
-.hero-cta {
-  font-size: 1.1rem;
-  padding: 20px 56px;
+.reel-avatar {
+  width: 34px;
+  height: 34px;
+  border: 2px solid #e1306c;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-section {
-    padding: 30px 16px 40px;
-  }
-
-  .hero-headline {
-    margin-bottom: 20px;
-  }
-
-  .hero-subheadline {
-    margin-bottom: 36px;
-    font-size: 16px !important;
-  }
-
-  .hero-vsl-container {
-    margin-bottom: 36px;
-  }
-
-  .vsl-play-button {
-    width: 64px;
-    height: 64px;
-  }
-
-  .vsl-play-button svg {
-    width: 26px;
-    height: 26px;
-  }
-
-  .hero-cta {
-    font-size: 1rem;
-    padding: 18px 32px;
-  }
-
-  /* Disable animations on mobile for instant LCP */
-  .hero-headline,
-  .hero-subheadline,
-  .hero-cta {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+.reel-username {
+  font-size: 13px;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
 }
 
-/* Animation Keyframes using pure CSS instead of GSAP */
-.hero-headline,
-.hero-subheadline,
-.hero-vsl-container,
-.hero-cta {
-  opacity: 0;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+.reel-verified {
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.7));
 }
 
-.hero-headline {
-  animation: heroFadeUp 0.5s forwards;
-  animation-delay: 0s;
+.reel-followers {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
 }
 
-.hero-subheadline {
-  animation: heroFadeUp 0.5s forwards;
-  animation-delay: 0.2s;
+/* Legenda de uma linha cortada com "…", como na referência. O H1 fica em linha,
+   sem o tamanho e o peso globais. */
+.reel-caption-text {
+  font-size: 13px;
+  line-height: 1.4;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.hero-vsl-container {
-  animation: heroZoomIn 0.5s forwards;
-  animation-delay: 0.3s;
+.reel-caption-text .hero-headline {
+  display: inline;
+  color: inherit;
+  font: inherit;
 }
 
-.hero-cta {
-  animation: heroFadeUp 0.6s forwards;
+/* CTA revelado pelo VTurb, logo abaixo do reel */
+.hero-cta-band {
+  padding: 8px 16px 48px;
+  background: #000;
+  text-align: center;
 }
 
-@keyframes heroFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heroZoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.hero-cta-band .hero-cta {
+  display: block;
+  max-width: 600px;
+  margin: 0 auto;
 }

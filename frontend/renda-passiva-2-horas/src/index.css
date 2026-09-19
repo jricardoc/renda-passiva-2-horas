@@ -211,21 +211,26 @@ section {
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
+/* Scrollbar: laranja só depois que o VTurb revela o #content-gate. Antes disso fica a
+   barra padrão do navegador, como no primeiro viewport da referência. */
+:root:not(:has(#content-gate[style*="none"]))::-webkit-scrollbar,
+:root:not(:has(#content-gate[style*="none"])) ::-webkit-scrollbar {
   width: 8px;
 }
 
-::-webkit-scrollbar-track {
+:root:not(:has(#content-gate[style*="none"]))::-webkit-scrollbar-track,
+:root:not(:has(#content-gate[style*="none"])) ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 
-::-webkit-scrollbar-thumb {
+:root:not(:has(#content-gate[style*="none"]))::-webkit-scrollbar-thumb,
+:root:not(:has(#content-gate[style*="none"])) ::-webkit-scrollbar-thumb {
   background: var(--accent-orange);
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+:root:not(:has(#content-gate[style*="none"]))::-webkit-scrollbar-thumb:hover,
+:root:not(:has(#content-gate[style*="none"])) ::-webkit-scrollbar-thumb:hover {
   background: var(--gold);
 }
 
