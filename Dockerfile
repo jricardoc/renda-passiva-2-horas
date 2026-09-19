@@ -21,6 +21,10 @@ COPY --from=builder /app/dist /usr/share/nginx/html/protocolo1
 # Copiada direto do contexto de build para /links.
 COPY frontend/links /usr/share/nginx/html/links
 
+# Versao temporaria para aprovacao do hero (build estatico, sem GTM, noindex).
+# Remover junto com frontend/validacao depois da aprovacao.
+COPY frontend/validacao /usr/share/nginx/html/validacao
+
 # Configuração Nginx Otimizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
