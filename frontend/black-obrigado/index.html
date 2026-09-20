@@ -6,9 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
 
-  <!-- Só quem enviou o formulário chega aqui; acesso direto volta para a captura (antes do GTM) -->
+  <script>document.documentElement.className = 'js';</script>
+
+  <!--
+    Só quem enviou o formulário chega aqui; acesso direto volta para a captura (antes do GTM).
+    Exceção: /black-obrigado?preview=1 abre a página para revisão, e nesse modo
+    nenhum evento de conversão é disparado.
+  -->
   <script>
+    window.blackPreview = /[?&]preview=1(&|$)/.test(location.search);
     (function () {
+      if (window.blackPreview) return;
       var ok;
       try { ok = sessionStorage.getItem('black_inscrito') === '1'; } catch (e) { ok = true; }
       if (!ok) { window.blackSaindo = true; location.replace('/black' + location.search); }
@@ -16,7 +24,7 @@
   </script>
 
   <!-- Google Tag Manager (mesmo loader da VSL) -->
-  <script>if (!window.blackSaindo) (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://api.ohendi.com.br/autguzkstg.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','55r3sa=DhBOLC44SiMxPyQhKjs0UhFJQUVLUwMaWhsbDhQRDloEGx5FGAc%3D');</script>
+  <script>if (!window.blackSaindo && !window.blackPreview) (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://api.ohendi.com.br/autguzkstg.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','55r3sa=DhBOLC44SiMxPyQhKjs0UhFJQUVLUwMaWhsbDhQRDloEGx5FGAc%3D');</script>
   <!-- End Google Tag Manager -->
 
   <title>Inscrição confirmada | Black Vitalícia</title>
@@ -39,10 +47,10 @@
       --org: #EB4618;
       --org2: #FF6231;
       --paper: #FAFAF7;
-      --mut: rgba(250, 250, 247, .68);
-      --mut2: rgba(250, 250, 247, .5);
-      --line: rgba(250, 250, 247, .13);
-      --line2: rgba(250, 250, 247, .07);
+      --mut: rgba(250, 250, 247, .72);
+      --mut2: rgba(250, 250, 247, .55);
+      --line: rgba(250, 250, 247, .14);
+      --line2: rgba(250, 250, 247, .08);
       --verde: #5DCAA5;
       --pad: clamp(20px, 5vw, 56px);
     }
@@ -54,15 +62,15 @@
       color: var(--paper);
       font-family: 'Archivo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       font-weight: 400;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 17px;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
     :focus-visible { outline: 2px solid var(--org2); outline-offset: 3px; }
 
-    .container { max-width: 560px; margin: 0 auto; padding: 0 var(--pad); }
+    .container { max-width: 580px; margin: 0 auto; padding: 0 var(--pad); }
 
     /* grão de filme — estático, zero JS (mesmo recurso da LP da Academia) */
     .grain {
@@ -70,6 +78,28 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 180px 180px;
     }
+
+    /* ================= movimento ================= */
+    @keyframes sobe { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+    @keyframes sobePalavra { from { opacity: 0; transform: translateY(32%); } to { opacity: 1; transform: none; } }
+    @keyframes entraSelo { 0% { opacity: 0; transform: scale(.8); } 60% { transform: scale(1.06); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes riscaSelo { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes respira { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+    @keyframes pulsaBrilho { 0%, 100% { opacity: .75; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.06); } }
+    @keyframes sobeLeve { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+    .js .ent > * { animation: sobe .9s cubic-bezier(.16, 1, .3, 1) both; }
+    .js .ent > *:nth-child(2) { animation-delay: .1s; }
+    .js .ent > *:nth-child(3) { animation-delay: .5s; }
+    .js .ent > *:nth-child(4) { animation-delay: .6s; }
+    .js .ent > *:nth-child(5) { animation-delay: .68s; }
+    .js .ent > *:nth-child(6) { animation-delay: .76s; }
+    .js .ent > .selo { animation: entraSelo .8s cubic-bezier(.16, 1, .3, 1) both; }
+    .js h1.partido { animation: none; opacity: 1; }
+    .js .pal { display: inline-block; }
+    .js .pal > i { display: inline-block; font-style: normal; animation: sobePalavra .85s cubic-bezier(.16, 1, .3, 1) both; }
+    .js .rv { opacity: 0; }
+    .js .rv.on { animation: sobeLeve .9s cubic-bezier(.16, 1, .3, 1) both; }
 
     /* 1. Confirmação: ocupa a primeira tela, então o bloco 2 fica abaixo da dobra */
     .confirmacao {
@@ -81,85 +111,93 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      gap: 18px;
-      padding: 40px 0;
+      gap: 20px;
+      padding: 44px 0;
     }
     /* clarão laranja do palco, atrás da confirmação */
     .brilho {
       position: absolute; z-index: 0; top: -14%; left: 50%; transform: translateX(-50%);
-      width: min(760px, 130vw); height: min(760px, 130vw); border-radius: 50%;
-      background: radial-gradient(circle, rgba(235, 70, 24, .26), transparent 64%);
+      width: min(820px, 135vw); height: min(820px, 135vw); border-radius: 50%;
+      background: radial-gradient(circle, rgba(235, 70, 24, .28), transparent 63%);
       pointer-events: none;
     }
+    .js .brilho { animation: pulsaBrilho 6s ease-in-out infinite; }
     .confirmacao > :not(.brilho) { position: relative; z-index: 1; }
 
     .selo {
-      display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid rgba(93, 202, 165, .3); background: rgba(93, 202, 165, .1); color: var(--verde);
-      font-size: 10.5px; font-weight: 700; letter-spacing: .2em; border-radius: 999px; padding: 7px 14px;
+      display: inline-flex; align-items: center; gap: 9px;
+      border: 1px solid rgba(93, 202, 165, .32); background: rgba(93, 202, 165, .1); color: var(--verde);
+      font-size: 12px; font-weight: 700; letter-spacing: .2em; border-radius: 999px; padding: 9px 17px;
     }
-    .selo svg { width: 12px; height: 12px; }
+    .selo svg { width: 14px; height: 14px; }
+    .js .selo svg polyline { stroke-dasharray: 1; stroke-dashoffset: 1; animation: riscaSelo .5s ease .55s forwards; }
 
     h1 {
       font-family: 'Anton', sans-serif; font-weight: 400;
-      font-size: clamp(30px, 6vw, 48px); line-height: 1.04; letter-spacing: .004em;
-      max-width: 14ch;
+      /* entrelinha < 1.1 corta o acento do í nesta fonte */
+      font-size: clamp(34px, 6.6vw, 60px); line-height: 1.14; letter-spacing: .004em;
+      max-width: 15ch;
     }
-    .sub { color: var(--mut); font-size: clamp(14px, 1.3vw, 16px); }
+    .sub { color: var(--mut); font-size: clamp(16px, 1.4vw, 19px); }
 
-    .video { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--line2); }
+    .video { width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid var(--line2); }
 
     /* CTA: o mesmo "fogo" dos botões da LP da Academia */
     .btn {
       display: flex; align-items: center; justify-content: space-between; gap: 14px;
-      width: 100%; min-height: 58px; padding: 16px 20px;
+      width: 100%; min-height: 64px; padding: 18px 22px;
       border: 0; border-radius: 3px; position: relative; text-decoration: none;
-      font-family: 'Anton', sans-serif; font-size: 15.5px; letter-spacing: .08em; text-align: left;
+      font-family: 'Anton', sans-serif; font-size: 17px; letter-spacing: .08em; text-align: left;
       background: linear-gradient(180deg, var(--org2) 0%, #E03C0E 100%); color: #190A05;
-      box-shadow: 0 0 46px rgba(235, 70, 24, .38), 0 10px 34px -14px rgba(235, 70, 24, .7);
+      box-shadow: 0 0 48px rgba(235, 70, 24, .38), 0 10px 34px -14px rgba(235, 70, 24, .7);
       transition: transform .15s ease, box-shadow .35s ease, background .3s ease;
       touch-action: manipulation;
     }
-    .btn:hover { background: linear-gradient(180deg, #FF7245 0%, #EE4715 100%); box-shadow: 0 0 64px rgba(235, 70, 24, .52), 0 10px 40px -12px rgba(235, 70, 24, .8); }
+    .btn:hover { background: linear-gradient(180deg, #FF7245 0%, #EE4715 100%); box-shadow: 0 0 66px rgba(235, 70, 24, .54), 0 10px 40px -12px rgba(235, 70, 24, .8); }
     .btn:active { transform: scale(.985); }
-    .btn .arr { position: relative; flex: none; width: 24px; height: 24px; overflow: hidden; }
-    .btn .arr svg { position: absolute; inset: 0; width: 24px; height: 24px; transition: transform .3s cubic-bezier(.75, 0, .2, 1); }
-    .btn .arr .a2 { transform: translateX(-28px); }
-    .btn:hover .arr .a1, .btn:active .arr .a1 { transform: translateX(28px); }
+    .btn::after {
+      content: ""; position: absolute; inset: -2px; border-radius: inherit; pointer-events: none; opacity: 0;
+      box-shadow: 0 0 84px rgba(235, 70, 24, .5), 0 10px 48px -10px rgba(235, 70, 24, .5);
+    }
+    .js .btn::after { animation: respira 3.4s ease-in-out infinite; }
+    .btn .arr { position: relative; flex: none; width: 26px; height: 26px; overflow: hidden; }
+    .btn .arr svg { position: absolute; inset: 0; width: 26px; height: 26px; transition: transform .3s cubic-bezier(.75, 0, .2, 1); }
+    .btn .arr .a2 { transform: translateX(-30px); }
+    .btn:hover .arr .a1, .btn:active .arr .a1 { transform: translateX(30px); }
     .btn:hover .arr .a2, .btn:active .arr .a2 { transform: translateX(0); }
     /* No celular o vídeo empurra o card para baixo: o botão se repete acima dele */
     .btn-topo { display: none; }
 
     .card {
       width: 100%; text-align: left;
-      background: linear-gradient(180deg, rgba(250, 250, 247, .06), rgba(250, 250, 247, .022));
-      border: 1px solid var(--line); border-radius: 6px; padding: clamp(20px, 3.4vw, 26px);
-      box-shadow: 0 30px 70px -34px rgba(0, 0, 0, .95);
+      background: linear-gradient(180deg, rgba(250, 250, 247, .07), rgba(250, 250, 247, .025));
+      border: 1px solid var(--line); border-radius: 8px; padding: clamp(22px, 3.6vw, 30px);
+      box-shadow: 0 34px 80px -34px rgba(0, 0, 0, .95);
       position: relative;
     }
-    .card::before { content: ""; position: absolute; left: -1px; top: -1px; width: 62px; height: 2px; background: var(--org); }
-    .card p { font-size: 14px; line-height: 1.62; }
+    .card::before { content: ""; position: absolute; left: -1px; top: -1px; width: 68px; height: 2px; background: var(--org); }
+    .card p { font-size: 16px; line-height: 1.6; }
     .card .explica { color: var(--mut); }
-    .card .reforco { font-weight: 600; margin: 10px 0 18px; }
-    .card .data { color: var(--mut2); font-size: 11px; letter-spacing: .04em; text-align: center; margin-top: 12px; }
+    .card .reforco { font-weight: 600; margin: 12px 0 20px; }
+    .card .data { color: var(--mut2); font-size: 13px; letter-spacing: .03em; text-align: center; margin-top: 14px; }
 
     /* 2. Enquanto isso */
-    .enquanto { border-top: 1px solid var(--line2); background: var(--blk); padding: clamp(44px, 7vw, 76px) 0; text-align: center; }
-    h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(22px, 3vw, 30px); line-height: 1.1; margin-bottom: 10px; }
-    .enquanto p { color: var(--mut); font-size: 14px; margin-bottom: 22px; }
+    .enquanto { border-top: 1px solid var(--line2); background: var(--blk); padding: clamp(50px, 7vw, 86px) 0; text-align: center; }
+    h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(25px, 3.4vw, 36px); line-height: 1.16; margin-bottom: 12px; }
+    .enquanto p { color: var(--mut); font-size: 16px; margin-bottom: 26px; }
     .btn-sec {
-      display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--paper);
+      display: inline-flex; align-items: center; gap: 11px; text-decoration: none; color: var(--paper);
       border: 1px solid var(--line); border-radius: 3px;
-      font-size: 12px; font-weight: 700; letter-spacing: .14em; padding: 13px 22px;
-      transition: border-color .25s ease, background .25s ease, color .25s ease;
+      font-size: 13.5px; font-weight: 700; letter-spacing: .14em; padding: 15px 26px;
+      transition: border-color .25s ease, background .25s ease, color .25s ease, transform .25s ease;
     }
-    .btn-sec:hover { border-color: rgba(235, 70, 24, .8); background: rgba(235, 70, 24, .08); color: #FFD9CA; }
-    .btn-sec svg { width: 15px; height: 15px; }
+    .btn-sec:hover { border-color: rgba(235, 70, 24, .85); background: rgba(235, 70, 24, .08); color: #FFD9CA; transform: translateY(-2px); }
+    .btn-sec svg { width: 17px; height: 17px; }
 
     /* 3. Rodapé */
     footer {
-      border-top: 1px solid var(--line2); padding: clamp(26px, 4vw, 40px) 0 clamp(32px, 5vw, 48px);
-      color: var(--mut2); font-size: 11.5px; line-height: 1.65; text-align: center;
+      border-top: 1px solid var(--line2); padding: clamp(30px, 4vw, 44px) 0 clamp(36px, 5vw, 52px);
+      color: var(--mut2); font-size: 12.5px; line-height: 1.65; text-align: center;
     }
     footer p + p { margin-top: 10px; }
 
@@ -167,8 +205,17 @@
       .com-video .btn-topo { display: flex; }
     }
 
+    /* no celular o rótulo do botão precisa caber em uma linha */
+    @media (max-width: 520px) {
+      h1 { max-width: none; }
+      .btn { font-size: 15.5px; letter-spacing: .05em; padding: 17px 18px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .btn, .btn .arr svg, .btn-sec { transition: none; }
+      .js .ent > *, .js .selo, .js .pal > i, .js .rv, .js .rv.on { animation: none; opacity: 1; transform: none; }
+      .js .selo svg polyline { animation: none; stroke-dashoffset: 0; }
+      .js .brilho, .js .btn::after { animation: none; }
+      .btn-sec { transition: none; }
     }
   </style>
 </head>
@@ -178,11 +225,11 @@
 
   <main>
     <div class="container">
-      <div class="confirmacao" id="confirmacao">
+      <div class="confirmacao ent" id="confirmacao">
         <div class="brilho" aria-hidden="true"></div>
 
         <p class="selo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline pathLength="1" points="20 6 9 17 4 12"></polyline></svg>
           INSCRIÇÃO CONFIRMADA
         </p>
         <h1>Sua vaga na Black Vitalícia está confirmada!</h1>
@@ -215,7 +262,7 @@
     </div>
 
     <div class="enquanto">
-      <div class="container">
+      <div class="container rv">
         <h2>Enquanto o dia 28 não chega</h2>
         <p>Me segue no Instagram e acompanha comigo essa BLACK ÚNICA da Academia!</p>
         <a class="btn-sec" href="https://www.instagram.com/ocaradocopytrade/" target="_blank" rel="noopener">
@@ -240,21 +287,24 @@
       var cfg = window.BLACK_CONFIG || {};
       window.dataLayer = window.dataLayer || [];
 
-      // Conversão de inscrição: esta página só abre depois do envio do formulário. Uma vez por sessão.
-      try {
-        if (!sessionStorage.getItem('black_confirmada')) {
+      // Modo revisão (?preview=1): mostra a página sem contar conversão nem play
+      if (!window.blackPreview) {
+        // Conversão de inscrição: esta página só abre depois do envio do formulário. Uma vez por sessão.
+        try {
+          if (!sessionStorage.getItem('black_confirmada')) {
+            window.dataLayer.push({ event: 'black_inscricao_confirmada' });
+            sessionStorage.setItem('black_confirmada', '1');
+          }
+        } catch (e) {
           window.dataLayer.push({ event: 'black_inscricao_confirmada' });
-          sessionStorage.setItem('black_confirmada', '1');
         }
-      } catch (e) {
-        window.dataLayer.push({ event: 'black_inscricao_confirmada' });
       }
 
       document.querySelectorAll('.btn-grupo').forEach(function (a) {
         if (cfg.grupo) a.href = cfg.grupo;
         else console.error('BLACK_GRUPO_URL não configurado no serviço');
         a.addEventListener('click', function () {
-          window.dataLayer.push({ event: 'black_clique_grupo' });
+          if (!window.blackPreview) window.dataLayer.push({ event: 'black_clique_grupo' });
         });
       });
 
@@ -272,7 +322,7 @@
       document.addEventListener('player:ready', function (e) {
         var p = e.detail.player;
         p.addEventListener('video:play', function () {
-          if (contou || p.inSmartAutoPlay) return;
+          if (contou || p.inSmartAutoPlay || window.blackPreview) return;
           contou = true;
           window.dataLayer.push({ event: 'black_play_video' });
         });
@@ -282,6 +332,42 @@
       s.src = 'https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/' + cfg.vturb + '/v4/player.js';
       s.async = true;
       document.head.appendChild(s);
+    })();
+
+    /* ---------- movimento ---------- */
+    (function () {
+      if (window.blackSaindo) return;
+      var menos = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var h1 = document.querySelector('h1');
+      if (h1 && !menos) {
+        var frag = document.createDocumentFragment();
+        h1.textContent.split(' ').forEach(function (palavra, i) {
+          if (i) frag.appendChild(document.createTextNode(' '));
+          var caixa = document.createElement('span');
+          caixa.className = 'pal';
+          var dentro = document.createElement('i');
+          dentro.style.animationDelay = (0.3 + i * 0.05) + 's';
+          dentro.textContent = palavra;
+          caixa.appendChild(dentro);
+          frag.appendChild(caixa);
+        });
+        h1.textContent = '';
+        h1.appendChild(frag);
+        h1.className = 'partido';
+      }
+
+      var alvos = document.querySelectorAll('.rv');
+      if (menos || !window.IntersectionObserver) {
+        alvos.forEach(function (el) { el.classList.add('on'); });
+      } else {
+        var io = new IntersectionObserver(function (itens) {
+          itens.forEach(function (i) {
+            if (i.isIntersecting) { i.target.classList.add('on'); io.unobserve(i.target); }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: .1 });
+        alvos.forEach(function (el) { io.observe(el); });
+      }
     })();
   </script>
 </body>

@@ -24,6 +24,7 @@
 
   <link rel="preload" as="font" type="font/woff2" href="/black/fonts/anton-400.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/black/fonts/archivo-var.woff2" crossorigin>
+  <link rel="preload" as="image" href="/black/img/fundo-hero.webp">
 
   <!-- Webhook do GHL: gerado ao subir o container a partir das variáveis do serviço -->
   <script src="/black/config.js"></script>
@@ -39,11 +40,11 @@
       --org: #EB4618;
       --org2: #FF6231;
       --paper: #FAFAF7;
-      --mut: rgba(250, 250, 247, .68);
-      --mut2: rgba(250, 250, 247, .5);
-      --line: rgba(250, 250, 247, .13);
-      --line2: rgba(250, 250, 247, .07);
-      --inkmut: rgba(11, 11, 11, .78);
+      --mut: rgba(250, 250, 247, .72);
+      --mut2: rgba(250, 250, 247, .55);
+      --line: rgba(250, 250, 247, .14);
+      --line2: rgba(250, 250, 247, .08);
+      --inkmut: rgba(11, 11, 11, .8);
       --verde: #5DCAA5;
       --vermelho: #F0997B;
       --pad: clamp(20px, 5vw, 56px);
@@ -51,13 +52,15 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       background: var(--ink);
       color: var(--paper);
       font-family: 'Archivo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       font-weight: 400;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 17px;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -79,212 +82,306 @@
       background-size: 180px 180px;
     }
 
-    /* entrada da dobra: só com JS vivo, e sempre termina visível (animation-fill: both) */
-    @keyframes sobe { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    .js .ent { animation: sobe .8s cubic-bezier(.2, .7, .2, 1) both; }
-    .js .ent-2 { animation-delay: .14s; }
+    /* ================= movimento =================
+       Tudo depende da classe .js no <html>: sem JS a página nasce visível e parada. */
+    @keyframes sobe { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+    @keyframes sobePalavra { from { opacity: 0; transform: translateY(32%); } to { opacity: 1; transform: none; } }
+    @keyframes entraMarca { from { opacity: 0; transform: scale(.94); letter-spacing: .14em; } to { opacity: 1; transform: none; } }
+    @keyframes varrer { 0%, 14% { background-position: 150% 0; } 86%, 100% { background-position: -50% 0; } }
+    @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.12); } }
+    @keyframes pulso { 0%, 100% { box-shadow: 0 0 0 4px rgba(235, 70, 24, .18); } 50% { box-shadow: 0 0 0 10px rgba(235, 70, 24, .03); } }
+    @keyframes pulsoVerde { 0%, 100% { box-shadow: 0 0 0 3px rgba(93, 202, 165, .16); } 50% { box-shadow: 0 0 0 7px rgba(93, 202, 165, .02); } }
+    @keyframes respira { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+    @keyframes escaneia { 0% { top: -12%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { top: 104%; opacity: 0; } }
+    @keyframes brilhaPonto { 0%, 100% { r: 4.5; opacity: 1; } 50% { r: 6.5; opacity: .75; } }
 
-    /* ---------- topo ---------- */
-    .topo { position: relative; z-index: 3; border-bottom: 1px solid var(--line2); }
-    .topo-in {
-      max-width: 1180px; margin: 0 auto; padding: 14px var(--pad);
-      display: flex; justify-content: space-between; align-items: center; gap: 16px;
-    }
-    .topo-marca { font-family: 'Anton', sans-serif; font-size: 15px; letter-spacing: .14em; color: var(--org); white-space: nowrap; }
-    .topo-frase { color: var(--mut2); font-size: 11.5px; text-align: right; }
+    /* entrada da dobra, em cascata */
+    .js .ent > * { animation: sobe .9s cubic-bezier(.16, 1, .3, 1) both; }
+    .js .ent > .frase { animation-delay: .34s; }
+    .js .ent > .rotulo { animation-delay: .44s; }
+    .js .ent > h1 { animation-delay: .52s; }
+    .js .ent > .sub { animation-delay: .64s; }
+    .js .ent > .form-card { animation-delay: .74s; }
+    .js .ent > .marca { animation: entraMarca 1.1s cubic-bezier(.16, 1, .3, 1) both; animation-delay: .06s; }
+    /* com o H1 quebrado em palavras, quem anima são elas */
+    .js h1.partido { animation: none; opacity: 1; }
+    .js .pal { display: inline-block; }
+    .js .pal > i { display: inline-block; font-style: normal; animation: sobePalavra .85s cubic-bezier(.16, 1, .3, 1) both; }
+
+    /* revelação por rolagem */
+    .js .rv { opacity: 0; transform: translateY(30px); transition: opacity .9s ease, transform .9s cubic-bezier(.16, 1, .3, 1); }
+    .js .rv.on { opacity: 1; transform: none; }
+    .js .rv-stag > * { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.16, 1, .3, 1); }
+    .js .rv-stag.on > * { opacity: 1; transform: none; }
+    .js .rv-stag.on > *:nth-child(1) { transition-delay: .04s; }
+    .js .rv-stag.on > *:nth-child(2) { transition-delay: .12s; }
+    .js .rv-stag.on > *:nth-child(3) { transition-delay: .2s; }
+    .js .rv-stag.on > *:nth-child(4) { transition-delay: .28s; }
 
     /* ---------- dobra ---------- */
-    .hero { position: relative; overflow: hidden; padding: clamp(32px, 5.5vw, 68px) 0 clamp(44px, 6vw, 80px); }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background: url('/black/img/fundo-hero.webp') 50% 18% / cover no-repeat;
-      opacity: .17; filter: grayscale(1) contrast(1.08);
+    .capa {
+      position: relative; overflow: hidden;
+      min-height: 100svh; display: flex; align-items: center;
+      padding: clamp(30px, 4vw, 52px) 0 clamp(36px, 4.5vw, 62px);
     }
-    .hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 11, 11, .5), rgba(11, 11, 11, .92) 58%, var(--ink)); }
-    .hero-glow {
-      position: absolute; z-index: 0; top: -240px; right: -180px; width: 640px; height: 640px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(235, 70, 24, .28), transparent 66%); pointer-events: none;
+    .capa-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; will-change: transform; }
+    .capa-bg::before {
+      content: ""; position: absolute; inset: -8%;
+      background: url('/black/img/fundo-hero.webp') 50% 16% / cover no-repeat;
+      opacity: .2; filter: grayscale(1) contrast(1.1);
+      transform-origin: 60% 40%;
     }
-    .hero-in {
-      position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1fr 1.02fr; gap: clamp(28px, 4vw, 54px); align-items: center;
+    .js .capa-bg::before { animation: kenburns 26s ease-in-out infinite alternate; }
+    .capa-bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 18%, rgba(11, 11, 11, .35), rgba(11, 11, 11, .88) 58%, var(--ink) 92%); }
+    .capa-brilho {
+      position: absolute; z-index: 0; top: -22%; left: 50%; transform: translateX(-50%);
+      width: min(1100px, 150vw); height: min(780px, 100vw); pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(235, 70, 24, .26), transparent 62%);
     }
+    /* clarão que segue o ponteiro (só mouse) */
+    .capa-ponteiro {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .5s ease;
+      background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 30%), rgba(235, 70, 24, .17), transparent 72%);
+    }
+    .capa.com-ponteiro .capa-ponteiro { opacity: 1; }
+
+    .capa-in { position: relative; z-index: 2; text-align: center; max-width: 1040px; }
 
     .rotulo {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-size: 10.5px; font-weight: 700; letter-spacing: .2em; color: var(--org2);
-      margin-bottom: clamp(14px, 2vw, 20px);
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; letter-spacing: .22em; color: var(--org2);
+      margin-top: clamp(16px, 2vw, 24px);
     }
-    .rotulo::before {
-      content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--org);
-      box-shadow: 0 0 0 4px rgba(235, 70, 24, .18); animation: pulso 2.6s ease-in-out infinite;
+    .rotulo::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--org); box-shadow: 0 0 0 4px rgba(235, 70, 24, .18); }
+    .js .rotulo::before { animation: pulso 2.6s ease-in-out infinite; }
+
+    /* a marca é o centro da página: Anton grande, com uma luz que passa por dentro */
+    .marca {
+      font-family: 'Anton', sans-serif; font-weight: 400;
+      font-size: clamp(38px, 8.2vw, 112px); line-height: .92; letter-spacing: .012em;
+      color: var(--paper);
+      /* o clip de texto só pinta o que está dentro da caixa de fundo: o padding salva o acento do Í */
+      padding: .12em .02em .06em; margin: -.12em -.02em -.06em;
     }
-    @keyframes pulso { 0%, 100% { box-shadow: 0 0 0 4px rgba(235, 70, 24, .18); } 50% { box-shadow: 0 0 0 9px rgba(235, 70, 24, .04); } }
+    @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+      .marca {
+        background: linear-gradient(100deg, var(--paper) 0%, var(--paper) 36%, var(--org2) 50%, var(--paper) 64%, var(--paper) 100%);
+        background-size: 280% 100%; background-position: 150% 0;
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .js .marca { animation: entraMarca 1.1s cubic-bezier(.16, 1, .3, 1) .06s both, varrer 7s ease-in-out 1.9s infinite; }
+    }
+    .frase { color: var(--mut); font-size: clamp(14px, 1.3vw, 17px); margin-top: 12px; }
 
     h1 {
       font-family: 'Anton', sans-serif; font-weight: 400;
-      font-size: clamp(31px, 4.5vw, 55px); line-height: 1.02; letter-spacing: .004em;
-      margin-bottom: clamp(14px, 2vw, 20px);
+      /* entrelinha < 1.1 corta acento de minúscula nesta fonte (í, ê) */
+      font-size: clamp(25px, 3vw, 38px); line-height: 1.16; letter-spacing: .004em;
+      margin-top: clamp(12px, 1.5vw, 18px);
+      max-width: 24ch; margin-left: auto; margin-right: auto;
     }
-    .sub { color: var(--mut); font-size: clamp(14px, 1.2vw, 16px); line-height: 1.62; max-width: 36em; margin-bottom: clamp(22px, 3vw, 32px); }
+    .sub {
+      color: var(--mut); font-size: clamp(15px, 1.3vw, 17px); line-height: 1.58;
+      max-width: 62ch; margin: 14px auto 0;
+    }
 
     /* ---------- formulário ---------- */
     .form-card {
-      position: relative;
-      background: linear-gradient(180deg, rgba(250, 250, 247, .06), rgba(250, 250, 247, .022));
-      border: 1px solid var(--line); border-radius: 6px;
-      padding: clamp(20px, 2.6vw, 28px);
-      box-shadow: 0 30px 70px -34px rgba(0, 0, 0, .95);
+      position: relative; text-align: left;
+      width: 100%; max-width: 520px; margin: clamp(22px, 3vw, 34px) auto 0;
+      scroll-margin-top: 24px;
+      background: linear-gradient(180deg, rgba(250, 250, 247, .07), rgba(250, 250, 247, .025));
+      border: 1px solid var(--line); border-radius: 8px;
+      padding: clamp(18px, 2.4vw, 26px);
+      box-shadow: 0 34px 80px -34px rgba(0, 0, 0, .95);
+      backdrop-filter: blur(3px);
     }
-    .form-card::before { content: ""; position: absolute; left: -1px; top: -1px; width: 62px; height: 2px; background: var(--org); }
+    .form-card::before { content: ""; position: absolute; left: -1px; top: -1px; width: 68px; height: 2px; background: var(--org); }
 
     .campo { margin-bottom: 10px; }
     .campo input {
       width: 100%;
-      background: rgba(5, 5, 5, .55);
+      background: rgba(5, 5, 5, .6);
       border: 1px solid var(--line);
-      border-radius: 4px;
-      padding: 13px 14px;
+      border-radius: 5px;
+      padding: 14px 15px;
       color: var(--paper);
       font: inherit;
-      font-size: 16px; /* 16px evita o zoom automático do iOS ao focar */
+      font-size: 16.5px; /* ≥16px evita o zoom automático do iOS ao focar */
       transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
     }
-    .campo input::placeholder { color: rgba(250, 250, 247, .42); }
-    .campo input:focus { outline: none; border-color: rgba(235, 70, 24, .75); box-shadow: 0 0 0 3px rgba(235, 70, 24, .14); background: rgba(5, 5, 5, .85); }
+    .campo input::placeholder { color: rgba(250, 250, 247, .45); }
+    .campo input:focus { outline: none; border-color: rgba(235, 70, 24, .8); box-shadow: 0 0 0 3px rgba(235, 70, 24, .15); background: rgba(5, 5, 5, .88); }
     .campo input[aria-invalid="true"] { border-color: var(--vermelho); }
-    .erro { color: var(--vermelho); font-size: 12px; margin-top: 5px; }
+    .erro { color: var(--vermelho); font-size: 13px; margin-top: 6px; }
     .erro:empty { display: none; }
-    #erro-envio { margin-top: 10px; }
+    #erro-envio { margin-top: 12px; }
 
     /* CTA: o mesmo "fogo" dos botões da LP da Academia */
     .btn {
       display: flex; align-items: center; justify-content: space-between; gap: 14px;
-      width: 100%; min-height: 56px; padding: 15px 20px;
+      width: 100%; min-height: 60px; padding: 16px 22px;
       border: 0; border-radius: 3px; cursor: pointer; position: relative;
-      font-family: 'Anton', sans-serif; font-size: 15.5px; letter-spacing: .08em; text-align: left; text-decoration: none;
-      transition: transform .15s ease, box-shadow .35s ease, background .3s ease;
+      font-family: 'Anton', sans-serif; font-size: 17px; letter-spacing: .08em; text-align: left; text-decoration: none;
+      transition: transform .15s ease, box-shadow .35s ease, background .3s ease, color .2s ease;
       touch-action: manipulation;
     }
     .btn:active { transform: scale(.985); }
-    .btn .arr { position: relative; flex: none; width: 24px; height: 24px; overflow: hidden; }
-    .btn .arr svg { position: absolute; inset: 0; width: 24px; height: 24px; transition: transform .3s cubic-bezier(.75, 0, .2, 1); }
-    .btn .arr .a2 { transform: translateX(-28px); }
-    .btn:hover .arr .a1, .btn:active .arr .a1 { transform: translateX(28px); }
+    .btn .arr { position: relative; flex: none; width: 26px; height: 26px; overflow: hidden; }
+    .btn .arr svg { position: absolute; inset: 0; width: 26px; height: 26px; transition: transform .3s cubic-bezier(.75, 0, .2, 1); }
+    .btn .arr .a2 { transform: translateX(-30px); }
+    .btn:hover .arr .a1, .btn:active .arr .a1 { transform: translateX(30px); }
     .btn:hover .arr .a2, .btn:active .arr .a2 { transform: translateX(0); }
     .btn-fire {
       background: linear-gradient(180deg, var(--org2) 0%, #E03C0E 100%); color: #190A05;
-      box-shadow: 0 0 46px rgba(235, 70, 24, .38), 0 10px 34px -14px rgba(235, 70, 24, .7);
+      box-shadow: 0 0 48px rgba(235, 70, 24, .38), 0 10px 34px -14px rgba(235, 70, 24, .7);
     }
-    .btn-fire:hover { background: linear-gradient(180deg, #FF7245 0%, #EE4715 100%); box-shadow: 0 0 64px rgba(235, 70, 24, .52), 0 10px 40px -12px rgba(235, 70, 24, .8); }
+    .btn-fire:hover { background: linear-gradient(180deg, #FF7245 0%, #EE4715 100%); box-shadow: 0 0 66px rgba(235, 70, 24, .54), 0 10px 40px -12px rgba(235, 70, 24, .8); }
+    /* halo que respira, como no CTA da LP da Academia */
+    .btn-fire::after {
+      content: ""; position: absolute; inset: -2px; border-radius: inherit; pointer-events: none; opacity: 0;
+      box-shadow: 0 0 84px rgba(235, 70, 24, .5), 0 10px 48px -10px rgba(235, 70, 24, .5);
+    }
+    .js .btn-fire::after { animation: respira 3.4s ease-in-out infinite; }
+    .btn-tinta { background: var(--ink); color: var(--paper); border: 2px solid var(--ink); }
+    .btn-tinta:hover { background: #000; }
     .btn:disabled { cursor: progress; filter: saturate(.7) brightness(.86); }
-    .aviso { color: var(--mut2); font-size: 11.5px; line-height: 1.55; margin-top: 14px; }
+    .aviso { color: var(--mut2); font-size: 13px; line-height: 1.5; margin-top: 14px; }
 
-    /* ---------- mosaico do que está dentro ---------- */
-    .mosaico { display: grid; gap: 10px; }
-    .capas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-    .capa { position: relative; aspect-ratio: 3 / 4; border-radius: 4px; overflow: hidden; background: #141416; border: 1px solid var(--line2); }
-    .capa img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92); }
-    .capa::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(11, 11, 11, .6)); }
+    .cta-secao { max-width: 440px; margin: clamp(30px, 4vw, 48px) auto 0; }
 
-    .quadros { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-    .q {
-      background: linear-gradient(180deg, rgba(250, 250, 247, .045), rgba(250, 250, 247, .015));
-      border: 1px solid var(--line2); border-radius: 4px; padding: 13px;
+    /* ---------- prova: fotos e painéis do produto ---------- */
+    .prova { position: relative; background: var(--blk); padding: clamp(54px, 8vw, 104px) 0; }
+    .capas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .capa-foto { position: relative; aspect-ratio: 3 / 4; border-radius: 5px; overflow: hidden; background: #141416; border: 1px solid var(--line2); }
+    .capa-foto img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92); transition: transform .9s cubic-bezier(.16, 1, .3, 1), filter .5s ease; }
+    .capa-foto:hover img { transform: scale(1.07); filter: saturate(1.04); }
+    .capa-foto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 44%, rgba(5, 5, 5, .62)); }
+
+    .paineis { display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; margin-top: 12px; }
+    .painel {
+      position: relative; overflow: hidden;
+      background: linear-gradient(180deg, rgba(250, 250, 247, .05), rgba(250, 250, 247, .017));
+      border: 1px solid var(--line2); border-radius: 5px; padding: clamp(16px, 2vw, 22px);
+      transition: border-color .4s ease, transform .5s cubic-bezier(.16, 1, .3, 1);
     }
-    .q-3 { grid-column: span 3; }
-    .q-2 { grid-column: span 2; }
-    .rot { font-size: 8.6px; font-weight: 700; letter-spacing: .16em; color: var(--mut2); margin-bottom: 11px; }
-    .rot-org { color: rgba(255, 98, 49, .92); }
-    .barras { display: flex; align-items: flex-end; gap: 4px; height: 34px; }
-    .barras span { flex: 1; background: rgba(250, 250, 247, .16); border-radius: 1px; }
-    .barras span.destaque { background: linear-gradient(180deg, var(--org2), var(--org)); }
-    .linha { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; color: var(--mut); }
-    .linha + .linha { margin-top: 7px; }
-    .selo { font-size: 8.6px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 3px 7px; }
-    .passa { background: rgba(93, 202, 165, .14); color: var(--verde); }
-    .reprova { background: rgba(240, 153, 123, .12); color: var(--vermelho); }
-    .pronta { display: flex; align-items: center; gap: 7px; font-size: 10.5px; color: var(--mut); }
-    .pronta::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 3px rgba(93, 202, 165, .14); }
-    .comunidade { font-family: 'Anton', sans-serif; font-size: 15px; letter-spacing: .01em; }
-    .investidores { font-size: 10px; color: var(--mut2); }
-    .faixa {
-      background: var(--org); color: #190A05; border-radius: 3px;
-      font-family: 'Anton', sans-serif; font-size: clamp(11px, 1.05vw, 13px); letter-spacing: .1em;
-      text-align: center; padding: 13px 12px;
+    .painel:hover { border-color: var(--line); transform: translateY(-2px); }
+    .rot { font-size: 10.5px; font-weight: 700; letter-spacing: .18em; color: var(--mut2); }
+    .rot-org { color: rgba(255, 98, 49, .95); }
+
+    /* gráfico do acompanhamento: SVG que se desenha ao entrar na tela */
+    .grafico { display: block; width: 100%; height: auto; margin-top: 20px; color: var(--paper); }
+    .grafico .grade { stroke: currentColor; opacity: .1; }
+    .grafico .area { opacity: 0; transition: opacity 1.1s ease .5s; }
+    .grafico .curva { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.7s cubic-bezier(.4, 0, .2, 1) .15s; }
+    .grafico .ponto { opacity: 0; transition: opacity .5s ease 1.5s; }
+    .rv.on .grafico .area { opacity: 1; }
+    .rv.on .grafico .curva { stroke-dashoffset: 0; }
+    .rv.on .grafico .ponto { opacity: 1; }
+    .js .rv.on .grafico .ponto { animation: brilhaPonto 2.4s ease-in-out 2s infinite; }
+
+    /* IA de filtragem: lista com barra de leitura e uma varredura passando por cima */
+    .ia { margin-top: 22px; position: relative; }
+    .ia-scan {
+      position: absolute; left: -6%; width: 112%; height: 44px; top: -12%; pointer-events: none;
+      background: linear-gradient(180deg, transparent, rgba(255, 98, 49, .16), transparent);
     }
+    .js .rv.on .ia-scan { animation: escaneia 3.6s cubic-bezier(.5, 0, .5, 1) 1.2s infinite; }
+    .linha { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; font-size: 13.5px; color: var(--mut); }
+    .linha + .linha { margin-top: 17px; }
+    .barra { height: 5px; border-radius: 3px; background: rgba(250, 250, 247, .09); overflow: hidden; }
+    .barra i { display: block; height: 100%; border-radius: 3px; background: rgba(250, 250, 247, .28); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(.16, 1, .3, 1); }
+    .barra.ok i { background: linear-gradient(90deg, rgba(93, 202, 165, .5), var(--verde)); }
+    .rv.on .barra i { transform: scaleX(1); }
+    .rv.on .linha:nth-child(2) .barra i { transition-delay: .18s; }
+    .rv.on .linha:nth-child(3) .barra i { transition-delay: .3s; }
+    .rv.on .linha:nth-child(4) .barra i { transition-delay: .42s; }
+    .selo { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; border-radius: 3px; padding: 4px 9px; white-space: nowrap; }
+    .passa { background: rgba(93, 202, 165, .15); color: var(--verde); }
+    .reprova { background: rgba(240, 153, 123, .13); color: var(--vermelho); }
+
+    .status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+    .pronta { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--mut); margin-top: 12px; }
+    .pronta::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 3px rgba(93, 202, 165, .16); }
+    .js .pronta::before { animation: pulsoVerde 2.8s ease-in-out infinite; }
+    .comunidade { font-family: 'Anton', sans-serif; font-size: clamp(19px, 1.8vw, 24px); line-height: 1.1; }
+    .investidores { font-size: 13px; color: var(--mut2); margin-top: 4px; }
 
     /* ---------- faixa de autoridade ---------- */
-    .autoridade { border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); background: var(--blk); }
+    .autoridade { border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); background: var(--ink); }
     .autoridade-in {
-      max-width: 1180px; margin: 0 auto; padding: 18px var(--pad);
-      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px clamp(20px, 4vw, 56px);
-      color: rgba(250, 250, 247, .52); font-size: 10px; font-weight: 700; letter-spacing: .22em;
+      max-width: 1180px; margin: 0 auto; padding: 22px var(--pad);
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px clamp(22px, 4vw, 60px);
+      color: rgba(250, 250, 247, .55); font-size: 11.5px; font-weight: 700; letter-spacing: .24em;
     }
     .autoridade-in span { position: relative; }
     .autoridade-in span + span::before {
-      content: ""; position: absolute; left: calc(clamp(20px, 4vw, 56px) / -2); top: 50%;
-      width: 3px; height: 3px; border-radius: 50%; background: rgba(235, 70, 24, .8); transform: translate(-50%, -50%);
+      content: ""; position: absolute; left: calc(clamp(22px, 4vw, 60px) / -2); top: 50%;
+      width: 3px; height: 3px; border-radius: 50%; background: rgba(235, 70, 24, .85); transform: translate(-50%, -50%);
     }
 
     /* ---------- o que é a Academia (papel) ---------- */
-    .papel { background: var(--paper); color: var(--ink); padding: clamp(52px, 7.5vw, 100px) 0; }
-    .duas { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(22px, 4vw, 64px); align-items: start; }
-    .papel h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(27px, 3.6vw, 44px); line-height: 1.04; }
-    .regua { width: 56px; height: 3px; background: var(--org); margin-bottom: 18px; }
-    .papel .lede { font-size: clamp(17px, 1.5vw, 20px); line-height: 1.5; color: var(--ink); }
-    .papel p + p { margin-top: 14px; }
-    .papel .corpo { color: var(--inkmut); font-size: 16px; line-height: 1.68; }
+    .papel { background: var(--paper); color: var(--ink); padding: clamp(58px, 8vw, 110px) 0; }
+    .duas { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(24px, 4vw, 68px); align-items: start; }
+    .papel h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(30px, 4.2vw, 52px); line-height: 1.12; }
+    .regua { width: 64px; height: 3px; background: var(--org); margin-bottom: 20px; }
+    .papel .lede { font-size: clamp(19px, 1.7vw, 23px); line-height: 1.48; color: var(--ink); }
+    .papel p + p { margin-top: 16px; }
+    .papel .corpo { color: var(--inkmut); font-size: 17.5px; line-height: 1.66; }
 
     /* ---------- quem vai te mostrar ---------- */
-    .quem { background: var(--blk); padding: clamp(52px, 7.5vw, 100px) 0; }
-    .quem h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.06; margin-bottom: clamp(24px, 3.5vw, 40px); }
-    .hendi { display: grid; grid-template-columns: 320px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+    .quem { background: var(--blk); padding: clamp(58px, 8vw, 110px) 0; }
+    .quem h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(28px, 3.7vw, 46px); line-height: 1.12; margin-bottom: clamp(26px, 3.6vw, 44px); }
+    .hendi { display: grid; grid-template-columns: 340px 1fr; gap: clamp(26px, 4vw, 60px); align-items: start; }
     .retrato { position: relative; }
-    .retrato img { width: 100%; height: auto; border-radius: 4px; }
+    .retrato img { width: 100%; height: auto; border-radius: 5px; }
     .retrato::after {
-      content: ""; position: absolute; right: -12px; bottom: -12px; width: 58%; height: 52%;
-      border-right: 1px solid var(--org); border-bottom: 1px solid var(--org); border-radius: 0 0 4px 0; pointer-events: none;
+      content: ""; position: absolute; right: -14px; bottom: -14px; width: 58%; height: 52%;
+      border-right: 1px solid var(--org); border-bottom: 1px solid var(--org); border-radius: 0 0 5px 0; pointer-events: none;
     }
-    .quem p { color: var(--mut); font-size: 16px; line-height: 1.68; }
-    .quem p + p { margin-top: 14px; }
+    .quem p { color: var(--mut); font-size: 17.5px; line-height: 1.66; }
+    .quem p + p { margin-top: 16px; }
 
     /* ---------- rodapé ---------- */
     footer {
       border-top: 1px solid var(--line2); background: var(--ink);
-      padding: clamp(26px, 4vw, 42px) 0 clamp(32px, 5vw, 50px);
-      color: var(--mut2); font-size: 11.5px; line-height: 1.65; text-align: center;
+      padding: clamp(30px, 4vw, 46px) 0 clamp(36px, 5vw, 54px);
+      color: var(--mut2); font-size: 12.5px; line-height: 1.65; text-align: center;
     }
     footer p + p { margin-top: 10px; }
 
-    /* tela larga e baixa (notebook): encolhe a dobra para o botão não cair abaixo do corte */
-    @media (min-width: 901px) and (max-height: 780px) {
-      .hero { padding-top: 22px; padding-bottom: 34px; }
-      .rotulo { margin-bottom: 10px; }
-      h1 { font-size: clamp(28px, 3.2vw, 40px); margin-bottom: 12px; }
-      .sub { margin-bottom: 16px; }
-      .form-card { padding: 20px; }
-    }
-
     @media (max-width: 900px) {
-      .hero-in { grid-template-columns: 1fr; }
+      .paineis { grid-template-columns: 1fr; }
       .duas { grid-template-columns: 1fr; }
       .hendi { grid-template-columns: 1fr; }
-      .retrato { max-width: 280px; }
+      .retrato { max-width: 300px; }
     }
 
     @media (max-width: 620px) {
-      .topo-in { flex-direction: column; align-items: flex-start; gap: 5px; }
-      .topo-frase { text-align: left; }
       .capas { grid-template-columns: repeat(2, 1fr); }
-      .quadros { grid-template-columns: repeat(2, 1fr); }
-      .q-3, .q-com { grid-column: span 2; }
-      .q-2 { grid-column: span 1; }
+      .status { grid-template-columns: 1fr; }
+      h1 { max-width: none; }
+    }
+
+    /* tela larga e baixa (notebook): a dobra inteira precisa caber */
+    @media (min-width: 901px) and (max-height: 820px) {
+      .capa { min-height: 0; padding-top: clamp(28px, 4vw, 48px); padding-bottom: clamp(34px, 4vw, 56px); }
+      .marca { font-size: clamp(38px, 6.4vw, 80px); }
+      h1 { font-size: clamp(23px, 2.4vw, 31px); margin-top: 12px; }
+      .sub { font-size: 15.5px; margin-top: 11px; }
+      .form-card { margin-top: 20px; padding: 20px; }
+      .rotulo { margin-top: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .js .ent { animation: none; }
-      .rotulo::before { animation: none; }
+      html { scroll-behavior: auto; }
+      .js .ent > *, .js .marca, .js .pal > i { animation: none; opacity: 1; transform: none; }
+      .js .rv, .js .rv-stag > * { opacity: 1; transform: none; transition: none; }
+      .js .capa-bg::before, .js .rotulo::before, .js .pronta::before, .js .btn-fire::after, .js .rv.on .ia-scan, .js .rv.on .grafico .ponto { animation: none; }
+      .grafico .curva { stroke-dashoffset: 0; }
+      .grafico .area, .grafico .ponto { opacity: 1; }
+      .barra i { transform: scaleX(1); }
+      .ia-scan { display: none; }
     }
   </style>
 </head>
@@ -292,91 +389,119 @@
 <body>
   <div class="grain" aria-hidden="true"></div>
 
-  <header class="topo">
-    <div class="topo-in">
-      <span class="topo-marca">BLACK VITALÍCIA</span>
-      <span class="topo-frase">A maior oferta que eu já fiz. Tudo com acesso vitalício.</span>
-    </div>
-  </header>
-
   <main>
-    <section class="hero">
-      <div class="hero-bg" aria-hidden="true"></div>
-      <div class="hero-glow" aria-hidden="true"></div>
+    <section class="capa" id="topo">
+      <div class="capa-bg" aria-hidden="true"></div>
+      <div class="capa-brilho" aria-hidden="true"></div>
+      <div class="capa-ponteiro" aria-hidden="true"></div>
 
-      <div class="wrap hero-in">
-        <div id="inscricao" class="ent">
-          <p class="rotulo">28 DE OUTUBRO — AO VIVO</p>
-          <h1>Você nunca mais vai precisar renovar nada para continuar no copy trade</h1>
-          <p class="sub">Paga uma única vez e a Academia é sua pelo resto da vida. Inclusive o que eu ainda nem coloquei lá dentro.</p>
+      <div class="wrap capa-in ent">
+        <p class="marca">BLACK VITALÍCIA</p>
+        <p class="frase">A maior oferta que eu já fiz. Tudo com acesso vitalício.</p>
+        <p class="rotulo">28 DE OUTUBRO — AO VIVO</p>
+        <h1>Você nunca mais vai precisar renovar nada para continuar no copy trade</h1>
+        <p class="sub">Paga uma única vez e a Academia é sua pelo resto da vida. Inclusive o que eu ainda nem coloquei lá dentro.</p>
 
-          <div class="form-card">
-            <form id="form" novalidate>
-              <div class="campo">
-                <label class="sr-only" for="nome">Nome</label>
-                <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="erro-nome">
-                <p class="erro" id="erro-nome" aria-live="polite"></p>
-              </div>
-              <div class="campo">
-                <label class="sr-only" for="email">E-mail</label>
-                <input id="email" name="email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" required aria-describedby="erro-email">
-                <p class="erro" id="erro-email" aria-live="polite"></p>
-              </div>
-              <div class="campo">
-                <label class="sr-only" for="whatsapp">WhatsApp com DDD</label>
-                <input id="whatsapp" name="whatsapp" type="tel" inputmode="numeric" placeholder="Seu WhatsApp com DDD" autocomplete="tel-national" maxlength="15" required aria-describedby="erro-whatsapp">
-                <p class="erro" id="erro-whatsapp" aria-live="polite"></p>
-              </div>
-              <button class="btn btn-fire" type="submit">
-                <span class="btn-tx">QUERO PARTICIPAR</span>
-                <span class="arr" aria-hidden="true">
-                  <svg class="a1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
-                  <svg class="a2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
-                </span>
-              </button>
-              <p class="erro" id="erro-envio" aria-live="polite"></p>
-              <p class="aviso">Nunca fiz isso antes e não pretendo repetir. Depois dessa live a Academia fecha para novos alunos.</p>
-            </form>
-          </div>
+        <div class="form-card" id="inscricao">
+          <form id="form" novalidate>
+            <div class="campo">
+              <label class="sr-only" for="nome">Nome</label>
+              <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="erro-nome">
+              <p class="erro" id="erro-nome" aria-live="polite"></p>
+            </div>
+            <div class="campo">
+              <label class="sr-only" for="email">E-mail</label>
+              <input id="email" name="email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" required aria-describedby="erro-email">
+              <p class="erro" id="erro-email" aria-live="polite"></p>
+            </div>
+            <div class="campo">
+              <label class="sr-only" for="whatsapp">WhatsApp com DDD</label>
+              <input id="whatsapp" name="whatsapp" type="tel" inputmode="numeric" placeholder="Seu WhatsApp com DDD" autocomplete="tel-national" maxlength="15" required aria-describedby="erro-whatsapp">
+              <p class="erro" id="erro-whatsapp" aria-live="polite"></p>
+            </div>
+            <button class="btn btn-fire" type="submit">
+              <span class="btn-tx">QUERO PARTICIPAR</span>
+              <span class="arr" aria-hidden="true">
+                <svg class="a1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+                <svg class="a2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+              </span>
+            </button>
+            <p class="erro" id="erro-envio" aria-live="polite"></p>
+            <p class="aviso">Nunca fiz isso antes e não pretendo repetir. Depois dessa live a Academia fecha para novos alunos.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="prova">
+      <div class="wrap">
+        <!-- fotos da Academia, sem texto (a fileira 1 não tem copy no briefing) -->
+        <div class="capas rv rv-stag" aria-hidden="true">
+          <figure class="capa-foto"><img src="/black/img/capa-1.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
+          <figure class="capa-foto"><img src="/black/img/capa-2.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
+          <figure class="capa-foto"><img src="/black/img/capa-3.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
+          <figure class="capa-foto"><img src="/black/img/capa-4.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
         </div>
 
-        <div class="mosaico ent ent-2">
-          <!-- capas: fotos da Academia, sem texto (a fileira 1 não tem copy no briefing) -->
-          <div class="capas" aria-hidden="true">
-            <figure class="capa"><img src="/black/img/capa-1.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
-            <figure class="capa"><img src="/black/img/capa-2.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
-            <figure class="capa"><img src="/black/img/capa-3.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
-            <figure class="capa"><img src="/black/img/capa-4.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
-          </div>
+        <div class="paineis">
+          <article class="painel rv">
+            <p class="rot">SISTEMA DE ACOMPANHAMENTO</p>
+            <svg class="grafico" viewBox="0 0 340 96" fill="none" aria-hidden="true" preserveAspectRatio="none" height="96">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#EB4618" stop-opacity=".34"></stop>
+                  <stop offset="100%" stop-color="#EB4618" stop-opacity="0"></stop>
+                </linearGradient>
+                <linearGradient id="curvaGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#FF6231" stop-opacity=".45"></stop>
+                  <stop offset="100%" stop-color="#FF6231"></stop>
+                </linearGradient>
+              </defs>
+              <g class="grade" stroke-width=".7">
+                <line x1="0" y1="24" x2="340" y2="24"></line>
+                <line x1="0" y1="52" x2="340" y2="52"></line>
+                <line x1="0" y1="80" x2="340" y2="80"></line>
+              </g>
+              <path class="area" d="M0,78 C28,74 44,63 68,65 C94,67 108,50 132,48 C158,46 170,58 194,52 C220,46 232,32 258,28 C284,24 300,17 340,10 L340,96 L0,96 Z" fill="url(#areaGrad)"></path>
+              <path class="curva" pathLength="1" d="M0,78 C28,74 44,63 68,65 C94,67 108,50 132,48 C158,46 170,58 194,52 C220,46 232,32 258,28 C284,24 300,17 340,10" stroke="url(#curvaGrad)" stroke-width="2.4" stroke-linecap="round"></path>
+              <circle class="ponto" cx="258" cy="28" r="4.5" fill="#FF6231"></circle>
+            </svg>
+          </article>
 
-          <div class="quadros">
-            <article class="q q-3">
-              <p class="rot">SISTEMA DE ACOMPANHAMENTO</p>
-              <div class="barras" aria-hidden="true">
-                <span style="height:35%"></span><span style="height:62%"></span><span style="height:48%"></span><span class="destaque" style="height:100%"></span><span style="height:55%"></span><span style="height:72%"></span><span style="height:44%"></span><span style="height:66%"></span>
-              </div>
-            </article>
-            <article class="q q-3">
-              <p class="rot rot-org">IA DE FILTRAGEM</p>
-              <p class="linha">Copy A <span class="selo passa">passa</span></p>
-              <p class="linha">Copy B <span class="selo reprova">reprova</span></p>
-              <p class="linha">Copy C <span class="selo reprova">reprova</span></p>
-            </article>
-            <article class="q q-2">
-              <p class="rot">CARTEIRA 1</p>
-              <p class="pronta">pronta e rodando</p>
-            </article>
-            <article class="q q-2">
-              <p class="rot">CARTEIRA 2</p>
-              <p class="pronta">pronta e rodando</p>
-            </article>
-            <article class="q q-2 q-com">
-              <p class="comunidade">Comunidade</p>
-              <p class="investidores">de investidores</p>
-            </article>
-          </div>
+          <article class="painel rv">
+            <p class="rot rot-org">IA DE FILTRAGEM</p>
+            <div class="ia">
+              <div class="ia-scan" aria-hidden="true"></div>
+              <p class="linha">Copy A <span class="barra ok" aria-hidden="true"><i style="width:88%"></i></span> <span class="selo passa">passa</span></p>
+              <p class="linha">Copy B <span class="barra" aria-hidden="true"><i style="width:41%"></i></span> <span class="selo reprova">reprova</span></p>
+              <p class="linha">Copy C <span class="barra" aria-hidden="true"><i style="width:23%"></i></span> <span class="selo reprova">reprova</span></p>
+            </div>
+          </article>
+        </div>
 
-          <p class="faixa">TUDO ISSO COM ACESSO VITALÍCIO — PAGO UMA ÚNICA VEZ</p>
+        <div class="status rv rv-stag">
+          <article class="painel">
+            <p class="rot">CARTEIRA 1</p>
+            <p class="pronta">pronta e rodando</p>
+          </article>
+          <article class="painel">
+            <p class="rot">CARTEIRA 2</p>
+            <p class="pronta">pronta e rodando</p>
+          </article>
+          <article class="painel">
+            <p class="comunidade">Comunidade</p>
+            <p class="investidores">de investidores</p>
+          </article>
+        </div>
+
+        <div class="cta-secao rv">
+          <a class="btn btn-fire" href="#inscricao">
+            <span>QUERO PARTICIPAR</span>
+            <span class="arr" aria-hidden="true">
+              <svg class="a1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+              <svg class="a2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
         </div>
       </div>
     </section>
@@ -391,7 +516,7 @@
     </div>
 
     <section class="papel">
-      <div class="wrap duas">
+      <div class="wrap duas rv">
         <div>
           <div class="regua" aria-hidden="true"></div>
           <h2>O que é a Academia do Hendi de Copy Trade</h2>
@@ -402,10 +527,21 @@
           <p class="corpo">É um ecossistema completo de educação e investimento em copy trade de assinatura anual. Mas por pouco tempo, no dia 28, ela será vitalícia, onde você paga uma única vez, para o resto da vida.</p>
         </div>
       </div>
+      <div class="wrap">
+        <div class="cta-secao rv">
+          <a class="btn btn-tinta" href="#inscricao">
+            <span>QUERO PARTICIPAR</span>
+            <span class="arr" aria-hidden="true">
+              <svg class="a1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+              <svg class="a2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
+        </div>
+      </div>
     </section>
 
     <section class="quem">
-      <div class="wrap">
+      <div class="wrap rv">
         <h2>Quem vai te mostrar isso</h2>
         <div class="hendi">
           <div class="retrato">
@@ -415,6 +551,17 @@
             <p>Formado em engenharia da computação, engenheiro de dados da Ford e investidor em copy trade há mais de 9 anos. Eu passei os últimos anos auditando copy traders, entendendo todo o conceito e essência para se ter resultados nesse mercado. Corretora por corretora, trader por trader, operação por operação.</p>
             <p>Construí o sistema de acompanhamento e matriz de descorrelação porque eu precisava medir o que ninguém mostrava para decidir onde colocar o meu próprio dinheiro. As carteiras que estão dentro da Academia são as mesmas que eu uso e acompanho todo dia para você ter resultados tão bons quanto os meus com conhecimento e método.</p>
           </div>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="cta-secao rv">
+          <a class="btn btn-fire" href="#inscricao">
+            <span>QUERO PARTICIPAR</span>
+            <span class="arr" aria-hidden="true">
+              <svg class="a1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+              <svg class="a2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
         </div>
       </div>
     </section>
@@ -517,6 +664,78 @@
             erroEnvio.textContent = 'Não foi possível enviar agora. Tente de novo em instantes.';
           });
       });
+
+      // Ao clicar num CTA de seção, leva para o formulário e põe o cursor no primeiro campo
+      document.querySelectorAll('a[href="#inscricao"]').forEach(function (a) {
+        a.addEventListener('click', function () {
+          setTimeout(function () { form.nome.focus({ preventScroll: true }); }, 700);
+        });
+      });
+    })();
+
+    /* ---------- movimento ---------- */
+    (function () {
+      var menos = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // H1 palavra por palavra: o texto continua o mesmo, só ganha uma caixa por palavra
+      var h1 = document.querySelector('h1');
+      if (h1 && !menos) {
+        var frag = document.createDocumentFragment();
+        h1.textContent.split(' ').forEach(function (palavra, i) {
+          if (i) frag.appendChild(document.createTextNode(' '));
+          var caixa = document.createElement('span');
+          caixa.className = 'pal';
+          var dentro = document.createElement('i');
+          dentro.textContent = palavra;
+          dentro.style.animationDelay = (0.52 + i * 0.04) + 's';
+          caixa.appendChild(dentro);
+          frag.appendChild(caixa);
+        });
+        h1.textContent = '';
+        h1.appendChild(frag);
+        h1.className = 'partido';
+      }
+
+      // Revelação ao rolar (sem JS ou sem suporte, tudo nasce visível pelo CSS)
+      var alvos = document.querySelectorAll('.rv');
+      if (menos || !window.IntersectionObserver) {
+        alvos.forEach(function (el) { el.classList.add('on'); });
+      } else {
+        var io = new IntersectionObserver(function (itens) {
+          itens.forEach(function (i) {
+            if (i.isIntersecting) { i.target.classList.add('on'); io.unobserve(i.target); }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: .1 });
+        alvos.forEach(function (el) { io.observe(el); });
+      }
+
+      var capa = document.querySelector('.capa');
+
+      // Clarão que segue o ponteiro (só onde existe mouse)
+      if (capa && !menos && matchMedia('(hover: hover)').matches) {
+        capa.addEventListener('pointermove', function (e) {
+          var r = capa.getBoundingClientRect();
+          capa.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          capa.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          capa.classList.add('com-ponteiro');
+        });
+        capa.addEventListener('pointerleave', function () { capa.classList.remove('com-ponteiro'); });
+      }
+
+      // Paralaxe do fundo da dobra
+      var fundo = document.querySelector('.capa-bg');
+      if (fundo && !menos) {
+        var pedido = false;
+        addEventListener('scroll', function () {
+          if (pedido) return;
+          pedido = true;
+          requestAnimationFrame(function () {
+            pedido = false;
+            var y = Math.min(pageYOffset, 1000);
+            fundo.style.transform = 'translate3d(0,' + (y * 0.18).toFixed(1) + 'px,0)';
+          });
+        }, { passive: true });
+      }
     })();
   </script>
 </body>
