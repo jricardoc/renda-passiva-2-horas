@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- marca que o JS está vivo: sem ele, nada nasce escondido -->
+  <script>document.documentElement.className = 'js';</script>
+
   <!-- Google Tag Manager (mesmo loader da VSL) -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://api.ohendi.com.br/autguzkstg.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','55r3sa=DhBOLC44SiMxPyQhKjs0UhFJQUVLUwMaWhsbDhQRDloEGx5FGAc%3D');</script>
   <!-- End Google Tag Manager -->
@@ -16,267 +19,421 @@
   <meta property="og:url" content="https://ohendi.com.br/black">
   <meta property="og:title" content="Black Vitalícia | Academia do Hendi de Copy Trade">
   <meta property="og:description" content="Paga uma única vez e a Academia é sua pelo resto da vida. Inclusive o que eu ainda nem coloquei lá dentro.">
-  <meta name="theme-color" content="#0D0D0E">
+  <meta property="og:image" content="https://ohendi.com.br/black/img/capa-3.webp">
+  <meta name="theme-color" content="#0B0B0B">
+
+  <link rel="preload" as="font" type="font/woff2" href="/black/fonts/anton-400.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/black/fonts/archivo-var.woff2" crossorigin>
 
   <!-- Webhook do GHL: gerado ao subir o container a partir das variáveis do serviço -->
   <script src="/black/config.js"></script>
 
   <style>
+    /* fontes da marca, hospedadas junto da página (as mesmas da LP da Academia) */
+    @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('/black/fonts/anton-400.woff2') format('woff2')}
+    @font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url('/black/fonts/archivo-var.woff2') format('woff2')}
+
     :root {
-      --bg: #0D0D0E;
-      --card: #1C1C1F;
-      --capa-1: #252528;
-      --capa-2: #2B2B2E;
-      --laranja: #EB4618;
-      --azul: #3A95B4;
-      --azul-escuro: #2E5F72;
-      --texto: #FFFFFF;
-      --texto-2: #A8A8A2;
-      --texto-3: #78786F;
-      --texto-apagado: #5A5A56;
-      --borda-input: #2E2E30;
-      --divisor: #232326;
-      --verde-bg: #123A2C;
+      --ink: #0B0B0B;
+      --blk: #050505;
+      --org: #EB4618;
+      --org2: #FF6231;
+      --paper: #FAFAF7;
+      --mut: rgba(250, 250, 247, .68);
+      --mut2: rgba(250, 250, 247, .5);
+      --line: rgba(250, 250, 247, .13);
+      --line2: rgba(250, 250, 247, .07);
+      --inkmut: rgba(11, 11, 11, .78);
       --verde: #5DCAA5;
-      --vermelho-bg: #3A1512;
       --vermelho: #F0997B;
+      --pad: clamp(20px, 5vw, 56px);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--bg);
-      color: var(--texto);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Archivo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       font-weight: 400;
+      font-size: 15px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .container { max-width: 760px; margin: 0 auto; padding: 16px 20px; }
-
-    :focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 2px solid var(--org2); outline-offset: 3px; }
 
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
       overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
     }
 
-    /* 1. Dobra */
-    .topo { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 20px; }
-    .topo-marca { color: var(--laranja); font-size: 12px; font-weight: 500; letter-spacing: 0.5px; white-space: nowrap; }
-    .topo-frase { color: var(--texto-3); font-size: 11px; text-align: right; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--pad); }
 
-    .dobra { display: grid; grid-template-columns: 0.78fr 1.22fr; gap: 20px; align-items: start; }
+    /* grão de filme — estático, zero JS (mesmo recurso da LP da Academia) */
+    .grain {
+      position: fixed; inset: -40px; z-index: 96; pointer-events: none; opacity: .055;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
 
-    .rotulo { color: var(--texto-3); font-size: 10px; letter-spacing: 0.5px; margin-bottom: 8px; }
-    h1 { font-size: 19px; font-weight: 500; line-height: 1.25; margin-bottom: 8px; }
-    .sub { color: var(--texto-2); font-size: 11px; line-height: 1.55; margin-bottom: 14px; }
+    /* entrada da dobra: só com JS vivo, e sempre termina visível (animation-fill: both) */
+    @keyframes sobe { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    .js .ent { animation: sobe .8s cubic-bezier(.2, .7, .2, 1) both; }
+    .js .ent-2 { animation-delay: .14s; }
 
-    .campo { margin-bottom: 8px; }
+    /* ---------- topo ---------- */
+    .topo { position: relative; z-index: 3; border-bottom: 1px solid var(--line2); }
+    .topo-in {
+      max-width: 1180px; margin: 0 auto; padding: 14px var(--pad);
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .topo-marca { font-family: 'Anton', sans-serif; font-size: 15px; letter-spacing: .14em; color: var(--org); white-space: nowrap; }
+    .topo-frase { color: var(--mut2); font-size: 11.5px; text-align: right; }
+
+    /* ---------- dobra ---------- */
+    .hero { position: relative; overflow: hidden; padding: clamp(32px, 5.5vw, 68px) 0 clamp(44px, 6vw, 80px); }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: url('/black/img/fundo-hero.webp') 50% 18% / cover no-repeat;
+      opacity: .17; filter: grayscale(1) contrast(1.08);
+    }
+    .hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 11, 11, .5), rgba(11, 11, 11, .92) 58%, var(--ink)); }
+    .hero-glow {
+      position: absolute; z-index: 0; top: -240px; right: -180px; width: 640px; height: 640px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(235, 70, 24, .28), transparent 66%); pointer-events: none;
+    }
+    .hero-in {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1.02fr; gap: clamp(28px, 4vw, 54px); align-items: center;
+    }
+
+    .rotulo {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: .2em; color: var(--org2);
+      margin-bottom: clamp(14px, 2vw, 20px);
+    }
+    .rotulo::before {
+      content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--org);
+      box-shadow: 0 0 0 4px rgba(235, 70, 24, .18); animation: pulso 2.6s ease-in-out infinite;
+    }
+    @keyframes pulso { 0%, 100% { box-shadow: 0 0 0 4px rgba(235, 70, 24, .18); } 50% { box-shadow: 0 0 0 9px rgba(235, 70, 24, .04); } }
+
+    h1 {
+      font-family: 'Anton', sans-serif; font-weight: 400;
+      font-size: clamp(31px, 4.5vw, 55px); line-height: 1.02; letter-spacing: .004em;
+      margin-bottom: clamp(14px, 2vw, 20px);
+    }
+    .sub { color: var(--mut); font-size: clamp(14px, 1.2vw, 16px); line-height: 1.62; max-width: 36em; margin-bottom: clamp(22px, 3vw, 32px); }
+
+    /* ---------- formulário ---------- */
+    .form-card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(250, 250, 247, .06), rgba(250, 250, 247, .022));
+      border: 1px solid var(--line); border-radius: 6px;
+      padding: clamp(20px, 2.6vw, 28px);
+      box-shadow: 0 30px 70px -34px rgba(0, 0, 0, .95);
+    }
+    .form-card::before { content: ""; position: absolute; left: -1px; top: -1px; width: 62px; height: 2px; background: var(--org); }
+
+    .campo { margin-bottom: 10px; }
     .campo input {
       width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--borda-input);
-      border-radius: 8px;
-      padding: 8px 10px;
-      color: var(--texto);
+      background: rgba(5, 5, 5, .55);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 13px 14px;
+      color: var(--paper);
       font: inherit;
       font-size: 16px; /* 16px evita o zoom automático do iOS ao focar */
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
     }
-    .campo input::placeholder { color: var(--texto-3); }
+    .campo input::placeholder { color: rgba(250, 250, 247, .42); }
+    .campo input:focus { outline: none; border-color: rgba(235, 70, 24, .75); box-shadow: 0 0 0 3px rgba(235, 70, 24, .14); background: rgba(5, 5, 5, .85); }
     .campo input[aria-invalid="true"] { border-color: var(--vermelho); }
-    .erro { color: var(--vermelho); font-size: 12px; margin-top: 4px; }
+    .erro { color: var(--vermelho); font-size: 12px; margin-top: 5px; }
     .erro:empty { display: none; }
+    #erro-envio { margin-top: 10px; }
 
+    /* CTA: o mesmo "fogo" dos botões da LP da Academia */
     .btn {
-      width: 100%;
-      border: 0;
-      border-radius: 8px;
-      background: var(--laranja);
-      color: var(--texto);
-      font: inherit;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 10px;
-      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      width: 100%; min-height: 56px; padding: 15px 20px;
+      border: 0; border-radius: 3px; cursor: pointer; position: relative;
+      font-family: 'Anton', sans-serif; font-size: 15.5px; letter-spacing: .08em; text-align: left; text-decoration: none;
+      transition: transform .15s ease, box-shadow .35s ease, background .3s ease;
+      touch-action: manipulation;
     }
-    .btn:disabled { opacity: 0.7; cursor: progress; }
-    .aviso { color: var(--texto-apagado); font-size: 10px; margin-top: 8px; }
-    #erro-envio { margin-top: 8px; }
+    .btn:active { transform: scale(.985); }
+    .btn .arr { position: relative; flex: none; width: 24px; height: 24px; overflow: hidden; }
+    .btn .arr svg { position: absolute; inset: 0; width: 24px; height: 24px; transition: transform .3s cubic-bezier(.75, 0, .2, 1); }
+    .btn .arr .a2 { transform: translateX(-28px); }
+    .btn:hover .arr .a1, .btn:active .arr .a1 { transform: translateX(28px); }
+    .btn:hover .arr .a2, .btn:active .arr .a2 { transform: translateX(0); }
+    .btn-fire {
+      background: linear-gradient(180deg, var(--org2) 0%, #E03C0E 100%); color: #190A05;
+      box-shadow: 0 0 46px rgba(235, 70, 24, .38), 0 10px 34px -14px rgba(235, 70, 24, .7);
+    }
+    .btn-fire:hover { background: linear-gradient(180deg, #FF7245 0%, #EE4715 100%); box-shadow: 0 0 64px rgba(235, 70, 24, .52), 0 10px 40px -12px rgba(235, 70, 24, .8); }
+    .btn:disabled { cursor: progress; filter: saturate(.7) brightness(.86); }
+    .aviso { color: var(--mut2); font-size: 11.5px; line-height: 1.55; margin-top: 14px; }
 
-    /* Mosaico: quatro fileiras com 7px entre todos os blocos */
-    .mosaico { display: grid; gap: 7px; }
-    .fileira { display: grid; gap: 7px; }
-    .fileira-1 { grid-template-columns: repeat(4, 1fr); }
-    .fileira-2 { grid-template-columns: 1.35fr 1fr; }
-    .fileira-3 { grid-template-columns: repeat(3, 1fr); }
-    .bloco { background: var(--card); border-radius: 5px; padding: 8px; }
-    .capa { aspect-ratio: 3 / 4; border-radius: 5px; background: var(--capa-1); }
-    .capa:nth-child(even) { background: var(--capa-2); }
-    .rot { font-size: 8px; letter-spacing: 0.5px; margin-bottom: 6px; }
-    .azul { color: var(--azul); }
-    .laranja { color: var(--laranja); }
-    .barras { display: flex; align-items: flex-end; gap: 3px; height: 30px; }
-    .barras span { flex: 1; background: var(--azul-escuro); border-radius: 1px; }
-    .barras span.destaque { background: var(--laranja); }
-    .linha { display: flex; justify-content: space-between; align-items: center; font-size: 9px; color: var(--texto-2); }
-    .linha + .linha { margin-top: 4px; }
-    .selo { font-size: 8px; border-radius: 4px; padding: 1px 5px; }
-    .passa { background: var(--verde-bg); color: var(--verde); }
-    .reprova { background: var(--vermelho-bg); color: var(--vermelho); }
-    .pronta { font-size: 9px; color: var(--texto-2); }
-    .comunidade { font-size: 9px; font-weight: 500; }
-    .investidores { font-size: 8px; color: var(--texto-2); }
+    /* ---------- mosaico do que está dentro ---------- */
+    .mosaico { display: grid; gap: 10px; }
+    .capas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .capa { position: relative; aspect-ratio: 3 / 4; border-radius: 4px; overflow: hidden; background: #141416; border: 1px solid var(--line2); }
+    .capa img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92); }
+    .capa::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(11, 11, 11, .6)); }
+
+    .quadros { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    .q {
+      background: linear-gradient(180deg, rgba(250, 250, 247, .045), rgba(250, 250, 247, .015));
+      border: 1px solid var(--line2); border-radius: 4px; padding: 13px;
+    }
+    .q-3 { grid-column: span 3; }
+    .q-2 { grid-column: span 2; }
+    .rot { font-size: 8.6px; font-weight: 700; letter-spacing: .16em; color: var(--mut2); margin-bottom: 11px; }
+    .rot-org { color: rgba(255, 98, 49, .92); }
+    .barras { display: flex; align-items: flex-end; gap: 4px; height: 34px; }
+    .barras span { flex: 1; background: rgba(250, 250, 247, .16); border-radius: 1px; }
+    .barras span.destaque { background: linear-gradient(180deg, var(--org2), var(--org)); }
+    .linha { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; color: var(--mut); }
+    .linha + .linha { margin-top: 7px; }
+    .selo { font-size: 8.6px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 3px 7px; }
+    .passa { background: rgba(93, 202, 165, .14); color: var(--verde); }
+    .reprova { background: rgba(240, 153, 123, .12); color: var(--vermelho); }
+    .pronta { display: flex; align-items: center; gap: 7px; font-size: 10.5px; color: var(--mut); }
+    .pronta::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 3px rgba(93, 202, 165, .14); }
+    .comunidade { font-family: 'Anton', sans-serif; font-size: 15px; letter-spacing: .01em; }
+    .investidores { font-size: 10px; color: var(--mut2); }
     .faixa {
-      background: var(--laranja); color: var(--texto); border-radius: 5px;
-      font-size: 10px; font-weight: 500; text-align: center; padding: 8px;
+      background: var(--org); color: #190A05; border-radius: 3px;
+      font-family: 'Anton', sans-serif; font-size: clamp(11px, 1.05vw, 13px); letter-spacing: .1em;
+      text-align: center; padding: 13px 12px;
     }
 
-    .autoridade {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 28px;
-      border-top: 1px solid var(--divisor); margin-top: 20px; padding-top: 14px;
-      color: #4A4A45; font-size: 9px; letter-spacing: 0.5px;
+    /* ---------- faixa de autoridade ---------- */
+    .autoridade { border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); background: var(--blk); }
+    .autoridade-in {
+      max-width: 1180px; margin: 0 auto; padding: 18px var(--pad);
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px clamp(20px, 4vw, 56px);
+      color: rgba(250, 250, 247, .52); font-size: 10px; font-weight: 700; letter-spacing: .22em;
+    }
+    .autoridade-in span { position: relative; }
+    .autoridade-in span + span::before {
+      content: ""; position: absolute; left: calc(clamp(20px, 4vw, 56px) / -2); top: 50%;
+      width: 3px; height: 3px; border-radius: 50%; background: rgba(235, 70, 24, .8); transform: translate(-50%, -50%);
     }
 
-    /* 2 e 3 */
-    section { border-top: 1px solid var(--divisor); margin-top: 28px; padding-top: 28px; }
-    h2 { font-size: 17px; font-weight: 500; line-height: 1.3; margin-bottom: 12px; }
-    section p { color: var(--texto-2); font-size: 13px; line-height: 1.6; }
-    section p + p { margin-top: 10px; }
-    .hendi { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: start; }
-    .hendi img { width: 100%; height: auto; border-radius: 10px; display: block; }
+    /* ---------- o que é a Academia (papel) ---------- */
+    .papel { background: var(--paper); color: var(--ink); padding: clamp(52px, 7.5vw, 100px) 0; }
+    .duas { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(22px, 4vw, 64px); align-items: start; }
+    .papel h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(27px, 3.6vw, 44px); line-height: 1.04; }
+    .regua { width: 56px; height: 3px; background: var(--org); margin-bottom: 18px; }
+    .papel .lede { font-size: clamp(17px, 1.5vw, 20px); line-height: 1.5; color: var(--ink); }
+    .papel p + p { margin-top: 14px; }
+    .papel .corpo { color: var(--inkmut); font-size: 16px; line-height: 1.68; }
 
-    /* 4. Rodapé */
-    footer { border-top: 1px solid var(--divisor); margin-top: 28px; padding: 20px 0 8px; color: var(--texto-3); font-size: 11px; line-height: 1.6; }
-    footer p + p { margin-top: 8px; }
+    /* ---------- quem vai te mostrar ---------- */
+    .quem { background: var(--blk); padding: clamp(52px, 7.5vw, 100px) 0; }
+    .quem h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.06; margin-bottom: clamp(24px, 3.5vw, 40px); }
+    .hendi { display: grid; grid-template-columns: 320px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+    .retrato { position: relative; }
+    .retrato img { width: 100%; height: auto; border-radius: 4px; }
+    .retrato::after {
+      content: ""; position: absolute; right: -12px; bottom: -12px; width: 58%; height: 52%;
+      border-right: 1px solid var(--org); border-bottom: 1px solid var(--org); border-radius: 0 0 4px 0; pointer-events: none;
+    }
+    .quem p { color: var(--mut); font-size: 16px; line-height: 1.68; }
+    .quem p + p { margin-top: 14px; }
 
-    /* Celular: formulário primeiro, mosaico depois */
-    @media (max-width: 700px) {
-      .topo { flex-direction: column; gap: 4px; }
-      .topo-frase { text-align: left; }
-      .dobra { grid-template-columns: 1fr; }
-      h1 { font-size: 24px; }
+    /* ---------- rodapé ---------- */
+    footer {
+      border-top: 1px solid var(--line2); background: var(--ink);
+      padding: clamp(26px, 4vw, 42px) 0 clamp(32px, 5vw, 50px);
+      color: var(--mut2); font-size: 11.5px; line-height: 1.65; text-align: center;
+    }
+    footer p + p { margin-top: 10px; }
+
+    /* tela larga e baixa (notebook): encolhe a dobra para o botão não cair abaixo do corte */
+    @media (min-width: 901px) and (max-height: 780px) {
+      .hero { padding-top: 22px; padding-bottom: 34px; }
+      .rotulo { margin-bottom: 10px; }
+      h1 { font-size: clamp(28px, 3.2vw, 40px); margin-bottom: 12px; }
+      .sub { margin-bottom: 16px; }
+      .form-card { padding: 20px; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-in { grid-template-columns: 1fr; }
+      .duas { grid-template-columns: 1fr; }
       .hendi { grid-template-columns: 1fr; }
-      .hendi img { max-width: 260px; }
+      .retrato { max-width: 280px; }
+    }
+
+    @media (max-width: 620px) {
+      .topo-in { flex-direction: column; align-items: flex-start; gap: 5px; }
+      .topo-frase { text-align: left; }
+      .capas { grid-template-columns: repeat(2, 1fr); }
+      .quadros { grid-template-columns: repeat(2, 1fr); }
+      .q-3, .q-com { grid-column: span 2; }
+      .q-2 { grid-column: span 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .ent { animation: none; }
+      .rotulo::before { animation: none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <header class="topo">
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topo">
+    <div class="topo-in">
       <span class="topo-marca">BLACK VITALÍCIA</span>
       <span class="topo-frase">A maior oferta que eu já fiz. Tudo com acesso vitalício.</span>
-    </header>
+    </div>
+  </header>
 
-    <main>
-      <div class="dobra">
-        <div id="inscricao">
+  <main>
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="wrap hero-in">
+        <div id="inscricao" class="ent">
           <p class="rotulo">28 DE OUTUBRO — AO VIVO</p>
           <h1>Você nunca mais vai precisar renovar nada para continuar no copy trade</h1>
           <p class="sub">Paga uma única vez e a Academia é sua pelo resto da vida. Inclusive o que eu ainda nem coloquei lá dentro.</p>
 
-          <form id="form" novalidate>
-            <div class="campo">
-              <label class="sr-only" for="nome">Nome</label>
-              <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="erro-nome">
-              <p class="erro" id="erro-nome" aria-live="polite"></p>
-            </div>
-            <div class="campo">
-              <label class="sr-only" for="email">E-mail</label>
-              <input id="email" name="email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" required aria-describedby="erro-email">
-              <p class="erro" id="erro-email" aria-live="polite"></p>
-            </div>
-            <div class="campo">
-              <label class="sr-only" for="whatsapp">WhatsApp com DDD</label>
-              <input id="whatsapp" name="whatsapp" type="tel" inputmode="numeric" placeholder="Seu WhatsApp com DDD" autocomplete="tel-national" maxlength="15" required aria-describedby="erro-whatsapp">
-              <p class="erro" id="erro-whatsapp" aria-live="polite"></p>
-            </div>
-            <button class="btn" type="submit">QUERO PARTICIPAR</button>
-            <p class="erro" id="erro-envio" aria-live="polite"></p>
-            <p class="aviso">Nunca fiz isso antes e não pretendo repetir. Depois dessa live a Academia fecha para novos alunos.</p>
-          </form>
+          <div class="form-card">
+            <form id="form" novalidate>
+              <div class="campo">
+                <label class="sr-only" for="nome">Nome</label>
+                <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="erro-nome">
+                <p class="erro" id="erro-nome" aria-live="polite"></p>
+              </div>
+              <div class="campo">
+                <label class="sr-only" for="email">E-mail</label>
+                <input id="email" name="email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" required aria-describedby="erro-email">
+                <p class="erro" id="erro-email" aria-live="polite"></p>
+              </div>
+              <div class="campo">
+                <label class="sr-only" for="whatsapp">WhatsApp com DDD</label>
+                <input id="whatsapp" name="whatsapp" type="tel" inputmode="numeric" placeholder="Seu WhatsApp com DDD" autocomplete="tel-national" maxlength="15" required aria-describedby="erro-whatsapp">
+                <p class="erro" id="erro-whatsapp" aria-live="polite"></p>
+              </div>
+              <button class="btn btn-fire" type="submit">
+                <span class="btn-tx">QUERO PARTICIPAR</span>
+                <span class="arr" aria-hidden="true">
+                  <svg class="a1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+                  <svg class="a2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+                </span>
+              </button>
+              <p class="erro" id="erro-envio" aria-live="polite"></p>
+              <p class="aviso">Nunca fiz isso antes e não pretendo repetir. Depois dessa live a Academia fecha para novos alunos.</p>
+            </form>
+          </div>
         </div>
 
-        <!-- Fileira 1 (capas 3:4) fica com os placeholders coloridos até existirem as capas -->
-        <div class="mosaico">
-          <div class="fileira fileira-1" aria-hidden="true">
-            <div class="capa"></div>
-            <div class="capa"></div>
-            <div class="capa"></div>
-            <div class="capa"></div>
+        <div class="mosaico ent ent-2">
+          <!-- capas: fotos da Academia, sem texto (a fileira 1 não tem copy no briefing) -->
+          <div class="capas" aria-hidden="true">
+            <figure class="capa"><img src="/black/img/capa-1.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
+            <figure class="capa"><img src="/black/img/capa-2.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
+            <figure class="capa"><img src="/black/img/capa-3.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
+            <figure class="capa"><img src="/black/img/capa-4.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
           </div>
-          <div class="fileira fileira-2">
-            <div class="bloco">
-              <p class="rot azul">SISTEMA DE ACOMPANHAMENTO</p>
+
+          <div class="quadros">
+            <article class="q q-3">
+              <p class="rot">SISTEMA DE ACOMPANHAMENTO</p>
               <div class="barras" aria-hidden="true">
                 <span style="height:35%"></span><span style="height:62%"></span><span style="height:48%"></span><span class="destaque" style="height:100%"></span><span style="height:55%"></span><span style="height:72%"></span><span style="height:44%"></span><span style="height:66%"></span>
               </div>
-            </div>
-            <div class="bloco">
-              <p class="rot laranja">IA DE FILTRAGEM</p>
+            </article>
+            <article class="q q-3">
+              <p class="rot rot-org">IA DE FILTRAGEM</p>
               <p class="linha">Copy A <span class="selo passa">passa</span></p>
               <p class="linha">Copy B <span class="selo reprova">reprova</span></p>
               <p class="linha">Copy C <span class="selo reprova">reprova</span></p>
-            </div>
-          </div>
-          <div class="fileira fileira-3">
-            <div class="bloco">
-              <p class="rot azul">CARTEIRA 1</p>
+            </article>
+            <article class="q q-2">
+              <p class="rot">CARTEIRA 1</p>
               <p class="pronta">pronta e rodando</p>
-            </div>
-            <div class="bloco">
-              <p class="rot azul">CARTEIRA 2</p>
+            </article>
+            <article class="q q-2">
+              <p class="rot">CARTEIRA 2</p>
               <p class="pronta">pronta e rodando</p>
-            </div>
-            <div class="bloco">
+            </article>
+            <article class="q q-2 q-com">
               <p class="comunidade">Comunidade</p>
               <p class="investidores">de investidores</p>
-            </div>
+            </article>
           </div>
+
           <p class="faixa">TUDO ISSO COM ACESSO VITALÍCIO — PAGO UMA ÚNICA VEZ</p>
         </div>
       </div>
+    </section>
 
-      <!-- Trocar pelos logos em escala de cinza quando existirem -->
-      <div class="autoridade">
+    <!-- Trocar pelos logos em escala de cinza quando existirem -->
+    <div class="autoridade">
+      <div class="autoridade-in">
         <span>ACADEMIA DO HENDI</span>
         <span>DRAWDOWNGUARD</span>
         <span>ROBOFOREX</span>
       </div>
+    </div>
 
-      <section>
-        <h2>O que é a Academia do Hendi de Copy Trade</h2>
-        <p>É onde eu te mostro como escolher copy traders sem depender da palavra de ninguém.</p>
-        <p>Lá dentro você tem as aulas, a comunidade aberta de investidores, um sistema exclusivo de acompanhamento e gerenciamento de carteiras, a IA que filtra copys e analisa para você e as carteiras prontas que eu mesmo uso sempre atualizadas.</p>
-        <p>É um ecossistema completo de educação e investimento em copy trade de assinatura anual. Mas por pouco tempo, no dia 28, ela será vitalícia, onde você paga uma única vez, para o resto da vida.</p>
-      </section>
+    <section class="papel">
+      <div class="wrap duas">
+        <div>
+          <div class="regua" aria-hidden="true"></div>
+          <h2>O que é a Academia do Hendi de Copy Trade</h2>
+        </div>
+        <div>
+          <p class="lede">É onde eu te mostro como escolher copy traders sem depender da palavra de ninguém.</p>
+          <p class="corpo">Lá dentro você tem as aulas, a comunidade aberta de investidores, um sistema exclusivo de acompanhamento e gerenciamento de carteiras, a IA que filtra copys e analisa para você e as carteiras prontas que eu mesmo uso sempre atualizadas.</p>
+          <p class="corpo">É um ecossistema completo de educação e investimento em copy trade de assinatura anual. Mas por pouco tempo, no dia 28, ela será vitalícia, onde você paga uma única vez, para o resto da vida.</p>
+        </div>
+      </div>
+    </section>
 
-      <section>
+    <section class="quem">
+      <div class="wrap">
         <h2>Quem vai te mostrar isso</h2>
         <div class="hendi">
-          <img src="/black/hendi.webp" alt="Hendi, da Academia do Hendi de Copy Trade" width="480" height="720" loading="lazy" decoding="async">
+          <div class="retrato">
+            <img src="/black/hendi.webp" alt="Hendi, da Academia do Hendi de Copy Trade" width="480" height="720" loading="lazy" decoding="async">
+          </div>
           <div>
             <p>Formado em engenharia da computação, engenheiro de dados da Ford e investidor em copy trade há mais de 9 anos. Eu passei os últimos anos auditando copy traders, entendendo todo o conceito e essência para se ter resultados nesse mercado. Corretora por corretora, trader por trader, operação por operação.</p>
             <p>Construí o sistema de acompanhamento e matriz de descorrelação porque eu precisava medir o que ninguém mostrava para decidir onde colocar o meu próprio dinheiro. As carteiras que estão dentro da Academia são as mesmas que eu uso e acompanho todo dia para você ter resultados tão bons quanto os meus com conhecimento e método.</p>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+  </main>
 
-    <!-- Política de Privacidade e Termos de Uso ainda sem página: entram como link quando existirem -->
-    <footer>
+  <!-- Política de Privacidade e Termos de Uso ainda sem página: entram como link quando existirem -->
+  <footer>
+    <div class="wrap">
       <p>Este conteúdo é educacional. Operações no mercado financeiro envolvem risco de perda. Nenhum resultado é garantido.</p>
       <p>CNPJ: 53.724.905/0001-70 · Política de Privacidade · Termos de Uso</p>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   <script>
     (function () {
       var cfg = window.BLACK_CONFIG || {};
       var form = document.getElementById('form');
       var btn = form.querySelector('button');
+      var btnTx = btn.querySelector('.btn-tx');
       var erroEnvio = document.getElementById('erro-envio');
       var wa = form.whatsapp;
 
@@ -330,7 +487,7 @@
 
         btn.disabled = true;
         btn.setAttribute('aria-busy', 'true');
-        btn.textContent = 'ENVIANDO…';
+        btnTx.textContent = 'ENVIANDO…';
 
         (cfg.webhook
           ? fetch(cfg.webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados) })
@@ -356,7 +513,7 @@
             console.error('Falha no envio do formulário:', err);
             btn.disabled = false;
             btn.removeAttribute('aria-busy');
-            btn.textContent = 'QUERO PARTICIPAR';
+            btnTx.textContent = 'QUERO PARTICIPAR';
             erroEnvio.textContent = 'Não foi possível enviar agora. Tente de novo em instantes.';
           });
       });
