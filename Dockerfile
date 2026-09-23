@@ -34,6 +34,9 @@ ENV NGINX_ENVSUBST_OUTPUT_DIR=/usr/share/nginx/html/black \
     BLACK_GRUPO_URL="" \
     BLACK_VIDEO_VTURB_ID=""
 
+# Arquivos servidos na raiz do dominio (ex.: chave do IndexNow), fora do build do Vite.
+COPY frontend/raiz/ /usr/share/nginx/html/
+
 # Configuração Nginx Otimizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
