@@ -620,8 +620,12 @@
         if (primeiro) { primeiro.focus(); return; }
 
         var digitos = wa.value.replace(/\D/g, '');
+        var nome = form.nome.value.trim().split(/\s+/);
         var dados = {
-          name: form.nome.value.trim(),
+          name: nome.join(' '),
+          // Separado para o GHL: a M1 abre com "Fala [primeiro nome]"
+          first_name: nome[0],
+          last_name: nome.slice(1).join(' '),
           email: form.email.value.trim(),
           phone: '+55' + digitos,
           whatsapp: wa.value,

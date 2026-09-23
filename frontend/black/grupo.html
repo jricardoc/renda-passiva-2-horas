@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Grupo da Black Vitalícia</title>
+  <!-- Link do grupo: gerado ao subir o container a partir das variáveis do serviço -->
+  <script src="/black/config.js"></script>
+  <script>
+    // Destino do botão da M1 no WhatsApp: a Meta não aceita link do WhatsApp em botão,
+    // então o botão aponta para /grupo e daqui seguimos para BLACK_GRUPO_URL.
+    var grupo = (window.BLACK_CONFIG || {}).grupo;
+    if (grupo) {
+      document.documentElement.className = 'indo';
+      location.replace(grupo);
+    }
+  </script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; background: #0b0b0b; color: #f2efe9; font: 17px/1.5 system-ui, sans-serif; text-align: center; }
+    .indo p { visibility: hidden; }
+  </style>
+</head>
+<body>
+  <p>O link do grupo ainda não foi liberado. Volte daqui a pouco.</p>
+</body>
+</html>
