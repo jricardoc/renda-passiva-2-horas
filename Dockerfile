@@ -32,7 +32,18 @@ COPY frontend/black-config.js.template /etc/nginx/templates/config.js.template
 ENV NGINX_ENVSUBST_OUTPUT_DIR=/usr/share/nginx/html/black \
     GHL_WEBHOOK_URL="" \
     BLACK_GRUPO_URL="" \
-    BLACK_VIDEO_VTURB_ID=""
+    BLACK_VIDEO_VTURB_ID="" \
+    BLACK_BACKREDIRECT_URL=""
+
+# Dados reais da Carteira Oficial (DrawdownGuard) para a /black: o script coleta ao subir o
+# container e o crond repete as 09:07 e 21:07 UTC (06:07 e 18:07 em Brasilia).
+# O gancho do entrypoint nunca falha: sem crond ou sem rede, o nginx sobe igual.
+RUN apk add --no-cache curl jq
+COPY frontend/black-coleta-ddg.sh /usr/local/bin/black-coleta-ddg
+RUN chmod 755 /usr/local/bin/black-coleta-ddg \
+ && printf '#!/bin/sh\n/usr/local/bin/black-coleta-ddg >/proc/1/fd/1 2>&1 &\ncrond -b 2>/dev/null || echo "black-coleta-ddg: crond indisponivel"\nexit 0\n' > /docker-entrypoint.d/40-black-coleta-ddg.sh \
+ && chmod 755 /docker-entrypoint.d/40-black-coleta-ddg.sh \
+ && echo '7 9,21 * * * /usr/local/bin/black-coleta-ddg >/proc/1/fd/1 2>&1' > /etc/crontabs/root
 
 # Arquivos servidos na raiz do dominio (ex.: chave do IndexNow), fora do build do Vite.
 COPY frontend/raiz/ /usr/share/nginx/html/
