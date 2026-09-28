@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://protocolorendapassiva.com.br/sitemap.xml

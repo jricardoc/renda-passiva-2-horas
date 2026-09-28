@@ -1,8 +1,7 @@
 // Gerado ao subir o container (envsubst da imagem do nginx) com as variáveis do serviço no EasyPanel.
-// Vazio = ainda não configurado: o formulário mostra erro, o botão do grupo fica sem link e o backredirect não liga.
+// Vazio = ainda não configurado: o formulário mostra erro e o botão do grupo fica sem link.
 window.BLACK_CONFIG = {
   webhook: "${GHL_WEBHOOK_URL}",
   grupo: "${BLACK_GRUPO_URL}",
-  vturb: "${BLACK_VIDEO_VTURB_ID}",
-  backredirect: "${BLACK_BACKREDIRECT_URL}"
+  vturb: "${BLACK_VIDEO_VTURB_ID}"
 };

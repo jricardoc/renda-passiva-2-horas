@@ -1,5 +1,6 @@
 import HeroSection, { HeroCta } from "./components/HeroSection/HeroSection";
 import "./App.css";
+import "./backredirect";
 import { Suspense, lazy } from "react";
 
 const AuthoritySection = lazy(

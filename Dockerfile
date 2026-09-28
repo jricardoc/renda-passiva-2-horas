@@ -21,6 +21,10 @@ COPY --from=builder /app/dist /usr/share/nginx/html/protocolo1
 # Copiada direto do contexto de build para /links.
 COPY frontend/links /usr/share/nginx/html/links
 
+# Versao temporaria para validar o backredirect da VSL (build estatico, sem GTM, noindex).
+# Remover junto com frontend/teste e o bloco /teste/ do nginx depois da validacao.
+COPY frontend/teste /usr/share/nginx/html/teste
+
 # Black Vitalicia: captura (/black) e obrigado (/black-obrigado), HTML estatico.
 COPY frontend/black /usr/share/nginx/html/black
 COPY frontend/black-obrigado /usr/share/nginx/html/black-obrigado
@@ -32,8 +36,7 @@ COPY frontend/black-config.js.template /etc/nginx/templates/config.js.template
 ENV NGINX_ENVSUBST_OUTPUT_DIR=/usr/share/nginx/html/black \
     GHL_WEBHOOK_URL="" \
     BLACK_GRUPO_URL="" \
-    BLACK_VIDEO_VTURB_ID="" \
-    BLACK_BACKREDIRECT_URL=""
+    BLACK_VIDEO_VTURB_ID=""
 
 # Dados reais da Carteira Oficial (DrawdownGuard) para a /black: o script coleta ao subir o
 # container e o crond repete as 09:07 e 21:07 UTC (06:07 e 18:07 em Brasilia).

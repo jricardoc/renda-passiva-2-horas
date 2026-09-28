@@ -690,25 +690,6 @@
           setTimeout(function () { form.nome.focus({ preventScroll: true }); }, 700);
         });
       });
-
-      // Backredirect: com BLACK_BACKREDIRECT_URL preenchida, o "voltar" leva para essa página, com a mesma query.
-      // O navegador só respeita a entrada extra do histórico depois de um clique ou tecla, então ela nasce aí.
-      // As âncoras (#inscricao) criam entradas sem estado e não disparam o desvio; só a volta até a entrada "origem".
-      var destino = cfg.backredirect;
-      if (destino && /^(https?:\/\/|\/)/.test(destino)) {
-        var armar = function () {
-          ['click', 'keydown', 'pointerup'].forEach(function (t) { document.removeEventListener(t, armar, true); });
-          try { if (sessionStorage.getItem('black_inscrito')) return; } catch (err) {}
-          history.replaceState({ black: 'origem' }, '');
-          history.pushState({ black: 'guarda' }, '');
-        };
-        ['click', 'keydown', 'pointerup'].forEach(function (t) { document.addEventListener(t, armar, true); });
-        addEventListener('popstate', function (e) {
-          if (!e.state || e.state.black !== 'origem') return;
-          var q = location.search.slice(1);
-          location.replace(destino + (q ? (destino.indexOf('?') < 0 ? '?' : '&') + q : ''));
-        });
-      }
     })();
 
     /* ---------- movimento ---------- */
