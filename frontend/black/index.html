@@ -45,7 +45,6 @@
       --line: rgba(250, 250, 247, .14);
       --line2: rgba(250, 250, 247, .08);
       --inkmut: rgba(11, 11, 11, .8);
-      --verde: #5DCAA5;
       --vermelho: #F0997B;
       --pad: clamp(20px, 5vw, 56px);
     }
@@ -90,9 +89,7 @@
     @keyframes varrer { 0%, 14% { background-position: 150% 0; } 86%, 100% { background-position: -50% 0; } }
     @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.12); } }
     @keyframes pulso { 0%, 100% { box-shadow: 0 0 0 4px rgba(235, 70, 24, .18); } 50% { box-shadow: 0 0 0 10px rgba(235, 70, 24, .03); } }
-    @keyframes pulsoVerde { 0%, 100% { box-shadow: 0 0 0 3px rgba(93, 202, 165, .16); } 50% { box-shadow: 0 0 0 7px rgba(93, 202, 165, .02); } }
     @keyframes respira { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-    @keyframes brilhaPonto { 0%, 100% { r: 4.5; opacity: 1; } 50% { r: 6.5; opacity: .75; } }
 
     /* entrada da dobra, em cascata */
     .js .ent > * { animation: sobe .9s cubic-bezier(.16, 1, .3, 1) both; }
@@ -249,68 +246,13 @@
 
     .cta-secao { max-width: 440px; margin: clamp(30px, 4vw, 48px) auto 0; }
 
-    /* ---------- prova: fotos e painéis do produto ---------- */
+    /* ---------- prova: fotos da Academia ---------- */
     .prova { position: relative; background: var(--blk); padding: clamp(54px, 8vw, 104px) 0; }
     .capas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .capa-foto { position: relative; aspect-ratio: 3 / 4; border-radius: 5px; overflow: hidden; background: #141416; border: 1px solid var(--line2); }
     .capa-foto img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92); transition: transform .9s cubic-bezier(.16, 1, .3, 1), filter .5s ease; }
     .capa-foto:hover img { transform: scale(1.07); filter: saturate(1.04); }
     .capa-foto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 44%, rgba(5, 5, 5, .62)); }
-
-    .paineis { display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; margin-top: 12px; }
-    .painel {
-      position: relative; overflow: hidden;
-      background: linear-gradient(180deg, rgba(250, 250, 247, .05), rgba(250, 250, 247, .017));
-      border: 1px solid var(--line2); border-radius: 5px; padding: clamp(16px, 2vw, 22px);
-      transition: border-color .4s ease, transform .5s cubic-bezier(.16, 1, .3, 1);
-    }
-    .painel:hover { border-color: var(--line); transform: translateY(-2px); }
-    .rot { font-size: 10.5px; font-weight: 700; letter-spacing: .18em; color: var(--mut2); }
-    .rot-org { color: rgba(255, 98, 49, .95); }
-
-    /* gráfico do acompanhamento: SVG que se desenha ao entrar na tela */
-    .grafico { display: block; width: 100%; height: auto; margin-top: 20px; color: var(--paper); }
-    .grafico .grade { stroke: currentColor; opacity: .1; }
-    .grafico .area { opacity: 0; transition: opacity 1.1s ease .5s; }
-    .grafico .curva { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.7s cubic-bezier(.4, 0, .2, 1) .15s; }
-    .grafico .ponto { opacity: 0; transition: opacity .5s ease 1.5s; }
-    .rv.on .grafico .area { opacity: 1; }
-    .rv.on .grafico .curva { stroke-dashoffset: 0; }
-    .rv.on .grafico .ponto { opacity: 1; }
-    .js .rv.on .grafico .ponto { animation: brilhaPonto 2.4s ease-in-out 2s infinite; }
-
-    /* Carteira Oficial: número grande, curva real e o "rodando" que pulsa */
-    .carteira { font-size: 15px; font-weight: 600; margin-top: 16px; }
-    .numero { font-family: 'Anton', sans-serif; font-size: clamp(46px, 6vw, 72px); line-height: 1.1; color: var(--verde); margin-top: 2px; font-variant-numeric: tabular-nums; }
-    .legenda { font-size: 13.5px; color: var(--mut2); }
-    .grafico .zero { stroke: currentColor; opacity: .32; stroke-dasharray: 3 4; }
-
-    /* copys da carteira: barra do tamanho do resultado, verde ou vermelha */
-    .copias { margin-top: 22px; }
-    .linha { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; font-size: 13.5px; color: var(--mut); }
-    .linha + .linha { margin-top: 17px; }
-    .barra { height: 5px; border-radius: 3px; background: rgba(250, 250, 247, .09); overflow: hidden; }
-    .barra i { display: block; height: 100%; border-radius: 3px; background: rgba(250, 250, 247, .28); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(.16, 1, .3, 1); }
-    .barra.ok i { background: linear-gradient(90deg, rgba(93, 202, 165, .5), var(--verde)); }
-    .barra.neg i { background: linear-gradient(90deg, rgba(240, 153, 123, .45), var(--vermelho)); }
-    .rv.on .barra i { transform: scaleX(1); }
-    .rv.on .linha:nth-child(2) .barra i { transition-delay: .18s; }
-    .rv.on .linha:nth-child(3) .barra i { transition-delay: .3s; }
-    .rv.on .linha:nth-child(4) .barra i { transition-delay: .42s; }
-    .rv.on .linha:nth-child(5) .barra i { transition-delay: .54s; }
-    .selo { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; border-radius: 3px; padding: 4px 9px; white-space: nowrap; font-variant-numeric: tabular-nums; }
-    .passa { background: rgba(93, 202, 165, .15); color: var(--verde); }
-    .reprova { background: rgba(240, 153, 123, .13); color: var(--vermelho); }
-
-    .status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
-    .pronta { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--mut); margin-top: 14px; }
-    .pronta::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 3px rgba(93, 202, 165, .16); }
-    .js .pronta::before { animation: pulsoVerde 2.8s ease-in-out infinite; }
-    .kpi { font-family: 'Anton', sans-serif; font-size: clamp(32px, 3.4vw, 44px); line-height: 1.1; margin-top: 10px; font-variant-numeric: tabular-nums; }
-    .kpi.verde { color: var(--verde); }
-    .kpi.vermelho { color: var(--vermelho); }
-    .kpi-sub { font-size: 13px; color: var(--mut2); margin-top: 4px; }
-    .fonte-dados { font-size: 12.5px; color: var(--mut2); text-align: center; margin-top: 16px; }
 
     /* ---------- faixa de autoridade ---------- */
     .autoridade { border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); background: var(--ink); }
@@ -356,7 +298,6 @@
     footer p + p { margin-top: 10px; }
 
     @media (max-width: 900px) {
-      .paineis { grid-template-columns: 1fr; }
       .duas { grid-template-columns: 1fr; }
       .hendi { grid-template-columns: 1fr; }
       .retrato { max-width: 300px; }
@@ -366,7 +307,6 @@
 
     @media (max-width: 620px) {
       .capas { grid-template-columns: repeat(2, 1fr); }
-      .status { grid-template-columns: 1fr; }
       h1 { max-width: none; }
     }
 
@@ -384,10 +324,7 @@
       html { scroll-behavior: auto; }
       .js .ent > *, .js .marca, .js .pal > i { animation: none; opacity: 1; transform: none; }
       .js .rv, .js .rv-stag > * { opacity: 1; transform: none; transition: none; }
-      .js .capa-bg::before, .js .rotulo::before, .js .pronta::before, .js .btn-fire::after, .js .rv.on .grafico .ponto { animation: none; }
-      .grafico .curva { stroke-dashoffset: 0; }
-      .grafico .area, .grafico .ponto { opacity: 1; }
-      .barra i { transform: scaleX(1); }
+      .js .capa-bg::before, .js .rotulo::before, .js .btn-fire::after { animation: none; }
     }
   </style>
 </head>
@@ -448,68 +385,6 @@
           <figure class="capa-foto"><img src="/black/img/capa-3.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
           <figure class="capa-foto"><img src="/black/img/capa-4.webp" alt="" width="640" height="854" loading="lazy" decoding="async"></figure>
         </div>
-
-        <div class="paineis">
-          <article class="painel rv">
-            <p class="rot">SISTEMA DE ACOMPANHAMENTO</p>
-            <p class="carteira">Carteira Oficial</p>
-            <p class="numero"><span data-ddg="lucro" data-valor="9.859953425326978">+9,86%</span></p>
-            <p class="legenda">de lucro desde <span data-ddg="desde">jun/2025</span></p>
-            <svg class="grafico" viewBox="0 0 340 96" fill="none" aria-hidden="true" preserveAspectRatio="none" height="110">
-              <defs>
-                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#EB4618" stop-opacity=".34"></stop>
-                  <stop offset="100%" stop-color="#EB4618" stop-opacity="0"></stop>
-                </linearGradient>
-                <linearGradient id="curvaGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#FF6231" stop-opacity=".45"></stop>
-                  <stop offset="100%" stop-color="#FF6231"></stop>
-                </linearGradient>
-              </defs>
-              <g class="grade" stroke-width=".7">
-                <line x1="0" y1="24" x2="340" y2="24"></line>
-                <line x1="0" y1="52" x2="340" y2="52"></line>
-              </g>
-              <!-- curva real: gerada pelos dados de 2026-09-27 e redesenhada pelo script quando chega dado novo -->
-              <line class="zero" x1="0" y1="86.4" x2="340" y2="86.4" stroke-width=".8"></line>
-              <path class="area" d="M0,86.4 L4.8,88 L9.7,87.1 L14.5,86.8 L19.4,82.2 L24.2,80.5 L29,81.4 L33.9,81.4 L38.7,82.1 L43.6,82.1 L48.4,75.4 L53.2,73.7 L58.1,71.4 L62.9,69.8 L67.8,70.3 L72.6,68.5 L77.4,67.2 L82.3,60.8 L87.1,58.5 L92,60.8 L96.8,58.9 L101.7,58 L106.5,56.8 L111.3,54.9 L116.2,49.8 L121,52.3 L125.9,47 L130.7,46.3 L135.5,44.2 L140.4,51 L145.2,51.1 L150.1,42.7 L154.9,42.3 L159.7,37.8 L164.6,38.9 L169.4,39.4 L174.3,41.2 L179.1,39.8 L183.9,30.5 L188.8,28.5 L193.6,29.9 L198.5,30.7 L203.3,31.8 L208.1,42.5 L213,37.4 L217.8,40.8 L222.7,28.6 L227.5,29.1 L232.3,24.4 L237.2,21.4 L242,20.1 L246.9,8 L251.7,15.3 L256.6,23.6 L261.4,25.8 L266.2,27.3 L271.1,26.9 L275.9,31.2 L280.8,37.4 L285.6,35.7 L290.4,40.4 L295.3,38.5 L300.1,31.9 L305,40.9 L309.8,50.5 L314.6,50.1 L319.5,48.4 L324.3,50.4 L329.2,57.3 L334,56.8 L334,96 L0,96 Z" fill="url(#areaGrad)"></path>
-              <path class="curva" pathLength="1" d="M0,86.4 L4.8,88 L9.7,87.1 L14.5,86.8 L19.4,82.2 L24.2,80.5 L29,81.4 L33.9,81.4 L38.7,82.1 L43.6,82.1 L48.4,75.4 L53.2,73.7 L58.1,71.4 L62.9,69.8 L67.8,70.3 L72.6,68.5 L77.4,67.2 L82.3,60.8 L87.1,58.5 L92,60.8 L96.8,58.9 L101.7,58 L106.5,56.8 L111.3,54.9 L116.2,49.8 L121,52.3 L125.9,47 L130.7,46.3 L135.5,44.2 L140.4,51 L145.2,51.1 L150.1,42.7 L154.9,42.3 L159.7,37.8 L164.6,38.9 L169.4,39.4 L174.3,41.2 L179.1,39.8 L183.9,30.5 L188.8,28.5 L193.6,29.9 L198.5,30.7 L203.3,31.8 L208.1,42.5 L213,37.4 L217.8,40.8 L222.7,28.6 L227.5,29.1 L232.3,24.4 L237.2,21.4 L242,20.1 L246.9,8 L251.7,15.3 L256.6,23.6 L261.4,25.8 L266.2,27.3 L271.1,26.9 L275.9,31.2 L280.8,37.4 L285.6,35.7 L290.4,40.4 L295.3,38.5 L300.1,31.9 L305,40.9 L309.8,50.5 L314.6,50.1 L319.5,48.4 L324.3,50.4 L329.2,57.3 L334,56.8" stroke="url(#curvaGrad)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
-              <circle class="ponto" cx="334" cy="56.8" r="4.5" fill="#FF6231"></circle>
-            </svg>
-            <p class="pronta"><span>rodando há <span data-ddg="dias" data-valor="479">479</span> dias com <span data-ddg="copys" data-valor="5">5</span> copys</span></p>
-          </article>
-
-          <article class="painel rv">
-            <p class="rot rot-org">COPYS DA CARTEIRA OFICIAL</p>
-            <div class="copias">
-              <p class="linha">Copy 1 <span class="barra ok" aria-hidden="true"><i style="width: 100%;"></i></span> <span class="selo passa">+79,5%</span></p>
-              <p class="linha">Copy 2 <span class="barra ok" aria-hidden="true"><i style="width: 49.3%;"></i></span> <span class="selo passa">+39,2%</span></p>
-              <p class="linha">Copy 3 <span class="barra ok" aria-hidden="true"><i style="width: 7.9%;"></i></span> <span class="selo passa">+6,3%</span></p>
-              <p class="linha">Copy 4 <span class="barra ok" aria-hidden="true"><i style="width: 2%;"></i></span> <span class="selo passa">+1,6%</span></p>
-              <p class="linha">Copy 5 <span class="barra neg" aria-hidden="true"><i style="width: 26.5%;"></i></span> <span class="selo reprova">−21,1%</span></p>
-            </div>
-          </article>
-        </div>
-
-        <div class="status rv rv-stag">
-          <article class="painel">
-            <p class="rot">MÉDIA MENSAL</p>
-            <p class="kpi verde"><span data-ddg="media" data-valor="0.6337913028624926">+0,63%</span></p>
-            <p class="kpi-sub">da Carteira Oficial</p>
-          </article>
-          <article class="painel">
-            <p class="rot">DRAWDOWN MÁXIMO</p>
-            <p class="kpi vermelho"><span data-ddg="dd" data-valor="31.7194478278523">31,7%</span></p>
-            <p class="kpi-sub">a maior queda desde o início</p>
-          </article>
-          <article class="painel">
-            <p class="rot">DRAWDOWNGUARD</p>
-            <p class="kpi"><span data-ddg="contas" data-valor="359">359</span></p>
-            <p class="kpi-sub">contas conectadas ao sistema de acompanhamento</p>
-          </article>
-        </div>
-
-        <p class="fonte-dados">Dados reais da Carteira Oficial no DrawdownGuard, atualizados em <span data-ddg="atualizado">27/09/2026</span>.</p>
 
         <div class="cta-secao">
           <a class="btn btn-fire" href="#inscricao">
@@ -754,127 +629,6 @@
             fundo.style.transform = 'translate3d(0,' + (y * 0.18).toFixed(1) + 'px,0)';
           });
         }, { passive: true });
-      }
-    })();
-
-    /* ---------- dados reais da Carteira Oficial (DrawdownGuard) ----------
-       O HTML já nasce com a foto de 27/09. Se o JSON responder, números, curva e copys são trocados pelos dele. */
-    (function () {
-      var FONTE = '/black/dados-ddg.json';
-      var MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
-      var menos = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      function num(v, casas) { return v.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas }); }
-      function pct(v, casas, sinal) { return (v < 0 ? '−' : sinal && v > 0 ? '+' : '') + num(Math.abs(v), casas) + '%'; }
-      function mesAno(iso) { var m = /^(\d{4})-(\d{2})/.exec(iso || ''); return m ? MESES[+m[2] - 1] + '/' + m[1] : ''; }
-      var FORMATO = {
-        lucro: function (v) { return pct(v, 2, true); },
-        media: function (v) { return pct(v, 2, true); },
-        dd: function (v) { return pct(v, 1, false); },
-        dias: function (v) { return num(Math.round(v), 0); },
-        copys: function (v) { return num(Math.round(v), 0); },
-        contas: function (v) { return num(Math.round(v), 0); }
-      };
-
-      // Curva no viewBox 340x96: até 80 pontos, sempre com o último, e o zero dentro da escala
-      function tracar(curva) {
-        var passo = Math.ceil(curva.length / 80), pts = [];
-        for (var i = 0; i < curva.length; i += passo) pts.push(curva[i]);
-        if (pts[pts.length - 1] !== curva[curva.length - 1]) pts.push(curva[curva.length - 1]);
-        var vs = pts.map(function (p) { return p.percentage; });
-        var min = Math.min.apply(null, vs.concat(0)), max = Math.max.apply(null, vs.concat(0)), n = pts.length - 1;
-        function x(i) { return +(i / n * 334).toFixed(1); }
-        function y(v) { return +(8 + (max - v) / ((max - min) || 1) * 80).toFixed(1); }
-        var linha = pts.map(function (p, i) { return (i ? 'L' : 'M') + x(i) + ',' + y(p.percentage); }).join(' ');
-        return { linha: linha, area: linha + ' L' + x(n) + ',96 L0,96 Z', zero: y(0), fim: [x(n), y(vs[n])] };
-      }
-
-      function valor(chave, v) {
-        if (typeof v !== 'number' || !isFinite(v)) return;
-        document.querySelectorAll('[data-ddg="' + chave + '"]').forEach(function (el) {
-          el.setAttribute('data-valor', v);
-          if (!el.contando) el.textContent = FORMATO[chave](v);
-        });
-      }
-      function texto(chave, t) {
-        if (t) document.querySelectorAll('[data-ddg="' + chave + '"]').forEach(function (el) { el.textContent = t; });
-      }
-
-      function desenhar(curva) {
-        var svg = document.querySelector('.grafico'), t = tracar(curva);
-        svg.querySelector('.curva').setAttribute('d', t.linha);
-        svg.querySelector('.area').setAttribute('d', t.area);
-        svg.querySelector('.zero').setAttribute('y1', t.zero);
-        svg.querySelector('.zero').setAttribute('y2', t.zero);
-        svg.querySelector('.ponto').setAttribute('cx', t.fim[0]);
-        svg.querySelector('.ponto').setAttribute('cy', t.fim[1]);
-      }
-
-      function listar(vs) {
-        var maior = Math.max.apply(null, vs.map(Math.abs)) || 1, frag = document.createDocumentFragment();
-        vs.forEach(function (v, i) {
-          var linha = document.createElement('p'), barra = document.createElement('span'), enche = document.createElement('i'), selo = document.createElement('span');
-          linha.className = 'linha';
-          barra.className = 'barra ' + (v < 0 ? 'neg' : 'ok');
-          barra.setAttribute('aria-hidden', 'true');
-          enche.style.width = +(Math.abs(v) / maior * 100).toFixed(1) + '%';
-          selo.className = 'selo ' + (v < 0 ? 'reprova' : 'passa');
-          selo.textContent = pct(v, 1, true);
-          barra.appendChild(enche);
-          linha.appendChild(document.createTextNode('Copy ' + (i + 1) + ' '));
-          linha.appendChild(barra);
-          linha.appendChild(document.createTextNode(' '));
-          linha.appendChild(selo);
-          frag.appendChild(linha);
-        });
-        var caixa = document.querySelector('.copias');
-        caixa.textContent = '';
-        caixa.appendChild(frag);
-      }
-
-      function aplicar(d) {
-        var numero = function (v) { return typeof v === 'number' && isFinite(v); };
-        var k = d && d.kpis, p = (d && d.portfolio) || {};
-        var curva = ((d && d.curve) || []).filter(function (c) { return c && numero(c.percentage); });
-        var copias = ((d && d.copies) || []).map(function (c) { return c && c.net_profit_percent; }).filter(numero);
-        if (!k || !numero(k.net_profit_percent) || curva.length < 2 || !copias.length) return;
-        valor('lucro', k.net_profit_percent);
-        valor('media', k.avg_monthly_percent);
-        valor('dd', k.max_drawdown_percent);
-        valor('dias', p.days_active);
-        valor('copys', p.copys);
-        if (d.community) valor('contas', d.community.active_accounts);
-        texto('desde', mesAno(p.since));
-        var quando = new Date(d.updated_at);
-        if (!isNaN(quando)) texto('atualizado', quando.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }));
-        desenhar(curva);
-        listar(copias.sort(function (a, b) { return b - a; }));
-      }
-
-      // Os números contam do zero quando entram na tela
-      if (!menos && window.IntersectionObserver && window.requestAnimationFrame) {
-        var olho = new IntersectionObserver(function (itens) {
-          itens.forEach(function (i) {
-            if (!i.isIntersecting) return;
-            olho.unobserve(i.target);
-            var el = i.target, chave = el.getAttribute('data-ddg'), t0 = null;
-            el.contando = true;
-            requestAnimationFrame(function passo(t) {
-              if (t0 === null) t0 = t;
-              var k = Math.min(1, (t - t0) / 1400);
-              el.textContent = FORMATO[chave](+el.getAttribute('data-valor') * (1 - Math.pow(1 - k, 3)));
-              if (k < 1) requestAnimationFrame(passo); else el.contando = false;
-            });
-          });
-        }, { threshold: .6 });
-        document.querySelectorAll('[data-valor]').forEach(function (el) { olho.observe(el); });
-      }
-
-      if (window.fetch) {
-        fetch(FONTE, { credentials: 'omit' })
-          .then(function (r) { if (!r.ok) throw new Error('dados-ddg ' + r.status); return r.json(); })
-          .then(aplicar)
-          .catch(function () { /* fica a foto que já está no HTML */ });
       }
     })();
   </script>
