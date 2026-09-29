@@ -1,4 +1,5 @@
 import "./GuaranteeSection.css";
+import { Checkout } from "../../oferta";
 
 const GuaranteeSection = () => {
   return (
@@ -82,14 +83,14 @@ const GuaranteeSection = () => {
 
             <span className="price-installments">ou 12x de R$ 30,71</span>
 
-            <a
+            <Checkout
               href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary btn-pulse offer-cta"
             >
               QUERO ATIVAR MEU SETUP AGORA
-            </a>
+            </Checkout>
 
             <div className="payment-icons">
               <span>💳</span>

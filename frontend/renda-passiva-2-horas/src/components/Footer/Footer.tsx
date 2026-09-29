@@ -1,4 +1,5 @@
 import "./Footer.css";
+import { Checkout } from "../../oferta";
 
 const Footer = () => {
   return (
@@ -16,12 +17,12 @@ const Footer = () => {
             Garantia de 7 dias ou seu dinheiro de volta.
           </p>
 
-          <a
+          <Checkout
             href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
             className="btn-primary btn-pulse footer-cta"
           >
             QUERO COMEÇAR AGORA
-          </a>
+          </Checkout>
         </div>
 
         <div className="footer-bottom">

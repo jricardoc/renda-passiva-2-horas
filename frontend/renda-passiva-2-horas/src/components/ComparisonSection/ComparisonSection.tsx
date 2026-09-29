@@ -1,4 +1,5 @@
 import "./ComparisonSection.css";
+import { Checkout } from "../../oferta";
 
 const ComparisonSection = () => {
   const notItems = [
@@ -64,12 +65,12 @@ const ComparisonSection = () => {
         </p>
 
         <div className="comparison-cta-wrapper">
-          <a
+          <Checkout
             href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
             className="btn-primary btn-pulse"
           >
             GARANTA O PROTOCOLO POR 12x DE R$&nbsp;30,71
-          </a>
+          </Checkout>
         </div>
       </div>
     </section>

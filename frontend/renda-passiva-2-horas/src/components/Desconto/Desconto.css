@@ -1,0 +1,195 @@
+/* Página de desconto (destino do backredirect).
+   As animações levam !important de propósito: no celular o index.css zera todas
+   ("Zero Effects"), e o presente e o popup precisam se mexer para chamar atenção. */
+
+.desconto {
+  padding: 56px 20px 48px;
+  text-align: center;
+  background: radial-gradient(ellipse at top, rgba(255, 99, 0, 0.2), transparent 60%), #000;
+}
+
+.desconto-espera {
+  color: var(--accent-orange);
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+}
+
+.desconto-titulo {
+  max-width: 640px;
+  margin: 8px auto 28px;
+  font-size: clamp(1.9rem, 6vw, 3rem);
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.desconto-presente {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  width: 190px;
+  height: 190px;
+  margin: 0 auto;
+  border: 2px solid var(--gold);
+  border-radius: 28px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.25), rgba(255, 99, 0, 0.08));
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.35);
+  color: var(--text-white);
+  font-family: inherit;
+  cursor: pointer;
+  animation: desconto-balanca 1.6s ease-in-out infinite !important;
+}
+
+.desconto-presente-emoji {
+  font-size: 5rem;
+  line-height: 1;
+}
+
+.desconto-presente-dica {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.desconto-cupom {
+  margin-bottom: 20px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.desconto-cta {
+  display: flex;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Popup do cupom */
+.desconto-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.82);
+  animation: desconto-aparece 0.25s ease-out !important;
+}
+
+.desconto-popup {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 420px;
+  padding: 36px 24px 28px;
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  background: linear-gradient(160deg, #1f1506, #0a0a0a 60%);
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.35);
+  text-align: center;
+  animation: desconto-pula 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) !important;
+}
+
+.desconto-fechar {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  padding: 6px 10px;
+  border: 0;
+  background: none;
+  color: var(--text-gray);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.desconto-parabens {
+  color: var(--accent-orange);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.desconto-ganhou {
+  margin-top: 6px;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.desconto-ganhou span {
+  display: block;
+  color: var(--gold);
+  font-size: 3.2rem;
+  line-height: 1.1;
+  text-shadow: 0 0 24px rgba(255, 215, 0, 0.5);
+}
+
+.desconto-produto,
+.desconto-aplicado {
+  text-wrap: balance;
+}
+
+.desconto-produto {
+  color: var(--text-gray);
+}
+
+.desconto-preco {
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+.desconto-preco s {
+  color: var(--text-gray);
+}
+
+.desconto-aplicado {
+  margin: 12px 0 20px;
+  color: var(--success-green);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.desconto-confete {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.desconto-confete i {
+  position: absolute;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: desconto-confete 1.8s ease-in forwards !important;
+}
+
+@keyframes desconto-confete {
+  0% { opacity: 1; transform: translateY(0) rotate(0); }
+  100% { opacity: 0; transform: translateY(460px) rotate(540deg); }
+}
+
+@keyframes desconto-pula {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes desconto-aparece {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes desconto-balanca {
+  0%, 100% { transform: rotate(0) scale(1); }
+  25% { transform: rotate(-6deg) scale(1.04); }
+  75% { transform: rotate(6deg) scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desconto-presente,
+  .desconto-fundo,
+  .desconto-popup {
+    animation: none !important;
+  }
+
+  .desconto-confete {
+    display: none;
+  }
+}

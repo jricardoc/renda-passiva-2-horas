@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./ContentCards.css";
+import { Checkout } from "../../oferta";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,7 +92,7 @@ const ContentCards = () => {
           className="button-vsl-wrapper"
           style={{ textAlign: "center", marginTop: "20px" }}
         >
-          <a
+          <Checkout
             href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
             className="button-vsl btn-primary btn-pulse"
             style={{
@@ -102,7 +103,7 @@ const ContentCards = () => {
             }}
           >
             QUERO COMPRAR AGORA
-          </a>
+          </Checkout>
         </div>
       </div>
     </section>
