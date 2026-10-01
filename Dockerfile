@@ -21,10 +21,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html/protocolo1
 # Copiada direto do contexto de build para /links.
 COPY frontend/links /usr/share/nginx/html/links
 
-# Versao temporaria para validar o backredirect da VSL (build estatico, sem GTM, noindex).
-# Remover junto com frontend/teste e o bloco /teste/ do nginx depois da validacao.
-COPY frontend/teste /usr/share/nginx/html/teste
-
 # Black Vitalicia: captura (/black) e obrigado (/black-obrigado), HTML estatico.
 COPY frontend/black /usr/share/nginx/html/black
 COPY frontend/black-obrigado /usr/share/nginx/html/black-obrigado
