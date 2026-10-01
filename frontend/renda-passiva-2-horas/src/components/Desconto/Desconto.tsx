@@ -87,7 +87,7 @@ const Desconto = () => {
             </h2>
             <p className="desconto-produto">no acesso ao Protocolo Renda Passiva em 2H</p>
             <p className="desconto-preco">
-              De <s>R$ 297</s> por <strong>R$ 247</strong>
+              De <s>R$ 297</s> por <strong>R$ 246,51</strong>
             </p>
             <p className="desconto-aplicado">
               ✅ Cupom <strong>{CUPOM}</strong> já aplicado no botão
