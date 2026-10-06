@@ -358,8 +358,8 @@
               <p class="erro" id="erro-email" aria-live="polite"></p>
             </div>
             <div class="campo">
-              <label class="sr-only" for="whatsapp">WhatsApp com DDD</label>
-              <input id="whatsapp" name="whatsapp" type="tel" inputmode="numeric" placeholder="Seu WhatsApp com DDD" autocomplete="tel-national" maxlength="15" required aria-describedby="erro-whatsapp">
+              <label class="sr-only" for="whatsapp">WhatsApp com DDD ou, fora do Brasil, com + e o código do país</label>
+              <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" placeholder="Seu WhatsApp com DDD" autocomplete="tel" maxlength="20" required aria-describedby="erro-whatsapp">
               <p class="erro" id="erro-whatsapp" aria-live="polite"></p>
             </div>
             <button class="btn btn-fire" type="submit">
@@ -474,10 +474,17 @@
       var erroEnvio = document.getElementById('erro-envio');
       var wa = form.whatsapp;
 
+      // Fora do Brasil o número começa com + e o código do país (ex.: +351 912 345 678)
+      function intl(v) { return v.trim().charAt(0) === '+'; }
+
       var regras = {
         nome: function (v) { return v.trim().length >= 2 ? '' : 'Informe seu nome.'; },
         email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Informe um e-mail válido.'; },
-        whatsapp: function (v) { return /^[1-9]{2}\d{9}$/.test(v.replace(/\D/g, '')) ? '' : 'Informe seu WhatsApp com DDD.'; }
+        whatsapp: function (v) {
+          var d = v.replace(/\D/g, '');
+          if (intl(v)) return /^[1-9]\d{7,14}$/.test(d) ? '' : 'Confira o número com o código do país, ex.: +351 912 345 678.';
+          return /^[1-9]{2}\d{9}$/.test(d) ? '' : 'Informe seu WhatsApp com DDD. Fora do Brasil, comece com + e o código do país.';
+        }
       };
 
       function erro(campo, msg) {
@@ -485,8 +492,9 @@
         form[campo].setAttribute('aria-invalid', msg ? 'true' : 'false');
       }
 
-      // Máscara (00) 00000-0000
+      // Máscara (00) 00000-0000 só no número do Brasil; com + fica como a pessoa digitou
       wa.addEventListener('input', function () {
+        if (intl(wa.value)) { wa.value = '+' + wa.value.replace(/[^\d ]/g, '').replace(/^ +/, ''); return; }
         var d = wa.value.replace(/\D/g, '').slice(0, 11);
         wa.value = d.length > 7 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7)
           : d.length > 2 ? '(' + d.slice(0, 2) + ') ' + d.slice(2)
@@ -517,7 +525,7 @@
           first_name: nome[0],
           last_name: nome.slice(1).join(' '),
           email: form.email.value.trim(),
-          phone: '+55' + digitos,
+          phone: (intl(wa.value) ? '+' : '+55') + digitos,
           whatsapp: wa.value,
           pagina: 'black'
         };
