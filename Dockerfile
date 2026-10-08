@@ -23,6 +23,7 @@ COPY frontend/links /usr/share/nginx/html/links
 
 # Black Vitalicia: captura (/black) e obrigado (/black-obrigado), HTML estatico.
 COPY frontend/black /usr/share/nginx/html/black
+COPY frontend/black-b /usr/share/nginx/html/black-b
 COPY frontend/black-obrigado /usr/share/nginx/html/black-obrigado
 
 # /black/config.js e gerado ao subir o container pelo envsubst da imagem do nginx,
