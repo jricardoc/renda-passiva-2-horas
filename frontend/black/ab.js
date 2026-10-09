@@ -1,8 +1,10 @@
 /*
   Teste A/B da captação da Black (ADR-054 do Academia Hub).
   O nginx sorteia A (/black) ou B (/black-b) para quem abre /black e fixa a escolha no cookie black_ab por 30 dias.
-  Este script manda ao Hub cada etapa da visita uma vez (navigator.sendBeacon), só com a variante, a etapa, se veio de
-  anúncio e se é celular. Nada de nome, e-mail, telefone, IP ou identificador: o Hub só soma contadores.
+  Este script manda ao Hub cada etapa uma vez por pessoa (navigator.sendBeacon): a marca de etapa enviada fica no
+  navegador por 30 dias, o mesmo prazo do cookie do sorteio, e quem volta pelo anúncio não conta de novo. Só vão a
+  variante, a etapa, se veio de anúncio e se é celular. Nada de nome, e-mail, telefone, IP ou identificador: o Hub só
+  soma contadores.
 
   Na página de captura: <script src="/black/ab.js" data-variante="A" defer></script> (B na /black-b).
   No obrigado: <script src="/black/ab.js" defer></script> (a variante vem da captura, na mesma aba).
@@ -30,6 +32,19 @@
     try { sessionStorage.removeItem(chave); } catch (e) { /* nada a apagar */ }
   }
 
+  // Etapa já contada para esta pessoa (este navegador) nos últimos 30 dias. Sem localStorage, vale a memória da página.
+  var TRINTA_DIAS = 30 * 24 * 60 * 60 * 1000;
+  function jaContou(marca) {
+    var quando;
+    try { quando = localStorage.getItem(marca); } catch (e) { quando = memoria[marca]; }
+    return Boolean(quando) && Date.now() - Number(quando) < TRINTA_DIAS;
+  }
+  function marcarContada(marca) {
+    var agora = String(Date.now());
+    memoria[marca] = agora;
+    try { localStorage.setItem(marca, agora); } catch (e) { /* segue com a memória */ }
+  }
+
   var variante = null;
   if (naCaptura) variante = tag && tag.getAttribute('data-variante');
   else if (noObrigado && !preview && !window.blackSaindo && ler('black_inscrito') === '1') variante = ler('hub_ab_v');
@@ -54,8 +69,8 @@
 
   function enviar(etapa) {
     var marca = 'hub_ab_' + variante + '_' + etapa;
-    if (ler(marca)) return; // cada etapa uma vez por visita (aba) e por variante
-    gravar(marca, '1');
+    if (jaContou(marca)) return; // cada etapa uma vez por pessoa e por variante, em 30 dias
+    marcarContada(marca);
     var corpo = JSON.stringify({ v: variante, e: etapa, ad: anuncio, m: celular });
     try {
       if (navigator.sendBeacon && navigator.sendBeacon(COLETA, corpo)) return;
