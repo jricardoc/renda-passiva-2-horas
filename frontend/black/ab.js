@@ -1,17 +1,19 @@
 /*
   Teste A/B da captação da Black (ADR-054 do Academia Hub).
-  O nginx sorteia A (/black) ou B (/black-b) para quem abre /black e fixa a escolha no cookie black_ab por 30 dias.
+  O nginx sorteia A (/black), C (/black-c) ou D (/black-d) para quem abre /black e fixa a escolha no cookie black_ab por 30 dias.
   Este script manda ao Hub cada etapa uma vez por pessoa (navigator.sendBeacon): a marca de etapa enviada fica no
   navegador por 30 dias, o mesmo prazo do cookie do sorteio, e quem volta pelo anúncio não conta de novo. Só vão a
   variante, a etapa, se veio de anúncio e se é celular. Nada de nome, e-mail, telefone, IP ou identificador: o Hub só
   soma contadores.
 
-  Na página de captura: <script src="/black/ab.js" data-variante="A" defer></script> (B na /black-b).
+  Na página de captura: <script src="/black/ab.js" data-variante="A" defer></script> (C na /black-c, D na /black-d).
   No obrigado: <script src="/black/ab.js" defer></script> (a variante vem da captura, na mesma aba).
   Quem abre /black-b direto (revisão) ou o obrigado com ?preview=1 não entra na conta.
 */
 (function () {
-  var COLETA = 'https://hub.ocaradocopytrade.com/api/ab/black-captacao/events';
+  // Teste A x C x D (a B saiu em 13/10: perdeu para a A com 99,5% de chance). Chave nova no Hub para comparar só
+  // os dias em que as três rodam juntas.
+  var COLETA = 'https://hub.ocaradocopytrade.com/api/ab/black-captacao-acd/events';
   var tag = document.currentScript;
   var caminho = location.pathname.replace(/\/+$/, '');
   var naCaptura = caminho === '/black';
@@ -50,7 +52,7 @@
   else if (noObrigado && !preview && !window.blackSaindo && ler('black_inscrito') === '1') variante = ler('hub_ab_v');
 
   window.hubAB = function () {};
-  if (variante !== 'A' && variante !== 'B') {
+  if (variante !== 'A' && variante !== 'C' && variante !== 'D') {
     // Captura fora do sorteio (ex.: /black-b aberta direto para revisão): esquece a variante desta aba, para uma
     // inscrição feita aqui não ser creditada à variante da visita anterior.
     if (!naCaptura && !noObrigado) { apagar('hub_ab_v'); apagar('hub_ab_ad'); }
