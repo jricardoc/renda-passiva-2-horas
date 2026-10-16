@@ -11,6 +11,9 @@
   Quem abre /black-b direto (revisão) ou o obrigado com ?preview=1 não entra na conta.
 */
 (function () {
+  // Teste encerrado em 16/10 (a A venceu): não manda mais nada ao Hub. Para um teste novo, tire este return.
+  window.hubAB = function () {};
+  return;
   // Teste A x C x D (a B saiu em 13/10: perdeu para a A com 99,5% de chance). Chave nova no Hub para comparar só
   // os dias em que as três rodam juntas.
   var COLETA = 'https://hub.ocaradocopytrade.com/api/ab/black-captacao-acd/events';
