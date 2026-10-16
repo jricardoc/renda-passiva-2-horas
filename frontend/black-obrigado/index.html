@@ -309,6 +309,24 @@
         });
       });
 
+      // 1 s depois de abrir, leva ao grupo sozinho (o botão fica para quem voltar). Uma vez por sessão, a partir de
+      // 17/10 00:01 (Brasília). Antes de sair, espera o GTM despachar a conversão desta página (até 1,5 s a mais).
+      var grupoSozinho = false;
+      try { grupoSozinho = !sessionStorage.getItem('black_grupo_aberto'); } catch (e) { grupoSozinho = true; }
+      if (cfg.grupo && !window.blackPreview && grupoSozinho && Date.now() >= Date.parse('2026-10-17T00:01:00-03:00')) {
+        setTimeout(function () {
+          var foi = false;
+          function irParaGrupo() {
+            if (foi) return;
+            foi = true;
+            try { sessionStorage.setItem('black_grupo_aberto', '1'); } catch (e) {}
+            location.href = cfg.grupo;
+          }
+          window.dataLayer.push({ event: 'black_grupo_automatico', eventCallback: irParaGrupo, eventTimeout: 1500 });
+          setTimeout(irParaGrupo, 1600);
+        }, 1000);
+      }
+
       if (!cfg.vturb) return;
       var box = document.getElementById('video');
       var player = document.createElement('vturb-smartplayer');
