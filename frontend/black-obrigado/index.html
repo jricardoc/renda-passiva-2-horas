@@ -309,11 +309,14 @@
         });
       });
 
-      // 1 s depois de abrir, leva ao grupo sozinho (o botão fica para quem voltar). Uma vez por sessão, a partir de
-      // 17/10 00:01 (Brasília). Antes de sair, espera o GTM despachar a conversão desta página (até 1,5 s a mais).
+      // 1 s depois de abrir, leva ao grupo sozinho (o botão fica para quem voltar). Uma vez por sessão, só no teste de
+      // 48 h: de 17/10 00:01 a 19/10 00:01 (Brasília). Antes de sair, espera o GTM despachar a conversão desta página
+      // (até 1,5 s a mais).
       var grupoSozinho = false;
       try { grupoSozinho = !sessionStorage.getItem('black_grupo_aberto'); } catch (e) { grupoSozinho = true; }
-      if (cfg.grupo && !window.blackPreview && grupoSozinho && Date.now() >= Date.parse('2026-10-17T00:01:00-03:00')) {
+      var agora = Date.now();
+      var noTeste = agora >= Date.parse('2026-10-17T00:01:00-03:00') && agora < Date.parse('2026-10-19T00:01:00-03:00');
+      if (cfg.grupo && !window.blackPreview && grupoSozinho && noTeste) {
         setTimeout(function () {
           var foi = false;
           function irParaGrupo() {
