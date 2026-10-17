@@ -1,24 +1,26 @@
 /*
   Teste A/B da captação da Black (ADR-054 do Academia Hub).
-  O nginx sorteia A (/black), C (/black-c) ou D (/black-d) para quem abre /black e fixa a escolha no cookie black_ab por 30 dias.
+  O nginx sorteia A (/black), E (/black-e) ou F (/black-f) para quem abre /black e fixa a escolha no cookie black_aef por 30 dias.
   Este script manda ao Hub cada etapa uma vez por pessoa (navigator.sendBeacon): a marca de etapa enviada fica no
   navegador por 30 dias, o mesmo prazo do cookie do sorteio, e quem volta pelo anúncio não conta de novo. Só vão a
   variante, a etapa, se veio de anúncio e se é celular. Nada de nome, e-mail, telefone, IP ou identificador: o Hub só
   soma contadores.
 
-  Na página de captura: <script src="/black/ab.js" data-variante="A" defer></script> (C na /black-c, D na /black-d).
+  Na página de captura: <script src="/black/ab.js" data-variante="A" defer></script> (E na /black-e, F na /black-f).
   No obrigado: <script src="/black/ab.js" defer></script> (a variante vem da captura, na mesma aba).
-  Quem abre /black-b direto (revisão) ou o obrigado com ?preview=1 não entra na conta.
+  Quem abre /black-e ou /black-f direto (revisão, sem passar pelo sorteio da /black) ou o obrigado com ?preview=1 não entra na conta.
 */
 (function () {
-  // Teste encerrado em 16/10 (a A venceu): não manda mais nada ao Hub. Para um teste novo, tire este return.
+  // Teste A x E x F (E e F têm a mesma headline e o mesmo aviso, novos; só o texto de apoio muda entre elas), a partir de 18/10 00:00 de Brasília, quando o nginx
+  // abre o sorteio. Antes disso nada vai ao Hub. B, C e D já perderam para a A (testes black-captacao e -acd).
+  var COLETA = 'https://hub.ocaradocopytrade.com/api/ab/black-captacao-aef/events';
+  var TESTE = 'aef';
+  var INICIO = Date.UTC(2026, 9, 18, 3, 0, 0); // 18/10/2026 00:00 em Brasília (UTC-3)
   window.hubAB = function () {};
-  return;
-  // Teste A x C x D (a B saiu em 13/10: perdeu para a A com 99,5% de chance). Chave nova no Hub para comparar só
-  // os dias em que as três rodam juntas.
-  var COLETA = 'https://hub.ocaradocopytrade.com/api/ab/black-captacao-acd/events';
+  if (Date.now() < INICIO) return;
   var tag = document.currentScript;
   var caminho = location.pathname.replace(/\/+$/, '');
+  // A E é servida pelo nginx em /black (sorteio); aberta direto em /black-e ou /black-f é revisão e fica fora da conta.
   var naCaptura = caminho === '/black';
   var noObrigado = caminho === '/black-obrigado';
   var preview = /[?&]preview=1(&|$)/.test(location.search);
@@ -55,7 +57,7 @@
   else if (noObrigado && !preview && !window.blackSaindo && ler('black_inscrito') === '1') variante = ler('hub_ab_v');
 
   window.hubAB = function () {};
-  if (variante !== 'A' && variante !== 'C' && variante !== 'D') {
+  if (variante !== 'A' && variante !== 'E' && variante !== 'F') {
     // Captura fora do sorteio (ex.: /black-b aberta direto para revisão): esquece a variante desta aba, para uma
     // inscrição feita aqui não ser creditada à variante da visita anterior.
     if (!naCaptura && !noObrigado) { apagar('hub_ab_v'); apagar('hub_ab_ad'); }
@@ -73,7 +75,8 @@
   var celular = window.matchMedia && window.matchMedia('(max-width: 900px)').matches ? 1 : 0;
 
   function enviar(etapa) {
-    var marca = 'hub_ab_' + variante + '_' + etapa;
+    // Com o nome do teste na marca: quem já foi contado como A no teste A x C x D conta de novo neste.
+    var marca = 'hub_ab_' + TESTE + '_' + variante + '_' + etapa;
     if (jaContou(marca)) return; // cada etapa uma vez por pessoa e por variante, em 30 dias
     marcarContada(marca);
     var corpo = JSON.stringify({ v: variante, e: etapa, ad: anuncio, m: celular });

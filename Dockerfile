@@ -26,6 +26,8 @@ COPY frontend/black /usr/share/nginx/html/black
 COPY frontend/black-b /usr/share/nginx/html/black-b
 COPY frontend/black-c /usr/share/nginx/html/black-c
 COPY frontend/black-d /usr/share/nginx/html/black-d
+COPY frontend/black-e /usr/share/nginx/html/black-e
+COPY frontend/black-f /usr/share/nginx/html/black-f
 COPY frontend/black-obrigado /usr/share/nginx/html/black-obrigado
 
 # /black/config.js e gerado ao subir o container pelo envsubst da imagem do nginx,
