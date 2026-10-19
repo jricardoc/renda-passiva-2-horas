@@ -309,14 +309,12 @@
         });
       });
 
-      // 1 s depois de abrir, leva ao grupo sozinho (o botão fica para quem voltar). Uma vez por sessão, só no teste de
-      // 48 h: de 17/10 00:01 a 19/10 00:01 (Brasília). Antes de sair, espera o GTM despachar a conversão desta página
-      // (até 1,5 s a mais).
+      // 1 s depois de abrir, leva ao grupo sozinho (o botão fica para quem voltar). Uma vez por sessão. Ficou ligado de
+      // vez depois do teste de 48 h (17 a 19/10): antes, 90 a 95% já tocavam no botão, e abrir sozinho não tira nada.
+      // Antes de sair, espera o GTM despachar a conversão desta página (até 1,5 s a mais).
       var grupoSozinho = false;
       try { grupoSozinho = !sessionStorage.getItem('black_grupo_aberto'); } catch (e) { grupoSozinho = true; }
-      var agora = Date.now();
-      var noTeste = agora >= Date.parse('2026-10-17T00:01:00-03:00') && agora < Date.parse('2026-10-19T00:01:00-03:00');
-      if (cfg.grupo && !window.blackPreview && grupoSozinho && noTeste) {
+      if (cfg.grupo && !window.blackPreview && grupoSozinho) {
         setTimeout(function () {
           var foi = false;
           function irParaGrupo() {
@@ -325,6 +323,8 @@
             try { sessionStorage.setItem('black_grupo_aberto', '1'); } catch (e) {}
             location.href = cfg.grupo;
           }
+          // Conta "foi ao grupo" no teste A/B do Hub como o clique no botão (sendBeacon sobrevive à troca de página)
+          if (window.hubAB) window.hubAB('grupo');
           window.dataLayer.push({ event: 'black_grupo_automatico', eventCallback: irParaGrupo, eventTimeout: 1500 });
           setTimeout(irParaGrupo, 1600);
         }, 1000);
