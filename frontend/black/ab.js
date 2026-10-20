@@ -11,6 +11,9 @@
   Quem abre /black-e ou /black-f direto (revisão, sem passar pelo sorteio da /black) ou o obrigado com ?preview=1 não entra na conta.
 */
 (function () {
+  // Teste encerrado em 20/10 (a E ficou com todo o tráfego): não manda mais nada ao Hub. Para um teste novo, tire este return.
+  window.hubAB = function () {};
+  return;
   // Teste A x E x F (E e F têm a mesma headline e o mesmo aviso, novos; só o texto de apoio muda entre elas), a partir de 18/10 00:00 de Brasília, quando o nginx
   // abre o sorteio. Antes disso nada vai ao Hub. B, C e D já perderam para a A (testes black-captacao e -acd).
   var COLETA = 'https://hub.ocaradocopytrade.com/api/ab/black-captacao-aef/events';
