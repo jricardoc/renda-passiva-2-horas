@@ -29,6 +29,8 @@ COPY frontend/black-d /usr/share/nginx/html/black-d
 COPY frontend/black-e /usr/share/nginx/html/black-e
 COPY frontend/black-f /usr/share/nginx/html/black-f
 COPY frontend/black-obrigado /usr/share/nginx/html/black-obrigado
+# Pagina de vendas do replay da live (/replayblack e /blackreplay): HTML estatico, com os arquivos em /vitalicio.
+COPY frontend/vitalicio /usr/share/nginx/html/vitalicio
 
 # /black/config.js e gerado ao subir o container pelo envsubst da imagem do nginx,
 # com as variaveis do servico no EasyPanel. Os padroes vazios garantem a troca
