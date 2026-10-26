@@ -60,11 +60,20 @@ window.clarity = window.clarity || function(){ (window.clarity.q = window.clarit
 <link rel="preload" href="/vitalicio/assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/vitalicio/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="/vitalicio/assets/img/hero-poster.webp">
+<!-- VSL do replay (VTurb): o player e o vídeo começam a baixar já, porque são o centro da página -->
+<script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+<link rel="preload" href="https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/6adcb77858d713890626b695/v4/player.js" as="script">
+<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
+<link rel="preload" href="https://cdn.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/6adcb609686da2f0a78a6a40/main.m3u8" as="fetch">
+<link rel="dns-prefetch" href="https://cdn.converteai.net">
+<link rel="dns-prefetch" href="https://scripts.converteai.net">
+<link rel="dns-prefetch" href="https://images.converteai.net">
+<link rel="dns-prefetch" href="https://license.vturb.com">
 <!-- sem movimento também em tela muito baixa (celular deitado): as cenas pinadas não cabem nela -->
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!matchMedia('(max-height: 500px)').matches)document.documentElement.classList.add('m');</script>
 <!-- Replay da live da Black: a mesma página em dois endereços.
-     /blackreplay é aberta (grupos e automações). /replayblack começa fechada (tráfego pago): só o topo, com o botão
-     do replay, e abre quando completa, desde a primeira visita, o tempo do vídeo até o pitch.
+     /blackreplay é aberta (grupos e automações). /replayblack começa fechada (tráfego pago): só o topo, com a VSL e o
+     botão do replay, e abre quando completa, desde a primeira visita, o tempo do vídeo até o pitch.
      sala: link da sala de replay da Hotwebinar (vazio esconde o botão do replay).
      abreEm: segundos do vídeo até o pitch (null: a fechada não abre sozinha). -->
 <script>
@@ -652,6 +661,8 @@ html:not(.m) .fc-veil{display:none}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 /* ---------- replay da live: o botão da sala e a página fechada ---------- */
 .hero-replay{margin-top:clamp(14px,2.2svh,24px)}
+/* VSL (VTurb): logo abaixo do título, nas duas páginas; na fechada é o que aparece até o pitch */
+.hero-vsl{margin-top:clamp(12px,2svh,22px);max-width:640px}
 .hero-replay .btn{font-size:15.5px;letter-spacing:.04em}
 /* fechada (/replayblack): só o topo e o rodapé, e o botão do replay vira o principal */
 html.fechada main>:not(#topo){display:none}
@@ -686,6 +697,11 @@ html.fechada .hero-replay .btn-luz:focus-visible{outline-color:var(--paper)}
         <span class="hl h-sm"><span class="hl-in">de Academia e leva tudo</span></span>
         <span class="hl h-med hl-pad"><span class="hl-in"><span class="h-stamp" id="heroStamp">para o resto da vida.</span></span></span>
       </h1>
+      <!-- VSL do replay (VTurb), código do painel da VTurb -->
+      <div class="hero-vsl">
+        <vturb-smartplayer id="vid-6adcb77858d713890626b695" style="display: block; margin: 0 auto; width: 100%; "><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+        <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/6adcb77858d713890626b695/v4/player.js", s.async=!0,document.head.appendChild(s); </script>
+      </div>
       <p class="hero-sub">Acesso vitalício à Academia do Hendi de Copy Trade, com todos os sistemas inclusos, vendido uma única vez. Quando esta oferta fechar, a Academia fecha para novos alunos.</p>
       <ul class="hero-leva" aria-label="O que você leva">
         <li>Academia do Hendi: <span>todas as aulas, os materiais atualizados e a comunidade</span></li>
@@ -1437,7 +1453,9 @@ mm.add('(min-width: 900px)', function(){
   var heroScroll = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#topo', start: 'top top', end: 'bottom top', scrub: .6 } });
   heroScroll.fromTo('#heroMedia', { clipPath: 'inset(12% 5% 14% 58% round 18px)' }, { clipPath: 'inset(0% 0% 0% 44% round 0px)', immediateRender: false }, 0);
   heroScroll.fromTo('#heroLoop', { scale: 1 }, { scale: 1.06 }, 0);
-  heroScroll.to('#heroCopy', { y: -70, autoAlpha: .15 }, 0);
+  /* o texto sobe e apaga; a VSL sobe junto, mas não apaga (a pessoa pode estar assistindo) */
+  heroScroll.to('#heroCopy', { y: -70 }, 0);
+  heroScroll.to('#heroCopy > :not(.hero-vsl)', { autoAlpha: .15 }, 0);
 });
 mm.add('(max-width: 899px)', function(){
   gsap.fromTo('#heroLoop', { scale: 1 }, { scale: 1.08, ease: 'none', scrollTrigger: { trigger: '#topo', start: 'top top', end: 'bottom top', scrub: .6 } });
