@@ -73,26 +73,15 @@ window.clarity = window.clarity || function(){ (window.clarity.q = window.clarit
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!matchMedia('(max-height: 500px)').matches)document.documentElement.classList.add('m');</script>
 <!-- Replay da live da Black: a mesma página em dois endereços.
      /blackreplay é aberta (grupos e automações). /replayblack começa fechada (tráfego pago): só o topo, com a VSL e o
-     botão do replay, e abre quando completa, desde a primeira visita, o tempo do vídeo até o pitch.
-     sala: link da sala de replay da Hotwebinar (vazio esconde o botão do replay).
-     abreEm: segundos do vídeo até o pitch (null: a fechada não abre sozinha). -->
+     botão do replay. Ela abre quando a VTurb mostra o #content-gate (o "Mostrar conteúdo oculto" do player, no pitch)
+     e fica aberta nas visitas seguintes. O tempo do pitch mora no painel da VTurb, não aqui.
+     sala: link da sala de replay da Hotwebinar (vazio esconde o botão do replay). -->
 <script>
-window.REPLAY = { sala: '', abreEm: null };
+window.REPLAY = { sala: '' };
 (function(){
   if (location.pathname.indexOf('/replayblack') !== 0) return;
-  var t0 = Date.now(), abreEm = window.REPLAY.abreEm;
-  try {
-    var salvo = +localStorage.getItem('replayblack_inicio');
-    if (salvo) t0 = salvo; else localStorage.setItem('replayblack_inicio', String(t0));
-  } catch(e){}
-  function falta(){ return abreEm == null ? Infinity : abreEm * 1000 - (Date.now() - t0); }
-  if (falta() <= 0) return;
+  try { if (localStorage.getItem('replayblack_aberta')) return; } catch(e){}
   document.documentElement.classList.add('fechada');
-  /* abre recarregando: a página inteira nasce com as cenas medidas, sem montar nada escondido */
-  function confere(){ if (falta() <= 0) location.reload(); }
-  if (abreEm != null) setTimeout(confere, falta() + 50);
-  document.addEventListener('visibilitychange', function(){ if (!document.hidden) confere(); });
-  addEventListener('pageshow', confere);
 })();
 </script>
 <style>
@@ -672,6 +661,28 @@ html.fechada .hero-replay .btn-luz:focus-visible{outline-color:var(--paper)}
 </style>
 </head>
 <body>
+<!-- #content-gate: o player da VTurb esconde este marcador ao carregar e o mostra no pitch ("Mostrar conteúdo oculto").
+     Ele vem antes do player, porque a VTurb procura o elemento uma vez só, quando monta. Na /replayblack fechada,
+     mostrar o marcador abre a página no lugar, sem recarregar, para a VSL seguir tocando. -->
+<div id="content-gate" hidden></div>
+<script>
+(function(){
+  var html = document.documentElement, gate = document.getElementById('content-gate');
+  if (!html.classList.contains('fechada')) return;
+  function abre(){
+    if (!html.classList.contains('fechada')) return;
+    try { localStorage.setItem('replayblack_aberta', '1'); } catch(e){}
+    html.classList.remove('fechada');
+    document.dispatchEvent(new Event('replay:aberta'));
+  }
+  new MutationObserver(function(){ if (gate.style.display === 'block') abre(); })
+    .observe(gate, { attributes: true, attributeFilter: ['style'] });
+  /* falha segura: sem player em 20 s depois do load (bloqueador, rede), a página abre para não ficar sem oferta */
+  var pronto = false;
+  document.addEventListener('player:ready', function(){ pronto = true; }, { once: true });
+  addEventListener('load', function(){ setTimeout(function(){ if (!pronto) abre(); }, 20000); });
+})();
+</script>
 
 <main>
 <!-- =====================================================================
@@ -1283,7 +1294,7 @@ html.fechada .hero-replay .btn-luz:focus-visible{outline-color:var(--paper)}
 (function(){
 'use strict';
 var motionOK = document.documentElement.classList.contains('m');
-/* fechada: só o topo existe; o resto nasce inteiro quando a página recarrega aberta */
+/* fechada: só o topo existe até o pitch; o resto monta quando a página abre (replay:aberta), sem recarregar */
 var fechada = document.documentElement.classList.contains('fechada');
 var hasGSAP = !!(window.gsap && window.ScrollTrigger);
 if (!hasGSAP) { document.documentElement.classList.remove('m'); motionOK = false; }
@@ -1397,19 +1408,25 @@ document.querySelectorAll('.faq-item').forEach(function(item){
 /* ---------- esteiras táteis (dragloop) com boost do scroll ----------
    as cópias que o loop cria ficam escondidas do leitor de tela (cada print é lido uma vez) */
 var loops = [];
-if (!fechada) document.querySelectorAll('[data-dragloop]').forEach(function(z){
-  var base = parseFloat(z.dataset.speed || '24');
-  var orig = z.querySelectorAll('[data-track] > *').length;
-  var inst = window.makeDragLoop ? makeDragLoop(z, { speed: base }) : null;
-  z.querySelectorAll('[data-track] > *').forEach(function(el, i){ if (i >= orig) el.setAttribute('aria-hidden', 'true'); });
-  if (inst) loops.push({ inst: inst, base: base });
-});
-if (motionOK && loops.length) {
-  gsap.ticker.add(function(){
-    var boost = Math.min(Math.abs(lenisVel) * 0.045, 2.2);
-    for (var i = 0; i < loops.length; i++) loops[i].inst.speed = loops[i].base * (1 + boost);
+function montaLoops(){
+  document.querySelectorAll('[data-dragloop]').forEach(function(z){
+    var base = parseFloat(z.dataset.speed || '24');
+    var orig = z.querySelectorAll('[data-track] > *').length;
+    var inst = window.makeDragLoop ? makeDragLoop(z, { speed: base }) : null;
+    z.querySelectorAll('[data-track] > *').forEach(function(el, i){ if (i >= orig) el.setAttribute('aria-hidden', 'true'); });
+    if (inst) loops.push({ inst: inst, base: base });
   });
+  if (motionOK && loops.length) {
+    gsap.ticker.add(function(){
+      var boost = Math.min(Math.abs(lenisVel) * 0.045, 2.2);
+      for (var i = 0; i < loops.length; i++) loops[i].inst.speed = loops[i].base * (1 + boost);
+    });
+  }
 }
+/* fechada: o que está escondido só monta quando a página abre (replay:aberta, no pitch da VSL), já com medida */
+var aoAbrir = [montaLoops];
+if (fechada) document.addEventListener('replay:aberta', function(){ aoAbrir.forEach(function(f){ f(); }); }, { once: true });
+else montaLoops();
 
 if (!motionOK) return; /* sem movimento: a página fica estática e inteira legível */
 
@@ -1461,7 +1478,15 @@ mm.add('(max-width: 899px)', function(){
   gsap.fromTo('#heroLoop', { scale: 1 }, { scale: 1.08, ease: 'none', scrollTrigger: { trigger: '#topo', start: 'top top', end: 'bottom top', scrub: .6 } });
 });
 gsap.to('#heroHint', { autoAlpha: 0, ease: 'none', scrollTrigger: { trigger: '#topo', start: 'top top', end: '12% top', scrub: true } });
-if (fechada) { addEventListener('load', function(){ ScrollTrigger.refresh(); }); return; }
+if (fechada) {
+  addEventListener('load', function(){ ScrollTrigger.refresh(); });
+  aoAbrir.push(function(){ resto(); ScrollTrigger.refresh(); });
+  return;
+}
+resto();
+
+/* as cenas abaixo do topo (na fechada, só quando a página abre) */
+function resto(){
 
 /* ================================================================
    2 — A INUNDAÇÃO E A CONTA: as linhas entram, o odômetro gira até
@@ -1735,6 +1760,16 @@ addEventListener('resize', function(){
   clearTimeout(rto);
   rto = setTimeout(function(){ ScrollTrigger.refresh(); }, 300);
 });
+/* o botão da VTurb entra embaixo da VSL no pitch e empurra a página: as cenas se medem de novo */
+if ('ResizeObserver' in window) {
+  var hVsl = 0;
+  new ResizeObserver(function(es){
+    var h = Math.round(es[0].contentRect.height);
+    if (hVsl && h !== hVsl) { clearTimeout(rto); rto = setTimeout(function(){ ScrollTrigger.refresh(); }, 300); }
+    hVsl = h;
+  }).observe(document.querySelector('.hero-vsl'));
+}
+}
 })();
 </script>
 </body>
