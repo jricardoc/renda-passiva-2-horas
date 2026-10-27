@@ -1,0 +1,70 @@
+/* Black: sala da live da Hotwebinar com o visual da página de vendas (Anton + Archivo, preto e laranja).
+   Carregado pelo "Script personalizado" do webinar (passo Integrações), que aceita só 255 caracteres:
+   lá fica um <link rel="stylesheet"> para este arquivo, servido pelo jsDelivr com o commit fixo.
+   A sala cola esse campo no <head> 1 s depois de abrir; as classes são as do DOM público da sala. */
+@font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('https://academia.ocaradocopytrade.com/assets/fonts/anton-400.woff2') format('woff2')}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url('https://academia.ocaradocopytrade.com/assets/fonts/archivo-var.woff2') format('woff2')}
+:root{--background:0 0% 7%;--foreground:60 23% 97%;--card:0 0% 7%;--card-foreground:60 23% 97%;--popover:0 0% 9%;--popover-foreground:60 23% 97%;--muted:0 0% 12%;--muted-foreground:60 4% 62%;--border:0 0% 16%;--input:0 0% 16%;--ring:13 84% 51%}
+html,body{background:#0B0B0B !important;color:#FAFAF7 !important}
+body{background:radial-gradient(ellipse 1100px 620px at 32% 0%,rgba(235,70,24,.2),transparent 66%),#0B0B0B !important;background-attachment:fixed !important}
+body *{font-family:'Archivo',system-ui,sans-serif !important}
+section.room-desktop,div.min-h-svh{background:transparent !important}
+
+/* título */
+#video-section header h2{font-family:'Anton',sans-serif !important;font-weight:400 !important;text-transform:uppercase;letter-spacing:.02em;color:#FAFAF7 !important}
+
+/* player */
+.player-wrapper{border:1px solid rgba(235,70,24,.38);box-shadow:0 0 48px rgba(235,70,24,.2)}
+.player-wrapper .bg-gray150{background:#161616 !important}
+.player-wrapper .bg-gray150 .bg-white{background:#0B0B0B !important}
+.player-wrapper button.bg-red600{background:#D63A0F !important;text-transform:uppercase;letter-spacing:.05em}
+.player-wrapper button.bg-white{background:rgba(11,11,11,.8) !important;color:#FAFAF7 !important;box-shadow:inset 0 0 0 1px rgba(250,250,247,.18) !important}
+.player-wrapper [class*="bg-[#070b13]"]{background:rgba(5,5,5,.9) !important;border-color:rgba(235,70,24,.6) !important;box-shadow:0 0 44px rgba(235,70,24,.32)}
+.player-wrapper [class*="bg-[#070b13]"] h3{font-family:'Anton',sans-serif !important;font-weight:400 !important;text-transform:uppercase;letter-spacing:.04em}
+.player-wrapper [class*="bg-[#070b13]"] h3:last-of-type{color:#FF6231 !important}
+
+/* "Venda confirmada" */
+.purchase-notification > div{background:#0E0E0E !important;border:1px solid rgba(235,70,24,.55);box-shadow:0 0 30px rgba(235,70,24,.3),0 10px 28px rgba(0,0,0,.5) !important}
+.purchase-notification > div > span{background:linear-gradient(180deg,#FF6231 0%,#E03C0E 100%) !important;color:#190A05 !important}
+.purchase-notification p:first-child{color:#FF6231 !important}
+
+/* abas */
+.room-desktop-chat .bg-gray250{background:#141414 !important;box-shadow:inset 0 0 0 1px rgba(250,250,247,.08)}
+.room-desktop-chat [role="tab"]{color:rgba(250,250,247,.62) !important;font-weight:600 !important}
+.room-desktop-chat [role="tab"][data-state="active"]{background:rgba(235,70,24,.15) !important;color:#FFD9CA !important;box-shadow:inset 0 0 0 1px rgba(235,70,24,.6) !important}
+
+/* chat e suporte */
+.room-chat-card{background:#111 !important;color:#FAFAF7 !important;box-shadow:inset 0 0 0 1px rgba(250,250,247,.08) !important}
+.room-chat-card .text-black700{color:#FAFAF7 !important}
+.room-chat-card .text-gray400{color:rgba(250,250,247,.55) !important}
+.room-chat-card .text-red600,#virtuoso-chat span.text-gray400,#virtuoso-chat-private span.text-gray400{color:#FF6231 !important}
+.room-chat-card .bg-red600{background:#C2360D !important}
+.room-chat-card .bg-orange500{background:rgba(235,70,24,.14) !important;box-shadow:inset 0 0 0 1px rgba(235,70,24,.55)}
+.room-chat-card .bg-orange500 .text-white{color:#FFD9CA !important}
+.room-chat-card .border-gray300{border-color:rgba(250,250,247,.12) !important}
+#virtuoso-chat,#virtuoso-chat-private{scrollbar-color:rgba(250,250,247,.22) transparent}
+#chat-envio,#send-chat{background:#0E0E0E !important;border-top-color:rgba(250,250,247,.1) !important}
+#chat-envio h2{color:rgba(250,250,247,.6) !important}
+#inputMessage{color:#FAFAF7 !important}
+#inputMessage::placeholder{color:rgba(250,250,247,.45) !important}
+#chat-envio .lucide-paperclip,#chat-envio .lucide-smile,#send-chat .lucide-paperclip,#send-chat .lucide-smile{color:rgba(250,250,247,.55) !important}
+#chat-envio button[class*="bg-[#111]"],#send-chat button[class*="bg-[#111]"]{background:linear-gradient(180deg,#FF6231 0%,#E03C0E 100%) !important;color:#190A05 !important}
+
+/* oferta: na aba e a faixa acima do chat */
+[id$="-content-chat"] > div[class*="bottom-[90px]"]{background:#111 !important;box-shadow:0 -1px 0 rgba(235,70,24,.4),0 -14px 30px rgba(0,0,0,.45) !important}
+[id$="-content-offer"] .justify-between > div:first-child h3{font-family:'Anton',sans-serif !important;font-weight:400 !important;font-size:28px !important;line-height:1.15 !important;color:#FF6231 !important}
+.room-chat-card a.text-white{background:linear-gradient(180deg,#FF6231 0%,#E03C0E 100%) !important;color:#190A05 !important;font-family:'Anton',sans-serif !important;font-weight:400 !important;text-transform:uppercase;letter-spacing:.07em;border-radius:3px !important;box-shadow:0 0 44px rgba(235,70,24,.5),0 10px 36px -12px rgba(235,70,24,.7);transition:background .3s ease,box-shadow .35s ease}
+[id$="-content-chat"] a.text-white{box-shadow:0 0 18px rgba(235,70,24,.4)}
+.room-chat-card a.text-white:hover{background:linear-gradient(180deg,#FF7245 0%,#EE4715 100%) !important;box-shadow:0 0 64px rgba(235,70,24,.68),0 10px 40px -10px rgba(235,70,24,.8)}
+
+/* rodapé */
+.hide-on-short{border-top-color:rgba(250,250,247,.1) !important}
+.hide-on-short .seguranca p{color:rgba(250,250,247,.58) !important}
+
+@media (max-width:950px){
+  .player-wrapper{border:0;box-shadow:none}
+  .room-chat-card{box-shadow:none !important;border-top:1px solid rgba(250,250,247,.08) !important}
+  /* a faixa da oferta ficava sobre o campo de comentário (bottom 70px, sem contar a faixa de 43px embaixo da sala) */
+  [id$="-content-chat"] > div[class*="bottom-[90px]"]{bottom:111px !important}
+  [id$="-content-offer"] a.text-white{min-height:52px;display:flex !important;align-items:center;justify-content:center;font-size:18px !important}
+}
