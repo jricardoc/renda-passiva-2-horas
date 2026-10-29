@@ -60,11 +60,19 @@ window.clarity = window.clarity || function(){ (window.clarity.q = window.clarit
 <link rel="preload" href="/vitalicio/assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/vitalicio/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="/vitalicio/assets/img/hero-poster.webp">
-<!-- VSL do replay (VTurb): o player e o vídeo começam a baixar já, porque são o centro da página -->
+<!-- VSL do replay (VTurb): uma por página. A /replayblack (fechada) usa o player que abre a página no pitch
+     (#content-gate); a /blackreplay (aberta) tem a sua. O player e o vídeo começam a baixar já, porque são o centro da página. -->
 <script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
-<link rel="preload" href="https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/6adcb77858d713890626b695/v4/player.js" as="script">
+<script>
+window.VSL = location.pathname.indexOf('/replayblack') === 0
+  ? { player: '6adcb77858d713890626b695', video: '6adcb609686da2f0a78a6a40' }
+  : { player: '6adfcfefaf7ff3353b6f9053', video: '6adfce7f9b54567d42e59f3b' };
+[['https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/' + VSL.player + '/v4/player.js', 'script'],
+ ['https://cdn.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/' + VSL.video + '/main.m3u8', 'fetch']].forEach(function(p){
+  var l = document.createElement('link'); l.rel = 'preload'; l.href = p[0]; l.as = p[1]; document.head.appendChild(l);
+});
+</script>
 <link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
-<link rel="preload" href="https://cdn.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/6adcb609686da2f0a78a6a40/main.m3u8" as="fetch">
 <link rel="dns-prefetch" href="https://cdn.converteai.net">
 <link rel="dns-prefetch" href="https://scripts.converteai.net">
 <link rel="dns-prefetch" href="https://images.converteai.net">
@@ -708,10 +716,10 @@ html.fechada .hero-replay .btn-luz:focus-visible{outline-color:var(--paper)}
         <span class="hl h-sm"><span class="hl-in">de Academia e leva tudo</span></span>
         <span class="hl h-med hl-pad"><span class="hl-in"><span class="h-stamp" id="heroStamp">para o resto da vida.</span></span></span>
       </h1>
-      <!-- VSL do replay (VTurb), código do painel da VTurb -->
+      <!-- VSL do replay (VTurb), código do painel da VTurb; o player de cada página vem do window.VSL, no topo -->
       <div class="hero-vsl">
-        <vturb-smartplayer id="vid-6adcb77858d713890626b695" style="display: block; margin: 0 auto; width: 100%; "><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
-        <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/6adcb77858d713890626b695/v4/player.js", s.async=!0,document.head.appendChild(s); </script>
+        <vturb-smartplayer id="vid-6adfcfefaf7ff3353b6f9053" style="display: block; margin: 0 auto; width: 100%; "><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+        <script type="text/javascript"> document.currentScript.previousElementSibling.id = "vid-" + VSL.player; var s=document.createElement("script"); s.src="https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/players/" + VSL.player + "/v4/player.js", s.async=!0,document.head.appendChild(s); </script>
       </div>
       <p class="hero-sub">Acesso vitalício à Academia do Hendi de Copy Trade, com todos os sistemas inclusos, vendido uma única vez. Quando esta oferta fechar, a Academia fecha para novos alunos.</p>
       <ul class="hero-leva" aria-label="O que você leva">
