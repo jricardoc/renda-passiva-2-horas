@@ -167,8 +167,8 @@ const CHECKOUT_ES = "https://pay.hotmart.com/C107791955E?off=ejwey6k2&checkoutMo
 
 const es: typeof pt = {
   vsl: {
-    id: "ab-6ae537b2217265d6b619acd6",
-    script: "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/ab-test/6ae537b2217265d6b619acd6/player.js",
+    id: "ab-6ae572b7a1db2408a368a87e",
+    script: "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/ab-test/6ae572b7a1db2408a368a87e/player.js",
   },
   checkout: {
     hero: `${CHECKOUT_ES}&utm_campaign=vsl_fechada&utm_content=botao_vturbo`,
