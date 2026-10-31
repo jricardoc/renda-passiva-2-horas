@@ -160,10 +160,10 @@ const pt = {
   },
 };
 
-// VSL LATAM: produto "Ingreso Pasivo Automático en Dólares en 2 Horas" na Hotmart, a US$ 47, sem preço riscado e sem
-// parcelas (Ricardo, 30/10). O preço aparece no CTA, na caixa da oferta, na urgência e no rodapé.
+// VSL LATAM: produto "Ingreso Pasivo Automático en Dólares en 2 Horas" na Hotmart, oferta ejwey6k2 de US$ 47, sem preço
+// riscado e sem parcelas (Ricardo, 30/10). O preço aparece no CTA, na caixa da oferta, na urgência e no rodapé.
 const PRECO_ES = "US$ 47";
-const CHECKOUT_ES = "https://pay.hotmart.com/C107791955E?checkoutMode=10&utm_source=vsl&utm_medium=botao";
+const CHECKOUT_ES = "https://pay.hotmart.com/C107791955E?off=ejwey6k2&checkoutMode=10&utm_source=vsl&utm_medium=botao";
 
 const es: typeof pt = {
   vsl: {
