@@ -1,5 +1,6 @@
 import "./Footer.css";
 import { Checkout } from "../../oferta";
+import { t } from "../../textos";
 
 const Footer = () => {
   return (
@@ -7,46 +8,32 @@ const Footer = () => {
       <div className="container">
         {/* Final CTA */}
         <div className="footer-cta-wrapper">
-          <h2 className="footer-headline">
-            Ainda com dúvidas?{" "}
-            <span className="text-orange">Não perca mais tempo</span>
-          </h2>
+          <h2 className="footer-headline">{t.rodape.titulo}</h2>
 
-          <p className="footer-subtext">
-            Com apenas R$ 297 você ativa seu setup de renda passiva em dólar.
-            Garantia de 7 dias ou seu dinheiro de volta.
-          </p>
+          <p className="footer-subtext">{t.rodape.texto}</p>
 
-          <Checkout
-            href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
-            className="btn-primary btn-pulse footer-cta"
-          >
-            QUERO COMEÇAR AGORA
+          <Checkout href={t.checkout.pagina} className="btn-primary btn-pulse footer-cta">
+            {t.rodape.cta}
           </Checkout>
         </div>
 
         <div className="footer-bottom">
-          <p className="footer-disclaimer">
-            Este produto não garante a obtenção de lucros. Investir envolve
-            riscos e você deve estar ciente de que resultados passados não
-            garantem resultados futuros.
-          </p>
+          <p className="footer-disclaimer">{t.rodape.aviso}</p>
 
           <div className="footer-links">
-            <a href="#">Termos de Uso</a>
+            <a href="#">{t.rodape.termos}</a>
             <span className="divider">|</span>
-            <a href="#">Política de Privacidade</a>
+            <a href="#">{t.rodape.privacidade}</a>
           </div>
 
           <p className="footer-copyright">
-            © {new Date().getFullYear()} Protocolo Renda Passiva em 2H. Todos os
-            direitos reservados.
+            © {new Date().getFullYear()} {t.rodape.direitos}
           </p>
 
           <p className="footer-cnpj">CNPJ: 53.724.905/0001-70</p>
 
           <p className="footer-developer">
-            Desenvolvido por{" "}
+            {t.rodape.desenvolvido}{" "}
             <a
               href="https://jricardodev.com.br"
               target="_blank"

@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { visualizer } from "rollup-plugin-visualizer";
@@ -93,6 +94,11 @@ export default defineConfig(({ mode }) => {
         },
       },
       rollupOptions: {
+        // Duas páginas no mesmo build: a VSL do Brasil (/protocolo1/) e a LATAM (/protocolo1/es/), escolhida pelo <html lang>
+        input: {
+          main: fileURLToPath(new URL("index.html", import.meta.url)),
+          es: fileURLToPath(new URL("es/index.html", import.meta.url)),
+        },
         output: {
           manualChunks: {
             vendor: ["react", "react-dom"],

@@ -3,6 +3,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "./SpecialistSection.css";
+import { t } from "../../textos";
 
 import p1 from "../../assets/images/p-1.webp";
 import p2 from "../../assets/images/p-2.webp";
@@ -23,12 +24,8 @@ const SpecialistSection = () => {
       {/* Header with container */}
       <div className="container">
         <div className="specialist-header">
-          <h2 className="specialist-title">
-            Quem é o <span className="text-orange">Especialista</span>?
-          </h2>
-          <p className="specialist-subtitle">
-            Conheça um pouco mais sobre quem está por trás do Protocolo
-          </p>
+          <h2 className="specialist-title">{t.especialista.titulo}</h2>
+          <p className="specialist-subtitle">{t.especialista.subtitulo}</p>
         </div>
       </div>
 

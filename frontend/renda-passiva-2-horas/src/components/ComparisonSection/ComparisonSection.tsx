@@ -1,35 +1,19 @@
 import "./ComparisonSection.css";
 import { Checkout } from "../../oferta";
+import { t } from "../../textos";
 
 const ComparisonSection = () => {
-  const notItems = [
-    "Não é Bet",
-    "Não é Tigrinho",
-    "Não é Robô milagroso",
-    "Não é Casa de Apostas",
-  ];
-
-  const isItems = [
-    "É Mercado Financeiro real",
-    "Com estratégias validadas e histórico público",
-    "Com resultados auditados",
-    "Com risco controlado",
-    "Com setup simples para iniciantes",
-  ];
+  const notItems = t.comparacao.nao;
+  const isItems = t.comparacao.e;
 
   return (
     <section className="comparison-section animate-section">
       <div className="container">
-        <h2 className="comparison-title">
-          Diferente de <span className="text-orange">tudo</span> que você vê no
-          Instagram
-        </h2>
+        <h2 className="comparison-title">{t.comparacao.titulo}</h2>
 
         <div className="comparison-grid">
           <div className="comparison-card comparison-not">
-            <h3 className="card-title">
-              O que <span className="text-red">NÃO</span> é
-            </h3>
+            <h3 className="card-title">{t.comparacao.naoTitulo}</h3>
             <ul className="comparison-list">
               {notItems.map((item, index) => (
                 <li key={index}>
@@ -41,9 +25,7 @@ const ComparisonSection = () => {
           </div>
 
           <div className="comparison-card comparison-is">
-            <h3 className="card-title">
-              O que <span className="text-green">É</span>
-            </h3>
+            <h3 className="card-title">{t.comparacao.eTitulo}</h3>
             <ul className="comparison-list">
               {isItems.map((item, index) => (
                 <li key={index}>
@@ -55,21 +37,11 @@ const ComparisonSection = () => {
           </div>
         </div>
 
-        <p className="comparison-footer">
-          Enquanto muita gente perde dinheiro tentando a sorte, você vai seguir
-          um modelo que usa{" "}
-          <strong className="text-white">
-            estatística, tecnologia e análise de risco
-          </strong>{" "}
-          - não apostas.
-        </p>
+        <p className="comparison-footer">{t.comparacao.rodape}</p>
 
         <div className="comparison-cta-wrapper">
-          <Checkout
-            href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
-            className="btn-primary btn-pulse"
-          >
-            GARANTA O PROTOCOLO POR 12x DE R$&nbsp;30,71
+          <Checkout href={t.checkout.pagina} className="btn-primary btn-pulse">
+            {t.ctaPreco}
           </Checkout>
         </div>
       </div>

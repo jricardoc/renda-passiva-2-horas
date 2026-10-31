@@ -2,12 +2,13 @@
 // O navegador só respeita a entrada extra do histórico depois de um clique ou tecla, então ela nasce aí.
 // Âncoras criam entradas sem estado e não disparam o desvio: só a volta até a entrada "origem".
 // Vazio = desligado. Aponta para a página de desconto (cupom em oferta.tsx).
-// Na própria página de desconto ele não arma: lá o voltar sai normalmente.
+// Na própria página de desconto ele não arma: lá o voltar sai normalmente. Na VSL LATAM também não (o cupom é do produto do Brasil).
 import { DESCONTO } from "./oferta";
+import { ES } from "./textos";
 
 const DESTINO: string = "/protocolo1/desconto/";
 
-if (/^(https?:\/\/|\/)/.test(DESTINO) && !DESCONTO) {
+if (/^(https?:\/\/|\/)/.test(DESTINO) && !DESCONTO && !ES) {
   const eventos = ["click", "keydown", "pointerup"] as const;
   const armar = () => {
     eventos.forEach((t) => document.removeEventListener(t, armar, true));
