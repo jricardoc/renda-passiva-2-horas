@@ -21,61 +21,16 @@ import img9 from "../../assets/images/img9.png";
 import img10 from "../../assets/images/img10.png";
 import img11 from "../../assets/images/img11.png";
 import img12 from "../../assets/images/img12.png";
+import { t } from "../../textos";
 
 const SocialProof = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const images = [
-    {
-      src: img1,
-      caption: "Aluno comemorando primeiro lucro em dólar",
-    },
-    {
-      src: img2,
-      caption: "Feedback positivo após configurar o setup",
-    },
-    {
-      src: img3,
-      caption: "Resultado consistente na primeira semana",
-    },
-    {
-      src: img4,
-      caption: "Aluno impressionado com a simplicidade",
-    },
-    {
-      src: img5,
-      caption: "Conta ativa gerando resultados diários",
-    },
-    {
-      src: img6,
-      caption: "Depoimento de aluno satisfeito",
-    },
-    {
-      src: img7,
-      caption: "Setup funcionando automaticamente",
-    },
-    {
-      src: img8,
-      caption: "Resultados superando expectativas",
-    },
-    {
-      src: img9,
-      caption: "Ganhos recorrentes comprovados",
-    },
-    {
-      src: img10,
-      caption: "Estratégia rodando com sucesso",
-    },
-    {
-      src: img11,
-      caption: "Aluno agradecendo pelo método",
-    },
-    {
-      src: img12,
-      caption: "Histórico real de rendimentos",
-    },
-  ];
+  const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12].map((src, index) => ({
+    src,
+    caption: t.provas.legendas[index],
+  }));
 
   useEffect(() => {
     // Disable GSAP animations on mobile for performance
@@ -120,13 +75,8 @@ const SocialProof = () => {
   return (
     <section className="social-proof-section" ref={sectionRef}>
       <div className="container">
-        <h2 className="proof-title">
-          <span className="text-green">Prova Social</span> - Resultados Reais
-        </h2>
-        <p className="proof-subtitle">
-          Você não é o primeiro que irei ensinar. Veja os feedbacks de quem já
-          adquiriu o Protocolo
-        </p>
+        <h2 className="proof-title">{t.provas.titulo}</h2>
+        <p className="proof-subtitle">{t.provas.subtitulo}</p>
 
         <div className="proof-slider-wrapper">
           <Swiper

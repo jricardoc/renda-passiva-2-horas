@@ -1,5 +1,6 @@
 import "./GuaranteeSection.css";
 import { Checkout } from "../../oferta";
+import { t } from "../../textos";
 
 const GuaranteeSection = () => {
   return (
@@ -8,95 +9,63 @@ const GuaranteeSection = () => {
         {/* Offer Header */}
         <div className="offer-header">
           <span className="offer-badge">🔥 OFERTA ESPECIAL</span>
-          <h2 className="offer-title">
-            Acesse o{" "}
-            <span className="text-orange">Protocolo Renda Passiva em 2H</span>
-          </h2>
-          <p className="offer-subtitle">
-            Tudo que você precisa para ativar seu fluxo de renda automática em
-            dólar
-          </p>
+          <h2 className="offer-title">{t.oferta.titulo}</h2>
+          <p className="offer-subtitle">{t.oferta.subtitulo}</p>
         </div>
 
-        {/* Main Offer Box */}
-        <div className="offer-main-box">
+        {/* Main Offer Box (sem preço, a caixa de preço some e a grade fica com uma coluna) */}
+        <div className="offer-main-box" style={t.oferta.valor ? undefined : { gridTemplateColumns: "1fr" }}>
           {/* What's Included */}
           <div className="offer-includes">
-            <h3 className="includes-title">O que você recebe:</h3>
+            <h3 className="includes-title">{t.oferta.incluiTitulo}</h3>
 
             <ul className="includes-list">
-              <li>
-                <span className="icon-check">✓</span>
-                <div className="include-item">
-                  <strong>Acesso completo ao Protocolo</strong>
-                  <span className="include-value">Passo a passo do zero</span>
-                </div>
-              </li>
-              <li>
-                <span className="icon-check">✓</span>
-                <div className="include-item">
-                  <strong>Setup da corretora internacional</strong>
-                  <span className="include-value">
-                    Conta pronta para operar
-                  </span>
-                </div>
-              </li>
-              <li>
-                <span className="icon-check">✓</span>
-                <div className="include-item">
-                  <strong>Estratégias validadas</strong>
-                  <span className="include-value">Filtradas e testadas</span>
-                </div>
-              </li>
-              <li>
-                <span className="icon-check">✓</span>
-                <div className="include-item">
-                  <strong>Guia de gestão de risco</strong>
-                  <span className="include-value">Proteja seu capital</span>
-                </div>
-              </li>
-              <li>
-                <span className="icon-check">✓</span>
-                <div className="include-item">
-                  <strong>Configuração em até 2 horas</strong>
-                  <span className="include-value">
-                    Rápido e direto ao ponto
-                  </span>
-                </div>
-              </li>
+              {t.oferta.inclui.map(([item, valor]) => (
+                <li key={item}>
+                  <span className="icon-check">✓</span>
+                  <div className="include-item">
+                    <strong>{item}</strong>
+                    <span className="include-value">{valor}</span>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Price Box */}
-          <div className="price-box">
-            <div className="price-top">
-              <span className="price-from">
-                De <s>R$ 497</s>
-              </span>
-              <span className="price-to">Por apenas</span>
+          {t.oferta.valor && (
+            <div className="price-box">
+              <div className="price-top">
+                <span className="price-from">
+                  De <s>{t.oferta.de}</s>
+                </span>
+                <span className="price-to">{t.oferta.porApenas}</span>
+              </div>
+
+              <div className="price-main">
+                <span className="price-currency">{t.oferta.moeda}</span>
+                <span className="price-value">{t.oferta.valor}</span>
+              </div>
+
+              {t.oferta.parcelas && (
+                <span className="price-installments">{t.oferta.parcelas}</span>
+              )}
+
+              <Checkout
+                href={t.checkout.pagina}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary btn-pulse offer-cta"
+              >
+                {t.oferta.cta}
+              </Checkout>
+
+              <div className="payment-icons">
+                <span>💳</span>
+                <span>{t.oferta.pagamento}</span>
+              </div>
             </div>
-
-            <div className="price-main">
-              <span className="price-currency">R$</span>
-              <span className="price-value">297</span>
-            </div>
-
-            <span className="price-installments">ou 12x de R$ 30,71</span>
-
-            <Checkout
-              href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary btn-pulse offer-cta"
-            >
-              QUERO ATIVAR MEU SETUP AGORA
-            </Checkout>
-
-            <div className="payment-icons">
-              <span>💳</span>
-              <span>🔒 Pagamento 100% seguro</span>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Guarantee Section */}
@@ -104,31 +73,20 @@ const GuaranteeSection = () => {
           <div className="guarantee-badge-small">
             <div className="badge-inner-small">
               <span className="badge-days-small">7</span>
-              <span className="badge-text-small">DIAS</span>
+              <span className="badge-text-small">{t.oferta.dias}</span>
             </div>
           </div>
 
           <div className="guarantee-info">
-            <h4 className="guarantee-heading">
-              <span className="text-gold">Garantia Total</span> de 7 dias
-            </h4>
-            <p className="guarantee-desc">
-              Se você assistir e sentir que não é para você, basta pedir o
-              reembolso. Devolvo{" "}
-              <strong className="text-green">100% do valor</strong>, sem
-              perguntas, sem burocracia.
-            </p>
+            <h4 className="guarantee-heading">{t.oferta.garantiaTitulo}</h4>
+            <p className="guarantee-desc">{t.oferta.garantia}</p>
           </div>
         </div>
 
         {/* Urgency */}
         <div className="urgency-bar">
           <span className="urgency-icon">⚡</span>
-          <p className="urgency-text">
-            O investimento de <strong className="text-green">R$ 297</strong> é um
-            valor simbólico. Você está estruturando um fluxo de renda em dólar
-            com base real e validação prática.
-          </p>
+          <p className="urgency-text">{t.oferta.urgencia}</p>
         </div>
       </div>
     </section>

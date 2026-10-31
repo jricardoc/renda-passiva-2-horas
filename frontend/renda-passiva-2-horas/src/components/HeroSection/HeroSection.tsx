@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./HeroSection.css";
+import { t } from "../../textos";
 // Foto de perfil do Instagram @ocaradocopytrade (150px, salva em 102px para telas 3x)
 import avatarImg from "../../assets/images/hendi-perfil.webp";
 // Rosto gerado por IA (thispersondoesnotexist.com): pessoa que não existe, para o perfil fictício do "Curtido por"
@@ -24,12 +25,11 @@ const HeroSection = () => {
 
   useEffect(() => {
     // Check if script already exists to avoid duplicates
-    const scriptId = "vturb-script-ab-69eeaa9ee47d7b09a8e429e2";
+    const scriptId = `vturb-script-${t.vsl.id}`;
     if (!document.getElementById(scriptId)) {
       const script = document.createElement("script");
       script.id = scriptId;
-      script.src =
-        "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/ab-test/69eeaa9ee47d7b09a8e429e2/player.js";
+      script.src = t.vsl.script;
       script.async = true;
       document.head.appendChild(script);
     }
@@ -40,7 +40,7 @@ const HeroSection = () => {
       <div className="hero-vsl-container">
         <div className="vsl-wrapper">
           <vturb-smartplayer
-            id="ab-69eeaa9ee47d7b09a8e429e2"
+            id={t.vsl.id}
             style={{ display: "block", margin: "0 auto", width: "100%" }}
           ></vturb-smartplayer>
         </div>
@@ -89,10 +89,7 @@ const HeroSection = () => {
                 height="20"
                 decoding="async"
               />
-              <span className="reel-liked-text">
-                Curtido por <strong>julianasouza</strong> e outras{" "}
-                <strong>63.568 pessoas</strong>
-              </span>
+              <span className="reel-liked-text">{t.hero.curtidoPor}</span>
             </div>
 
             <div className="reel-user-row">
@@ -109,11 +106,11 @@ const HeroSection = () => {
                 <circle cx="20" cy="20" r="20" fill="#0095f6" />
                 <path d="M17.5 27.5l-7-7 2.8-2.8 4.2 4.2 9.2-9.2 2.8 2.8z" fill="#fff" />
               </svg>
-              <span className="reel-followers">1.5M seguidores</span>
+              <span className="reel-followers">{t.hero.seguidores}</span>
             </div>
 
             <div className="reel-caption-text">
-              <h1 className="hero-headline">Vou te provar que é possível mudar de vida</h1>
+              <h1 className="hero-headline">{t.hero.titulo}</h1>
             </div>
           </div>
         </div>
@@ -122,16 +119,14 @@ const HeroSection = () => {
   );
 };
 
-// Primeiro filho do #content-gate (App.tsx): o CTA aparece quando o VTurb revela o conteúdo.
-export const HeroCta = () => (
-  <div className="hero-cta-band">
-    <a
-      href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo"
-      className="btn-primary btn-pulse hero-cta"
-    >
-      GARANTA O PROTOCOLO POR 12x DE R$&nbsp;30,71
-    </a>
-  </div>
-);
+// Primeiro filho do #content-gate (App.tsx): o CTA aparece quando o VTurb revela o conteúdo. Sem checkout, não aparece.
+export const HeroCta = () =>
+  t.checkout.hero ? (
+    <div className="hero-cta-band">
+      <a href={t.checkout.hero} className="btn-primary btn-pulse hero-cta">
+        {t.ctaPreco}
+      </a>
+    </div>
+  ) : null;
 
 export default HeroSection;

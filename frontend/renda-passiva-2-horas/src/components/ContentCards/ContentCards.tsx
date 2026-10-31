@@ -3,38 +3,19 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./ContentCards.css";
 import { Checkout } from "../../oferta";
+import { t } from "../../textos";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ContentCards = () => {
   const cardsRef = useRef<HTMLDivElement>(null);
 
-  const cards = [
-    {
-      icon: "📋",
-      title: "O Passo a Passo do Zero",
-      description:
-        "Como abrir sua conta internacional, configurar tudo corretamente e conectar sua conta à estratégia automática em minutos.",
-    },
-    {
-      icon: "📊",
-      title: "Checklist de Segurança Validado",
-      description:
-        "Critérios, filtros e exemplos reais dos profissionais que entregam consistência e não promessas vazias.",
-    },
-    {
-      icon: "🛡️",
-      title: "Guia de Gestão de Risco Simplificado",
-      description:
-        "Instrumentos para proteger seu capital e manter seu patrimônio seguro, mesmo num mercado volátil.",
-    },
-    {
-      icon: "⚡",
-      title: "Tutorial Prático em 2 Horas",
-      description:
-        "Checklists, atalhos e orientações claras para você implementar tudo rapidamente.",
-    },
-  ];
+  const icons = ["📋", "📊", "🛡️", "⚡"];
+  const cards = t.conteudo.cards.map((card, index) => ({
+    icon: icons[index],
+    title: card.titulo,
+    description: card.descricao,
+  }));
 
   useEffect(() => {
     // Disable GSAP animations on mobile for performance
@@ -74,10 +55,7 @@ const ContentCards = () => {
   return (
     <section className="content-cards-section">
       <div className="container">
-        <h2 className="cards-title">
-          O que você vai receber dentro do{" "}
-          <span className="text-orange">Protocolo</span>
-        </h2>
+        <h2 className="cards-title">{t.conteudo.titulo}</h2>
 
         <div className="cards-grid" ref={cardsRef}>
           {cards.map((card, index) => (
@@ -93,7 +71,7 @@ const ContentCards = () => {
           style={{ textAlign: "center", marginTop: "20px" }}
         >
           <Checkout
-            href="https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb"
+            href={t.checkout.pagina}
             className="button-vsl btn-primary btn-pulse"
             style={{
               display: "inline-block",
@@ -102,7 +80,7 @@ const ContentCards = () => {
               textAlign: "center",
             }}
           >
-            QUERO COMPRAR AGORA
+            {t.conteudo.cta}
           </Checkout>
         </div>
       </div>
