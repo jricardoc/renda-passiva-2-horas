@@ -119,14 +119,13 @@ const HeroSection = () => {
   );
 };
 
-// Primeiro filho do #content-gate (App.tsx): o CTA aparece quando o VTurb revela o conteúdo. Sem checkout, não aparece.
-export const HeroCta = () =>
-  t.checkout.hero ? (
-    <div className="hero-cta-band">
-      <a href={t.checkout.hero} className="btn-primary btn-pulse hero-cta">
-        {t.ctaPreco}
-      </a>
-    </div>
-  ) : null;
+// Primeiro filho do #content-gate (App.tsx): o CTA aparece quando o VTurb revela o conteúdo.
+export const HeroCta = () => (
+  <div className="hero-cta-band">
+    <a href={t.checkout.hero} className="btn-primary btn-pulse hero-cta">
+      {t.ctaPreco}
+    </a>
+  </div>
+);
 
 export default HeroSection;

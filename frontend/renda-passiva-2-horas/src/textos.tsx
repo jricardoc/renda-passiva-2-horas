@@ -119,6 +119,7 @@ const pt = {
       ["Guia de gestão de risco", "Proteja seu capital"],
       ["Configuração em até 2 horas", "Rápido e direto ao ponto"],
     ],
+    // Vazio esconde o preço riscado
     de: "R$ 497",
     porApenas: "Por apenas",
     moeda: "R$",
@@ -159,28 +160,30 @@ const pt = {
   },
 };
 
-// VSL LATAM. Publicada em 30/10 sem checkout e sem preço, a pedido do Ricardo: checkout vazio esconde os botões de
-// compra e valor vazio esconde a caixa de preço. Quando a Hotmart tiver o produto em espanhol, preencha os dois e
-// devolva o preço aos textos de urgência e do rodapé (cartão "Criar LP para conectar a VSL LATAM").
+// VSL LATAM: produto "Ingreso Pasivo Automático en Dólares en 2 Horas" na Hotmart, a US$ 47, sem preço riscado e sem
+// parcelas (Ricardo, 30/10). O preço aparece no CTA, na caixa da oferta, na urgência e no rodapé.
+const PRECO_ES = "US$ 47";
+const CHECKOUT_ES = "https://pay.hotmart.com/C107791955E?checkoutMode=10&utm_source=vsl&utm_medium=botao";
+
 const es: typeof pt = {
   vsl: {
     id: "ab-6ae537b2217265d6b619acd6",
     script: "https://scripts.converteai.net/3f99e868-8a2c-4153-b834-85a358ba11f4/ab-test/6ae537b2217265d6b619acd6/player.js",
   },
   checkout: {
-    hero: "",
-    pagina: "",
+    hero: `${CHECKOUT_ES}&utm_campaign=vsl_fechada&utm_content=botao_vturbo`,
+    pagina: `${CHECKOUT_ES}&utm_campaign=vsl_aberta&utm_content=botao_vturb`,
   },
-  ctaPreco: <>GARANTIZA EL PROTOCOLO</>,
+  ctaPreco: <>GARANTIZA EL PROTOCOLO POR {PRECO_ES}</>,
   hero: {
     curtidoPor: <>Le gusta a <strong>julianasouza</strong> y a <strong>63.568 personas</strong> más</>,
     seguidores: "1.5M seguidores",
     titulo: "Te voy a demostrar que es posible cambiar de vida",
   },
   autoridade: {
-    fotoAlt: "Hendi - Especialista en Renta Pasiva",
+    fotoAlt: "Hendi - Especialista en Ingreso Pasivo",
     titulo: <>¿Qué es el <span className="text-orange">Protocolo</span>?</>,
-    intro: <>Soy <strong className="text-white">Hendi</strong>, ingeniero, ex-Ford y especialista en generar renta pasiva.</>,
+    intro: <>Soy <strong className="text-white">Hendi</strong>, ingeniero, ex-Ford y especialista en generar ingresos pasivos.</>,
     historia: (
       <>
         Después de años probando el mercado y estudiando formas inteligentes de ganar en dólares, desarrollé un{" "}
@@ -267,7 +270,7 @@ const es: typeof pt = {
     ],
   },
   oferta: {
-    titulo: <>Accede al <span className="text-orange">Protocolo Renta Pasiva en 2H</span></>,
+    titulo: <>Accede al <span className="text-orange">Protocolo Ingreso Pasivo en 2H</span></>,
     subtitulo: "Todo lo que necesitas para activar tu flujo de ingresos automáticos en dólares",
     incluiTitulo: "Lo que recibes:",
     inclui: [
@@ -279,8 +282,8 @@ const es: typeof pt = {
     ],
     de: "",
     porApenas: "Por solo",
-    moeda: "",
-    valor: "",
+    moeda: "US$",
+    valor: "47",
     parcelas: "",
     cta: "QUIERO ACTIVAR MI SETUP AHORA",
     pagamento: "🔒 Pago 100% seguro",
@@ -294,8 +297,8 @@ const es: typeof pt = {
     ),
     urgencia: (
       <>
-        La inversión es un valor <strong className="text-green">simbólico</strong>. Estás estructurando un flujo de ingresos
-        en dólares con base real y validación práctica.
+        La inversión de <strong className="text-green">{PRECO_ES}</strong> es un valor simbólico. Estás estructurando un flujo
+        de ingresos en dólares con base real y validación práctica.
       </>
     ),
   },
@@ -305,13 +308,13 @@ const es: typeof pt = {
   },
   rodape: {
     titulo: <>¿Todavía tienes dudas? <span className="text-orange">No pierdas más tiempo</span></>,
-    texto: "Activa tu setup de renta pasiva en dólares. Garantía de 7 días o te devolvemos tu dinero.",
+    texto: `Con solo ${PRECO_ES} activas tu setup de ingreso pasivo en dólares. Garantía de 7 días o te devolvemos tu dinero.`,
     cta: "QUIERO EMPEZAR AHORA",
     aviso:
       "Este producto no garantiza la obtención de ganancias. Invertir implica riesgos y debes saber que los resultados pasados no garantizan resultados futuros.",
     termos: "Términos de Uso",
     privacidade: "Política de Privacidad",
-    direitos: "Protocolo Renta Pasiva en 2H. Todos los derechos reservados.",
+    direitos: "Protocolo Ingreso Pasivo en 2H. Todos los derechos reservados.",
     desenvolvido: "Desarrollado por",
   },
 };

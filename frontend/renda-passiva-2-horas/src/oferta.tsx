@@ -9,10 +9,8 @@ export const CHECKOUT_DESCONTO = `https://pay.hotmart.com/N103487414R?checkoutMo
 export const TEXTO_DESCONTO = "R$ 50 OFF NO ACESSO AO PROTOCOLO";
 
 // Botão de checkout da VSL: na página de desconto troca o destino e o texto; na VSL fica como está.
-// Sem destino (a VSL LATAM ainda sem checkout, em textos.tsx), o botão não aparece.
-export const Checkout = ({ href, children, ...resto }: AnchorHTMLAttributes<HTMLAnchorElement>) =>
-  href ? (
-    <a href={DESCONTO ? CHECKOUT_DESCONTO : href} {...resto}>
-      {DESCONTO ? TEXTO_DESCONTO : children}
-    </a>
-  ) : null;
+export const Checkout = ({ href, children, ...resto }: AnchorHTMLAttributes<HTMLAnchorElement>) => (
+  <a href={DESCONTO ? CHECKOUT_DESCONTO : href} {...resto}>
+    {DESCONTO ? TEXTO_DESCONTO : children}
+  </a>
+);
