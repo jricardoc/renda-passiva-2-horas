@@ -100,10 +100,12 @@ export default defineConfig(({ mode }) => {
           es: fileURLToPath(new URL("es/index.html", import.meta.url)),
         },
         output: {
-          manualChunks: {
-            vendor: ["react", "react-dom"],
-            gsap: ["gsap", "gsap/ScrollTrigger"],
-            swiper: ["swiper", "swiper/react", "swiper/modules"],
+          // Por caminho, e não por lista de pacotes: na lista, o wrapper CommonJS do react
+          // caía no chunk do swiper e o main baixava o swiper inteiro no início.
+          manualChunks(id) {
+            if (/node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) return "vendor";
+            if (/node_modules[\\/]gsap[\\/]/.test(id)) return "gsap";
+            if (/node_modules[\\/](swiper|ssr-window|dom7)[\\/]/.test(id)) return "swiper";
           },
           chunkFileNames: "assets/js/[name]-[hash].js",
           entryFileNames: "assets/js/[name]-[hash].js",
