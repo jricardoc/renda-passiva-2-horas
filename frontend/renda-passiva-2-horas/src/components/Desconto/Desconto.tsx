@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CHECKOUT_DESCONTO, CUPOM, TEXTO_DESCONTO } from "../../oferta";
+import { t } from "../../textos";
 import "./Desconto.css";
 
 // Confete em CSS: cada peça com posição, altura, tamanho, cor, duração e atraso próprios.
@@ -24,9 +24,9 @@ const Desconto = () => {
   };
 
   useEffect(() => {
-    document.title = "🎁 Espera! Tenho um desconto exclusivo para você";
-    const t = setTimeout(abrir, 1500);
-    return () => clearTimeout(t);
+    document.title = t.desconto.tituloAba;
+    const timer = setTimeout(abrir, 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -43,22 +43,20 @@ const Desconto = () => {
 
   return (
     <section className="desconto">
-      <p className="desconto-espera">ESPERA!</p>
-      <h1 className="desconto-titulo">Tenho um desconto exclusivo para você</h1>
+      <p className="desconto-espera">{t.desconto.espera}</p>
+      <h1 className="desconto-titulo">{t.desconto.titulo}</h1>
 
       {revelado ? (
         <>
-          <p className="desconto-cupom">
-            🎁 R$ 50 OFF com o cupom <strong>{CUPOM}</strong>, já aplicado no botão
-          </p>
-          <a className="btn-primary btn-pulse desconto-cta" href={CHECKOUT_DESCONTO}>
-            {TEXTO_DESCONTO}
+          <p className="desconto-cupom">{t.desconto.cupom}</p>
+          <a className="btn-primary btn-pulse desconto-cta" href={t.checkout.desconto}>
+            {t.desconto.botao}
           </a>
         </>
       ) : (
         <button className="desconto-presente" onClick={abrir}>
           <span className="desconto-presente-emoji" aria-hidden="true">🎁</span>
-          <span className="desconto-presente-dica">TOQUE PARA ABRIR</span>
+          <span className="desconto-presente-dica">{t.desconto.abrir}</span>
         </button>
       )}
 
@@ -73,7 +71,7 @@ const Desconto = () => {
             aria-modal="true"
             aria-labelledby="desconto-popup-titulo"
           >
-            <button className="desconto-fechar" onClick={() => setAberto(false)} aria-label="Fechar">
+            <button className="desconto-fechar" onClick={() => setAberto(false)} aria-label={t.desconto.fechar}>
               ✕
             </button>
             <div className="desconto-confete" aria-hidden="true">
@@ -81,19 +79,15 @@ const Desconto = () => {
                 <i key={i} style={estilo} />
               ))}
             </div>
-            <p className="desconto-parabens">🎉 PARABÉNS!</p>
+            <p className="desconto-parabens">{t.desconto.parabens}</p>
             <h2 id="desconto-popup-titulo" className="desconto-ganhou">
-              Você ganhou <span>R$ 50 OFF</span>
+              {t.desconto.ganhou}
             </h2>
-            <p className="desconto-produto">no acesso ao Protocolo Renda Passiva em 2H</p>
-            <p className="desconto-preco">
-              De <s>R$ 297</s> por <strong>R$ 246,51</strong>
-            </p>
-            <p className="desconto-aplicado">
-              ✅ Cupom <strong>{CUPOM}</strong> já aplicado no botão
-            </p>
-            <a ref={cta} className="btn-primary desconto-cta" href={CHECKOUT_DESCONTO}>
-              {TEXTO_DESCONTO}
+            <p className="desconto-produto">{t.desconto.produto}</p>
+            <p className="desconto-preco">{t.desconto.preco}</p>
+            <p className="desconto-aplicado">{t.desconto.aplicado}</p>
+            <a ref={cta} className="btn-primary desconto-cta" href={t.checkout.desconto}>
+              {t.desconto.botao}
             </a>
           </div>
         </div>

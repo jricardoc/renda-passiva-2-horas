@@ -12,6 +12,24 @@ const pt = {
     // CTA do hero, que aparece quando o VTurb revela o #content-gate
     hero: "https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_fechada&utm_content=botao_vturbo",
     pagina: "https://pay.hotmart.com/N103487414R?checkoutMode=10&utm_source=vsl&utm_medium=botao&utm_campaign=vsl_aberta&utm_content=botao_vturb",
+    // Página de desconto (destino do backredirect): cupom PROTOCOLO5050, 17% no Protocolo = R$ 50 (R$ 297 por R$ 246,51).
+    // Vazio desliga o backredirect deste idioma.
+    desconto: "https://pay.hotmart.com/N103487414R?checkoutMode=10&offDiscount=PROTOCOLO5050",
+  },
+  // Textos da página de desconto (/protocolo1/desconto/ e /protocolo1/es/desconto/)
+  desconto: {
+    tituloAba: "🎁 Espera! Tenho um desconto exclusivo para você",
+    espera: "ESPERA!",
+    titulo: "Tenho um desconto exclusivo para você",
+    cupom: <>🎁 R$ 50 OFF com o cupom <strong>PROTOCOLO5050</strong>, já aplicado no botão</>,
+    abrir: "TOQUE PARA ABRIR",
+    fechar: "Fechar",
+    parabens: "🎉 PARABÉNS!",
+    ganhou: <>Você ganhou <span>R$ 50 OFF</span></>,
+    produto: "no acesso ao Protocolo Renda Passiva em 2H",
+    preco: <>De <s>R$ 297</s> por <strong>R$ 246,51</strong></>,
+    aplicado: <>✅ Cupom <strong>PROTOCOLO5050</strong> já aplicado no botão</>,
+    botao: "R$ 50 OFF NO ACESSO AO PROTOCOLO",
   },
   ctaPreco: <>GARANTA O PROTOCOLO POR 12x DE R$&nbsp;30,71</>,
   hero: {
@@ -173,6 +191,22 @@ const es: typeof pt = {
   checkout: {
     hero: `${CHECKOUT_ES}&utm_campaign=vsl_fechada&utm_content=botao_vturbo`,
     pagina: `${CHECKOUT_ES}&utm_campaign=vsl_aberta&utm_content=botao_vturb`,
+    // Página de desconto da LATAM: cupom CALLBACK0974HLS92, US$ 10 (US$ 47 por US$ 37), pedido do Hendi em 07/11
+    desconto: `${CHECKOUT_ES}&utm_campaign=vsl_desconto&utm_content=backredirect&offDiscount=CALLBACK0974HLS92`,
+  },
+  desconto: {
+    tituloAba: "🎁 ¡Espera! Tengo un descuento exclusivo para ti",
+    espera: "¡ESPERA!",
+    titulo: "Tengo un descuento exclusivo para ti",
+    cupom: <>🎁 US$ 10 OFF, ya aplicado en el botón</>,
+    abrir: "TOCA PARA ABRIR",
+    fechar: "Cerrar",
+    parabens: "🎉 ¡FELICIDADES!",
+    ganhou: <>Ganaste <span>US$ 10 OFF</span></>,
+    produto: "en el acceso al Protocolo Ingreso Pasivo en 2H",
+    preco: <>De <s>{PRECO_ES}</s> a <strong>US$ 37</strong></>,
+    aplicado: <>✅ Descuento ya aplicado en el botón</>,
+    botao: "US$ 10 OFF EN EL ACCESO AL PROTOCOLO",
   },
   ctaPreco: <>GARANTIZA EL PROTOCOLO POR {PRECO_ES}</>,
   hero: {
