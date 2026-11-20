@@ -40,6 +40,24 @@ window.clarity = window.clarity || function(){ (window.clarity.q = window.clarit
   else window.addEventListener('load', function(){ setTimeout(carregaClarity, 1200); }, { once: true });
 })();
 </script>
+<!-- Coleta das páginas do Academia Hub (visitas, etapas e clique no checkout, para o Trackeamento): entra na rede junto do GTM.
+     O script não escreve no sck nem no xcod que o GTM já pôs no link de compra: só preenche campo vazio, na hora do clique. -->
+<script>
+(function(){
+  var feito = false;
+  function carregaHub(){
+    if (feito) return; feito = true;
+    var j = document.createElement('script'); j.async = true;
+    j.src = 'https://hub.ocaradocopytrade.com/api/px/px-d0eed24fa78f.js';
+    document.head.appendChild(j);
+  }
+  ['pointerdown','keydown','touchstart','scroll'].forEach(function(ev){
+    window.addEventListener(ev, carregaHub, { once: true, passive: true });
+  });
+  if (document.readyState === 'complete') setTimeout(carregaHub, 1200);
+  else window.addEventListener('load', function(){ setTimeout(carregaHub, 1200); }, { once: true });
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Academia vitalícia | Academia do Hendi de Copy Trade</title>
 <meta name="description" content="Você paga hoje o preço de um ano de Academia e leva tudo para o resto da vida.">
